@@ -50,7 +50,6 @@ data = randi([0 1] , N_realizations , N_bits);
 
 
 %==============of polar RZ Ensemble========%
-%{
 %========Transmitter%
 Tx_RZ= (2*data -1)*A;   %Mapping
 
@@ -94,10 +93,8 @@ E_samp_RZ = mean(ensample_RZ(: , 10));  % mean of sample 10
 fprintf('Ensemble Mean of sample 10 = %f\n', E_samp_RZ);
 
  %2. autocorrelation function Rx(tau)
-[Rx_RZ, lags] = xcorr(ensample_RZ', 100, 'unbiased');
-
-Avg_Rx_RZ = mean(Rx_RZ, 2);
-
+%========== Method 2: Ensemble Average (Instructor Method) %
+[Rx_RZ , tau] = correlation(ensample_RZ , 100);
 
 %Ergodicity
 %1.Average over time
@@ -115,7 +112,7 @@ fprintf('Time Mean of realization 15 = %f\n', E_time_RZ);
 %Plotting 
 figure;
 subplot(2 , 1 , 1);
-plot(lags*Ts, Avg_Rx_RZ, 'LineWidth', 1.5);
+plot(tau*Ts, Rx_RZ, 'LineWidth', 1.5);
 grid on;
 title('Ensemble Autocorrelation Function R_x(\tau)');
 xlabel('\tau (seconds)'); ylabel('R_x(\tau)');
@@ -178,18 +175,13 @@ xlabel('\tau (seconds)');
 
 %PSD
 
-N_fft = 4096; 
-
-
-PSD = abs(fft(ifftshift(Avg_Rx_RZ), N_fft));
-
-
-Fs = 2/Ts;
+N_fft = 64; 
+PSD = abs(fft(ifftshift(Rx_RZ), N_fft));
+Fs = 1/Ts;
 freq = (-N_fft/2 : (N_fft/2)-1) * (Fs/N_fft);
 
 %plotting
 PSD_final = fftshift(PSD);
-
 figure;
 plot(freq, PSD_final, 'LineWidth', 2, 'Color' , [0 0.4470 0.7410]);
 grid on;
@@ -198,3 +190,16 @@ xlabel('Frequency (Hz)');
 ylabel('Magnitude');
 xlim([-120 120]); 
 
+
+%covnvolution function
+function [Rx , tau] = correlation(signal ,max_tau)
+  tau = -max_tau:max_tau;
+  Rx = zeros(1 , length(tau));
+  t_index = floor(size(signal , 2) / 2);
+  for i = 1 : length(tau)
+      shift = tau(i);
+      x_t = signal(: , t_index);
+      x_t_tau = signal(: , t_index+ shift);
+      Rx(i) = mean(x_t .* x_t_tau);
+  end
+end
