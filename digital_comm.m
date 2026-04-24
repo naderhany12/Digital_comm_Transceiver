@@ -97,6 +97,28 @@ xlabel('Realization Number');
 ylabel('Mean Value (V)');
 sgtitle('Unipolar NRZ: E[x(t)] vs <x(t)>');
 
+% Stationarity check for UniPolar NRZ
+t1 = 10;
+t2 = 50;
+window_size = 350;
+
+segment1 = ensample_unipolar(:, t1:t1+window_size);
+[R_t1, lags_t1] = correlation_manual(segment1, 50, 'ensemble');
+
+segment2 = ensample_unipolar(:, t2:t2+window_size);
+[R_t2, lags_t2] = correlation_manual(segment2, 50, 'ensemble');
+
+figure;
+plot(lags_t1 * Ts, R_t1, 'b', 'LineWidth', 1.5);
+hold on;
+plot(lags_t2 * Ts, R_t2, 'r--', 'LineWidth', 1.5);
+grid on;
+legend('R_x(\tau) at t_1', 'R_x(\tau) at t_2');
+title('Unipolar NRZ - Stationarity Check');
+xlabel('\tau (seconds)');
+ylabel('R_x(\tau)');
+
+
 % ---- PSD for Unipolar NRZ ----
 mx_unipolar = A/2;                          % theoretical mean (A=4 → 2)
 
@@ -126,7 +148,7 @@ grid on;
 title('PSD of Unipolar NRZ Signaling');
 xlabel('Frequency (Hz)');
 ylabel('S_x(f)  [V²/Hz]');
-xlim([-60, 60]);
+xlim([-120, 120]);
 
 %============Polar NRZ Ensemble==========%
 fprintf('\n========== POLAR NRZ ANALYSIS ==========\n');
@@ -212,6 +234,27 @@ title('Polar NRZ - Time Mean <X(t)> for Each Realization');
 xlabel('Realization Number');
 ylabel('Mean Value (V)');
 sgtitle('Polar NRZ: E[x(t)] vs <x(t)>');
+
+% Stationarity check for Polar NRZ
+t1 = 10;
+t2 = 50;
+window_size = 350;
+
+segment1 = ensample_polar_NRZ(:, t1:t1+window_size);
+[R_t1, lags_t1] = correlation_manual(segment1, 50, 'ensemble');
+
+segment2 = ensample_polar_NRZ(:, t2:t2+window_size);
+[R_t2, lags_t2] = correlation_manual(segment2, 50, 'ensemble');
+
+figure;
+plot(lags_t1 * Ts, R_t1, 'b', 'LineWidth', 1.5);
+hold on;
+plot(lags_t2 * Ts, R_t2, 'r--', 'LineWidth', 1.5);
+grid on;
+legend('R_x(\tau) at t_1', 'R_x(\tau) at t_2');
+title('Polar NRZ - Stationarity Check');
+xlabel('\tau (seconds)');
+ylabel('R_x(\tau)');
 
 % ---- PSD for Polar NRZ ----
 Rx_padded_polar_NRZ = zeros(1, N_fft);
@@ -356,33 +399,18 @@ xlim([-120, 120]);
 %manual_mean(matrix, 1)   % ensemble mean
 %manual_mean(matrix, 2)   % time mean
 function mean_val = manual_mean(data, dim)
-    if nargin == 1 % calculates number of inputs
-        data = data(:);
-        sum_val = 0;
-        for i = 1:length(data)
-            sum_val = sum_val + data(i);
-        end
-        mean_val = sum_val / length(data);
+
+    % Case 1: Compute average of all elements in the array
+    if nargin == 1 
+        mean_val = sum(data, 'all') / numel(data);
+   
+      % Case 2: Compute average of each column (down the rows)
     elseif dim == 1
-        [rows, cols] = size(data);
-        mean_val = zeros(1, cols);
-        for j = 1:cols
-            sum_val = 0;
-            for i = 1:rows
-                sum_val = sum_val + data(i, j);
-            end
-            mean_val(j) = sum_val / rows;
-        end
-    elseif dim == 2
-        [rows, cols] = size(data);
-        mean_val = zeros(rows, 1);
-        for i = 1:rows
-            sum_val = 0;
-            for j = 1:cols
-                sum_val = sum_val + data(i, j);
-            end
-            mean_val(i) = sum_val / cols;
-        end
+        mean_val = sum(data, 1) / size(data, 1);
+        
+     % Case 3: Compute average of each row (across the columns)
+    elseif dim == 2 
+        mean_val = sum(data, 2) / size(data, 2);
     end
 end
 
