@@ -1,3 +1,4 @@
+%authors:
 %===========Control Flags=========%
 N_bits = 100;               %Number of bits per realization
 N_realizations = 500;       %Number of realizations;
