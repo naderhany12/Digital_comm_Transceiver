@@ -15,6 +15,11 @@
 - [VIII. Applying Random Initial Time Shifts](#viii-applying-random-initial-time-shifts)
 - [IX. Preparing Cell Arrays for Analysis](#ix-preparing-cell-arrays-for-analysis)
 
+### 🖼️ Output Figures
+- [Unipolar NRZ Plots](#unipolar-nrz-plots)
+- [Polar NRZ Plots](#polar-nrz-plots)
+- [Polar RZ Plots](#polar-rz-plots)
+
 ### 💻 Source
 - [Full MATLAB Code](#full-matlab-code)
 
@@ -65,9 +70,50 @@ Data structures and plotting arguments are modularized to allow for a clean, uni
 
 ---
 
+## 🖼️ Output Figures
+
+All simulation plots are automatically generated and saved in the [`Signaling_Plots/`](./Signaling_Plots) directory. Below is a categorized list of the visual outputs for each signaling scheme.
+
+### Unipolar NRZ Plots
+
+* **Power Spectral Density:** ![PSD Unipolar NRZ](Signaling_Plots/PSD_of_Unipolar_NRZ_Signaling.png)
+* **Realization Sample:** ![Realization 2](Signaling_Plots/Unipolar_NRZ_-_Realization_%232.png)
+* **Stationarity Check:** ![Stationarity](Signaling_Plots/Unipolar_NRZ_-_Stationarity_Check.png)
+* **Time Autocorrelation (Realization #10):** ![Time Autocorrelation](Signaling_Plots/Unipolar_NRZ_-_Time_Autocorrelation_for_Realization_%2310.png)
+* **Time Mean (Each Realization):** ![Time Mean](Signaling_Plots/Unipolar_NRZ_-_Time_Mean_X%28t%29_for_Each_Realization.png)
+
+---
+
+### Polar NRZ Plots
+
+* **Power Spectral Density:** ![PSD Polar NRZ](Signaling_Plots/PSD_of_Polar_NRZ_Signaling.png)
+* **Realization Sample:** ![Realization 2](Signaling_Plots/Polar_NRZ_-_Realization_%232.png)
+* **Stationarity Check:** ![Stationarity](Signaling_Plots/Polar_NRZ_-_Stationarity_Check.png)
+* **Time Autocorrelation (Realization #10):** ![Time Autocorrelation](Signaling_Plots/Polar_NRZ_-_Time_Autocorrelation_for_Realization_%2310.png)
+* **Time Mean (Each Realization):** ![Time Mean](Signaling_Plots/Polar_NRZ_-_Time_Mean_X%28t%29_for_Each_Realization.png)
+
+---
+
+### Polar RZ Plots
+
+* **Power Spectral Density:** ![PSD Polar RZ](Signaling_Plots/PSD_of_Polar_RZ_Signaling.png)
+* **Realization Sample:** ![Realization 2](Signaling_Plots/Polar_RZ_-_Realization_%232.png)
+* **Stationarity Check:** ![Stationarity](Signaling_Plots/Polar_RZ_-_Stationarity_Check.png)
+* **Time Autocorrelation (Realization #10):** ![Time Autocorrelation](Signaling_Plots/Polar_RZ_-_Time_Autocorrelation_for_Realization_%2310.png)
+* **Time Mean (Each Realization):** ![Time Mean](Signaling_Plots/Polar_RZ_-_Time_Mean_X%28t%29_for_Each_Realization.png)
+
 ## 💻 Source
 
 ### Full MATLAB Code
 The completely modular MATLAB implementation containing all control flags, sequence generation, from-scratch mathematical functions, and automated plotting logic can be found in the main script here: 
 
 👉 **[digital_comm.m](./digital_comm.m)**
+
+
+## Authors
+
+- [@Youssif991](https://github.com/Youssif991)
+- [@youssefteam18-boop](https://github.com/youssefteam18-boop)
+- [@naderhany12](https://github.com/naderhany12)
+- [@minawaeltanagho](https://github.com/minawaeltanagho)
+- [@AbdelrhmanAtta](https://github.com/AbdelrhmanAtta)
