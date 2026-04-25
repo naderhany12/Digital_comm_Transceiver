@@ -25,14 +25,18 @@ else
         sg = findall(fig, 'Tag', 'sgtitle');
         if ~isempty(sg) && ~isempty(sg.String)
             title_str = sg.String;
-            if iscell(title_str), title_str = title_str{1}; end
+            if iscell(title_str)
+                title_str = title_str{1}; 
+            end
         else
             % 2. Fallback: find the first available axes title
             ax = findall(fig, 'type', 'axes');
             for a = 1:length(ax)
                 if ~isempty(ax(a).Title.String)
                     title_str = ax(a).Title.String;
-                    if iscell(title_str), title_str = title_str{1}; end
+                    if iscell(title_str)
+                        title_str = title_str{1}; 
+                    end
                     break;
                 end
             end
@@ -48,4 +52,22 @@ else
         safe_name = strrep(title_str, '\tau', 'tau');
         
         % Replace illegal Windows file characters (\ / : * ? " < > |) with an underscore
-        safe_name = regexprep
+        safe_name = regexprep(safe_name, '[\\/*?:"<>|\[\]]', '_');
+        
+        % Replace spaces with underscores for a cleaner file name
+        safe_name = regexprep(strtrim(safe_name), '\s+', '_');
+        
+        % Remove double underscores if any were created
+        safe_name = regexprep(safe_name, '_+', '_');
+        
+        % Generate the final path
+        filename_png = fullfile(export_folder, sprintf('%s.png', safe_name));
+        
+        % Save as a high-resolution PNG
+        exportgraphics(fig, filename_png, 'Resolution', 300);
+        
+        fprintf('  -> Saved: %s.png\n', safe_name);
+    end
+    
+    fprintf('All figures exported successfully.\n');
+end
