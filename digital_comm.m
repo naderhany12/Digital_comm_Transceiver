@@ -496,3 +496,5 @@ function [Rx, tau] = correlation_manual(signal, max_tau, type)
         end
     end
 end
+
+ExportFigures;

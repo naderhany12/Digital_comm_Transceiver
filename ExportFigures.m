@@ -1,5 +1,5 @@
 % ==========================================
-% EXPORT ALL OPEN FIGURES TO A FOLDER
+% EXPORT ALL OPEN FIGURES TO A FOLDER (PNG ONLY)
 % ==========================================
 export_folder = 'Signaling_Plots'; % Define your desired folder name here
 
@@ -19,18 +19,33 @@ else
     % Loop through each figure and save it
     for i = 1:length(all_figs)
         fig = all_figs(i);
+        title_str = '';
         
-        % Generate a standardized filename using the figure's number
-        filename_png = fullfile(export_folder, sprintf('Figure_%02d.png', fig.Number));
-        filename_fig = fullfile(export_folder, sprintf('Figure_%02d.fig', fig.Number));
+        % 1. Try to find an overarching sgtitle first
+        sg = findall(fig, 'Tag', 'sgtitle');
+        if ~isempty(sg) && ~isempty(sg.String)
+            title_str = sg.String;
+            if iscell(title_str), title_str = title_str{1}; end
+        else
+            % 2. Fallback: find the first available axes title
+            ax = findall(fig, 'type', 'axes');
+            for a = 1:length(ax)
+                if ~isempty(ax(a).Title.String)
+                    title_str = ax(a).Title.String;
+                    if iscell(title_str), title_str = title_str{1}; end
+                    break;
+                end
+            end
+        end
         
-        % Save as a high-resolution PNG (Requires MATLAB R2020a or newer)
-        exportgraphics(fig, filename_png, 'Resolution', 300);
+        % 3. If no title exists at all, default to Figure number
+        if isempty(title_str)
+            title_str = sprintf('Figure_%02d', fig.Number);
+        end
         
-        % Save as a standard MATLAB .fig file for future editing
-        savefig(fig, filename_fig);
+        % --- SANITIZE FILENAME ---
+        % Fix common LaTeX terms in your specific titles
+        safe_name = strrep(title_str, '\tau', 'tau');
         
-        fprintf('  -> Saved Figure %d\n', fig.Number);
-    end
-    fprintf('All figures exported successfully.\n');
-end
+        % Replace illegal Windows file characters (\ / : * ? " < > |) with an underscore
+        safe_name = regexprep
