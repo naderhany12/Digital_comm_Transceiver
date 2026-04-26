@@ -1,4 +1,4 @@
-%% Parameters
+%% Control Flags
 N_bits         = 100;           % Number of bits per realization.
 N_realizations = 500;           % Number of realizations.
 Pw             = 0.07;          % Pulse width of the bit.
@@ -11,7 +11,7 @@ freq           = (-N_fft/2:N_fft/2-1) * (Fs/N_fft);  % Frequency axis.
 center         = floor(N_fft/2) + 1;                  % Center bin.
 half_len       = 100;           % Max tau used in correlation_manual.
 
-%% Data
+%% Data Generation
 data = randi([0 1], N_realizations, N_bits);
 
 %% Unipolar NRZ
