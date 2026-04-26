@@ -16,39 +16,65 @@ data = randi([0 1], N_realizations, N_bits);
 
 %% Unipolar NRZ
 fprintf('\nUnipolar NRZ\n');
-ensample_unipolar                          = build_ensemble(data, A, ones(1,L), N_realizations, L, 'unipolar');
-[Ex_unipolar, Ux_unipolar]                = compute_means(ensample_unipolar, A/2);
-[Rx_unipolar, tau_unipolar]               = correlation_manual(ensample_unipolar, 100, 'ensemble');      % Ensemble autocorrelation.
-[Rx_time_unipolar, lags_time_unipolar]    = correlation_manual(ensample_unipolar(10,:), 100, 'time');    % Time autocorrelation.
-plot_realizations(ensample_unipolar,  'Unipolar NRZ', [-1, A+1]);
-plot_autocorr(tau_unipolar, Rx_unipolar, lags_time_unipolar, Rx_time_unipolar, 'Unipolar NRZ', Ts);
-plot_means(Ex_unipolar, Ux_unipolar,  'Unipolar NRZ', [-1, A+1]);
-plot_stationarity(ensample_unipolar,  Ts, 'Unipolar NRZ');
-compute_psd(Rx_unipolar,  N_fft, center, half_len, freq, Fs, A/2, [0.8500 0.3250 0.0980], 'PSD - Unipolar NRZ', 'S_x(f) [V^2/Hz]');
+pulse_unipolar  = ones(1, L);
+ylim_unipolar   = [-1, A+1];
+color_unipolar  = [0.8500 0.3250 0.0980];
+
+ensample_unipolar = build_ensemble(data, A, pulse_unipolar, N_realizations, L, 'unipolar');
+
+[Ex_unipolar, Ux_unipolar] = compute_means(ensample_unipolar, A/2);
+
+[Rx_unipolar, tau_unipolar]            = correlation_manual(ensample_unipolar,       100, 'ensemble');
+[Rx_time_unipolar, lags_time_unipolar] = correlation_manual(ensample_unipolar(10,:), 100, 'time');
+
+plot_realizations(ensample_unipolar, 'Unipolar NRZ', ylim_unipolar);
+plot_autocorr(tau_unipolar, Rx_unipolar, ...
+              lags_time_unipolar, Rx_time_unipolar, 'Unipolar NRZ', Ts);
+plot_means(Ex_unipolar, Ux_unipolar, 'Unipolar NRZ', ylim_unipolar);
+plot_stationarity(ensample_unipolar, Ts, 'Unipolar NRZ');
+compute_psd(Rx_unipolar, N_fft, center, half_len, freq, Fs, ...
+            A/2, color_unipolar, 'PSD - Unipolar NRZ', 'S_x(f) [V^2/Hz]');
 
 %% Polar NRZ
 fprintf('\nPolar NRZ\n');
-ensample_polar_NRZ                         = build_ensemble(data, A, ones(1,L), N_realizations, L, 'polar');
-[Ex_polar_NRZ, Ux_polar_NRZ]             = compute_means(ensample_polar_NRZ, 0);
-[Rx_polar_NRZ, tau_polar_NRZ]            = correlation_manual(ensample_polar_NRZ, 100, 'ensemble');
+pulse_polar_NRZ = ones(1, L);
+ylim_polar_NRZ  = [-A-1, A+1];
+color_polar_NRZ = [0 0.4470 0.7410];
+
+ensample_polar_NRZ = build_ensemble(data, A, pulse_polar_NRZ, N_realizations, L, 'polar');
+
+[Ex_polar_NRZ, Ux_polar_NRZ] = compute_means(ensample_polar_NRZ, 0);
+
+[Rx_polar_NRZ, tau_polar_NRZ]            = correlation_manual(ensample_polar_NRZ,       100, 'ensemble');
 [Rx_time_polar_NRZ, lags_time_polar_NRZ] = correlation_manual(ensample_polar_NRZ(10,:), 100, 'time');
-plot_realizations(ensample_polar_NRZ, 'Polar NRZ', [-A-1, A+1]);
-plot_autocorr(tau_polar_NRZ, Rx_polar_NRZ, lags_time_polar_NRZ, Rx_time_polar_NRZ, 'Polar NRZ', Ts);
-plot_means(Ex_polar_NRZ, Ux_polar_NRZ, 'Polar NRZ', [-A-1, A+1]);
+
+plot_realizations(ensample_polar_NRZ, 'Polar NRZ', ylim_polar_NRZ);
+plot_autocorr(tau_polar_NRZ, Rx_polar_NRZ, ...
+              lags_time_polar_NRZ, Rx_time_polar_NRZ, 'Polar NRZ', Ts);
+plot_means(Ex_polar_NRZ, Ux_polar_NRZ, 'Polar NRZ', ylim_polar_NRZ);
 plot_stationarity(ensample_polar_NRZ, Ts, 'Polar NRZ');
-compute_psd(Rx_polar_NRZ, N_fft, center, half_len, freq, Fs, 0, [0 0.4470 0.7410], 'PSD - Polar NRZ', 'Magnitude');
+compute_psd(Rx_polar_NRZ, N_fft, center, half_len, freq, Fs, ...
+            0, color_polar_NRZ, 'PSD - Polar NRZ', 'Magnitude');
 
 %% Polar RZ
 fprintf('\nPolar RZ\n');
-ensample_RZ                                = build_ensemble(data, A, [ones(1,floor(L/2)), zeros(1,ceil(L/2))], N_realizations, L, 'polar');
-[Ex_RZ, Ux_RZ]                           = compute_means(ensample_RZ, 0);
-[Rx_RZ, tau_RZ]                          = correlation_manual(ensample_RZ, 100, 'ensemble');
-[Rx_time_RZ, lags_time_RZ]               = correlation_manual(ensample_RZ(10,:), 100, 'time');
-plot_realizations(ensample_RZ,  'Polar RZ', [-A-1, A+1]);
+pulse_RZ = [ones(1, floor(L/2)), zeros(1, ceil(L/2))];
+ylim_RZ  = [-A-1, A+1];
+color_RZ = [0.4940 0.1840 0.5560];
+
+ensample_RZ = build_ensemble(data, A, pulse_RZ, N_realizations, L, 'polar');
+
+[Ex_RZ, Ux_RZ] = compute_means(ensample_RZ, 0);
+
+[Rx_RZ, tau_RZ]            = correlation_manual(ensample_RZ,       100, 'ensemble');
+[Rx_time_RZ, lags_time_RZ] = correlation_manual(ensample_RZ(10,:), 100, 'time');
+
+plot_realizations(ensample_RZ, 'Polar RZ', ylim_RZ);
 plot_autocorr(tau_RZ, Rx_RZ, lags_time_RZ, Rx_time_RZ, 'Polar RZ', Ts);
-plot_means(Ex_RZ, Ux_RZ,  'Polar RZ', [-1, 1]);
-plot_stationarity(ensample_RZ,  Ts, 'Polar RZ');
-compute_psd(Rx_RZ, N_fft, center, half_len, freq, Fs, 0, [0.4940 0.1840 0.5560], 'PSD - Polar RZ', 'Magnitude');
+plot_means(Ex_RZ, Ux_RZ, 'Polar RZ', [-1, 1]);
+plot_stationarity(ensample_RZ, Ts, 'Polar RZ');
+compute_psd(Rx_RZ, N_fft, center, half_len, freq, Fs, ...
+            0, color_RZ, 'PSD - Polar RZ', 'Magnitude');
 
 %% Functions
 
