@@ -1,507 +1,191 @@
-% =========== Control Flags ========= %
-N_bits = 100;               % Number of bits per realization.
-N_realizations = 500;       % Number of realizations.
-Pw = 0.07;                  % Pulse width of the bit.
-Ts = 0.01;                  % Time sample.
-L = round(Pw / Ts);         % Number of samples per symbol period (L=7).
-A = 4;                      % Amplitude.
+%% Control Flags
+N_bits         = 100;           % Number of bits per realization.
+N_realizations = 500;           % Number of realizations.
+Pw             = 0.07;          % Pulse width of the bit.
+Ts             = 0.01;          % Time sample.
+L              = round(Pw/Ts);  % Samples per symbol period (L=7).
+A              = 4;             % Amplitude.
+N_fft          = 1024;          % FFT size.
+Fs             = 1/Ts;          % Sampling frequency.
+freq           = (-N_fft/2:N_fft/2-1) * (Fs/N_fft);  % Frequency axis.
+center         = floor(N_fft/2) + 1;                  % Center bin.
+half_len       = 100;           % Max tau used in correlation_manual.
 
-N_fft = 1024;
-Fs = 1/Ts;
-freq = (-N_fft/2:N_fft/2-1) * (Fs/N_fft);
-
-% ========== Creating Random Data ======= %
+%% Data Generation
 data = randi([0 1], N_realizations, N_bits);
 
-% =========== Unipolar NRZ Ensemble ========== %
-fprintf('\n========== UNIPOLAR NRZ ANALYSIS ==========\n');
+%% Unipolar NRZ
+fprintf('\nUnipolar NRZ\n');
+pulse_unipolar  = ones(1, L);
+ylim_unipolar   = [-1, A+1];
+color_unipolar  = [0.8500 0.3250 0.0980];
 
-% Transmitter.
-Tx_Unipolar = data * A;       % Mapping.
-pulse_unipolar = ones(1, L);  % Pulse shape.
-ensample_unipolar = kron(Tx_Unipolar, pulse_unipolar); % Upsampling.
+ensample_unipolar = build_ensemble(data, A, pulse_unipolar, N_realizations, L, 'unipolar');
 
-% Add random delays.
-Td_unipolar = randi([0, L-1], N_realizations, 1);
-for i = 1:N_realizations
-    ensample_unipolar(i, :) = circshift(ensample_unipolar(i, :), [0, Td_unipolar(i)]);
-end
+[Ex_unipolar, Ux_unipolar] = compute_means(ensample_unipolar, A/2);
 
-% Plot realizations for Unipolar NRZ.
-figure;
-subplot(2, 1, 1);
-stairs(ensample_unipolar(1, 1:140), 'LineWidth', 1.5);
-title('Unipolar NRZ - Realization #1');
-ylim([-1, A+1]);
-grid on;
-ylabel('Voltage (V)');
+[Rx_unipolar, tau_unipolar]            = correlation_manual(ensample_unipolar,       100, 'ensemble');
+[Rx_time_unipolar, lags_time_unipolar] = correlation_manual(ensample_unipolar(10,:), 100, 'time');
 
-subplot(2, 1, 2);
-stairs(ensample_unipolar(2, 1:140), 'LineWidth', 1.5, 'Color', 'r');
-title('Unipolar NRZ - Realization #2');
-ylim([-1, A+1]);
-grid on;
-ylabel('Voltage (V)');
-xlabel('Sample Index');
-sgtitle('Unipolar NRZ Realizations with Random Delays');
+plot_realizations(ensample_unipolar, 'Unipolar NRZ', ylim_unipolar);
+plot_autocorr(tau_unipolar, Rx_unipolar, ...
+              lags_time_unipolar, Rx_time_unipolar, 'Unipolar NRZ', Ts);
+plot_means(Ex_unipolar, Ux_unipolar, 'Unipolar NRZ', ylim_unipolar);
+plot_stationarity(ensample_unipolar, Ts, 'Unipolar NRZ');
+compute_psd(Rx_unipolar, N_fft, center, half_len, freq, Fs, ...
+            A/2, color_unipolar, 'PSD - Unipolar NRZ', 'S_x(f) [V^2/Hz]');
 
-% Mean calculations.
-Ex_unipolar = manual_mean(ensample_unipolar, 1);         % Ensemble mean.
-E_samp_unipolar = manual_mean(ensample_unipolar(:, 10)); % Sample 10.
-fprintf('Ensemble Mean of sample 10 = %.4f V (Theoretical: %.2f V)\n', E_samp_unipolar, A/2);
-
-% Autocorrelation - Ensemble.
-[Rx_unipolar, tau_unipolar] = correlation_manual(ensample_unipolar, 100, 'ensemble');
-
-% Ergodicity - Time means.
-Ux_unipolar = manual_mean(ensample_unipolar, 2);         % Time mean for EVERY realization.
-E_time_unipolar = manual_mean(ensample_unipolar(15, :)); % Time mean for ONLY ONE specific realization.
-fprintf('Time Mean of realization 15 = %.4f V (Theoretical: %.2f V)\n', E_time_unipolar, A/2);
-
-% Time autocorrelation.
-[Rx_time_unipolar, lags_time_unipolar] = correlation_manual(ensample_unipolar(10, :), 100, 'time');
-
-% Plot autocorrelation for Unipolar NRZ.
-figure;
-subplot(2, 1, 1);
-plot(tau_unipolar*Ts, Rx_unipolar, 'LineWidth', 1.5);
-grid on;
-title('Unipolar NRZ - Ensemble Autocorrelation R_x(\tau)');
-xlabel('\tau (seconds)');
-ylabel('R_x(\tau)');
-xlim([-0.75 0.75]);
-
-subplot(2, 1, 2);
-plot(lags_time_unipolar*Ts, Rx_time_unipolar, 'g', 'LineWidth', 1.5);
-grid on;
-title('Unipolar NRZ - Time Autocorrelation for Realization #10');
-xlabel('\tau (seconds)');
-ylabel('R_T(\tau)');
-sgtitle('Unipolar NRZ: Ensemble vs Time Autocorrelation');
-
-% Plot mean comparison for Unipolar NRZ.
-figure;
-subplot(2, 1, 1);
-plot(Ex_unipolar);
-ylim([-1, A+1]);
-grid on;
-title('Unipolar NRZ - Statistical Mean E[X(t)]');
-xlabel('Sample Index (t)');
-ylabel('Mean Value (V)');
-
-subplot(2, 1, 2);
-plot(Ux_unipolar);
-ylim([-1, A+1]);
-grid on;
-title('Unipolar NRZ - Time Mean <X(t)> for Each Realization');
-xlabel('Realization Number');
-ylabel('Mean Value (V)');
-sgtitle('Unipolar NRZ: E[x(t)] vs <x(t)>');
-
-% Stationarity check for Unipolar NRZ.
-t1 = 10;
-t2 = 50;
-window_size = 350;
-
-segment1 = ensample_unipolar(:, t1:t1+window_size);
-[R_t1, lags_t1] = correlation_manual(segment1, 50, 'ensemble');
-
-segment2 = ensample_unipolar(:, t2:t2+window_size);
-[R_t2, lags_t2] = correlation_manual(segment2, 50, 'ensemble');
-
-figure;
-plot(lags_t1 * Ts, R_t1, 'b', 'LineWidth', 1.5);
-hold on;
-plot(lags_t2 * Ts, R_t2, 'r--', 'LineWidth', 1.5);
-grid on;
-legend('R_x(\tau) at t_1', 'R_x(\tau) at t_2');
-title('Unipolar NRZ - Stationarity Check');
-xlabel('\tau (seconds)');
-ylabel('R_x(\tau)');
-
-
-% ---- PSD for Unipolar NRZ ---- %
-mx_unipolar = A/2;  % Theoretical mean (A=4 -> 2).
-
-% 1) Subtract mean^2 from every lag to isolate the AC (sinc^2) part.
-Rx_ac_unipolar = Rx_unipolar - mx_unipolar^2;
-
-% 2) Zero-pad the AC autocorrelation into an N_fft-length buffer.
-Rx_padded_unipolar = zeros(1, N_fft);
-center   = floor(N_fft/2) + 1;
-half_len = 100;     % Max_tau used in correlation_manual.
-Rx_padded_unipolar(center - half_len : center + half_len) = Rx_ac_unipolar; % Places the AC autocorrelation in the center of a zero-padded array.
-
-% 3) FFT.
-PSD_ac_unipolar = fftshift(abs(fft(ifftshift(Rx_padded_unipolar))));
-
-% 4) Represent the DC impulse as a single raised bin (area = mx^2).
-%    Scale so the spike is visually comparable to the sinc^2 lobe.
-PSD_dc_unipolar = zeros(1, N_fft);
-DC_spike_height = mx_unipolar^2 / (Fs / N_fft); % Impulse strength / freq-res.
-PSD_dc_unipolar(center) = DC_spike_height;      % Narrow spike at f = 0.
-
-PSD_final_unipolar = PSD_ac_unipolar + PSD_dc_unipolar;
-% S(f) = (A^2/4) * delta(f) + (A^2 * T/4) * sinc^2(fT).
-
-figure;
-plot(freq, PSD_final_unipolar, 'LineWidth', 2, 'Color', [0.8500 0.3250 0.0980]);
-grid on;
-title('PSD of Unipolar NRZ Signaling');
-xlabel('Frequency (Hz)');
-ylabel('S_x(f)  [V^2/Hz]');
-xlim([-120, 120]);
-
-
-% ============ Polar NRZ Ensemble ========== %
-fprintf('\n========== POLAR NRZ ANALYSIS ==========\n');
-
-% Transmitter.
-Tx_Polar_NRZ = (2*data - 1) * A;
+%% Polar NRZ
+fprintf('\nPolar NRZ\n');
 pulse_polar_NRZ = ones(1, L);
-ensample_polar_NRZ = kron(Tx_Polar_NRZ, pulse_polar_NRZ);
+ylim_polar_NRZ  = [-A-1, A+1];
+color_polar_NRZ = [0 0.4470 0.7410];
 
-% Add random delays.
-Td_polar_NRZ = randi([0, L-1], N_realizations, 1);
-for i = 1:N_realizations
-    ensample_polar_NRZ(i, :) = circshift(ensample_polar_NRZ(i, :), [0, Td_polar_NRZ(i)]);
-end
+ensample_polar_NRZ = build_ensemble(data, A, pulse_polar_NRZ, N_realizations, L, 'polar');
 
-% Plot realizations for Polar NRZ.
-figure;
-subplot(2, 1, 1);
-stairs(ensample_polar_NRZ(1, 1:140), 'LineWidth', 1.5);
-title('Polar NRZ - Realization #1');
-ylim([-A-1, A+1]);
-grid on;
-ylabel('Voltage (V)');
+[Ex_polar_NRZ, Ux_polar_NRZ] = compute_means(ensample_polar_NRZ, 0);
 
-subplot(2, 1, 2);
-stairs(ensample_polar_NRZ(2, 1:140), 'LineWidth', 1.5, 'Color', 'r');
-title('Polar NRZ - Realization #2');
-ylim([-A-1, A+1]);
-grid on;
-ylabel('Voltage (V)');
-xlabel('Sample Index');
-sgtitle('Polar NRZ Realizations with Random Delays');
+[Rx_polar_NRZ, tau_polar_NRZ]            = correlation_manual(ensample_polar_NRZ,       100, 'ensemble');
+[Rx_time_polar_NRZ, lags_time_polar_NRZ] = correlation_manual(ensample_polar_NRZ(10,:), 100, 'time');
 
-% Mean calculations.
-Ex_polar_NRZ = manual_mean(ensample_polar_NRZ, 1);
-E_samp_polar_NRZ = manual_mean(ensample_polar_NRZ(:, 10));
-fprintf('Ensemble Mean of sample 10 = %.4f V (Theoretical: 0 V)\n', E_samp_polar_NRZ);
+plot_realizations(ensample_polar_NRZ, 'Polar NRZ', ylim_polar_NRZ);
+plot_autocorr(tau_polar_NRZ, Rx_polar_NRZ, ...
+              lags_time_polar_NRZ, Rx_time_polar_NRZ, 'Polar NRZ', Ts);
+plot_means(Ex_polar_NRZ, Ux_polar_NRZ, 'Polar NRZ', ylim_polar_NRZ);
+plot_stationarity(ensample_polar_NRZ, Ts, 'Polar NRZ');
+compute_psd(Rx_polar_NRZ, N_fft, center, half_len, freq, Fs, ...
+            0, color_polar_NRZ, 'PSD - Polar NRZ', 'Magnitude');
 
-% Autocorrelation - Ensemble.
-[Rx_polar_NRZ, tau_polar_NRZ] = correlation_manual(ensample_polar_NRZ, 100, 'ensemble');
-
-% Time means.
-Ux_polar_NRZ = manual_mean(ensample_polar_NRZ, 2);
-E_time_polar_NRZ = manual_mean(ensample_polar_NRZ(15, :));
-fprintf('Time Mean of realization 15 = %.4f V (Theoretical: 0 V)\n', E_time_polar_NRZ);
-
-% Time autocorrelation.
-[Rx_time_polar_NRZ, lags_time_polar_NRZ] = correlation_manual(ensample_polar_NRZ(10, :), 100, 'time');
-
-% Plot autocorrelation for Polar NRZ.
-figure;
-subplot(2, 1, 1);
-plot(tau_polar_NRZ*Ts, Rx_polar_NRZ, 'LineWidth', 1.5);
-grid on;
-title('Polar NRZ - Ensemble Autocorrelation R_x(\tau)');
-xlabel('\tau (seconds)');
-ylabel('R_x(\tau)');
-xlim([-0.75 0.75]);
-
-subplot(2, 1, 2);
-plot(lags_time_polar_NRZ*Ts, Rx_time_polar_NRZ, 'g', 'LineWidth', 1.5);
-grid on;
-title('Polar NRZ - Time Autocorrelation for Realization #10');
-xlabel('\tau (seconds)');
-ylabel('R_T(\tau)');
-sgtitle('Polar NRZ: Ensemble vs Time Autocorrelation');
-
-% Plot mean comparison for Polar NRZ.
-figure;
-subplot(2, 1, 1);
-plot(Ex_polar_NRZ);
-ylim([-A-1, A+1]);
-grid on;
-title('Polar NRZ - Statistical Mean E[X(t)]');
-xlabel('Sample Index (t)');
-ylabel('Mean Value (V)');
-
-subplot(2, 1, 2);
-plot(Ux_polar_NRZ);
-ylim([-A-1, A+1]);
-grid on;
-title('Polar NRZ - Time Mean <X(t)> for Each Realization');
-xlabel('Realization Number');
-ylabel('Mean Value (V)');
-sgtitle('Polar NRZ: E[x(t)] vs <x(t)>');
-
-% Stationarity check for Polar NRZ.
-t1 = 10;
-t2 = 50;
-window_size = 350;
-
-segment1 = ensample_polar_NRZ(:, t1:t1+window_size);
-[R_t1, lags_t1] = correlation_manual(segment1, 50, 'ensemble');
-
-segment2 = ensample_polar_NRZ(:, t2:t2+window_size);
-[R_t2, lags_t2] = correlation_manual(segment2, 50, 'ensemble');
-
-figure;
-plot(lags_t1 * Ts, R_t1, 'b', 'LineWidth', 1.5);
-hold on;
-plot(lags_t2 * Ts, R_t2, 'r--', 'LineWidth', 1.5);
-grid on;
-legend('R_x(\tau) at t_1', 'R_x(\tau) at t_2');
-title('Polar NRZ - Stationarity Check');
-xlabel('\tau (seconds)');
-ylabel('R_x(\tau)');
-
-% ---- PSD for Polar NRZ ---- %
-Rx_padded_polar_NRZ = zeros(1, N_fft);
-Rx_padded_polar_NRZ(center - half_len : center + half_len) = Rx_polar_NRZ;
-PSD_final_polar_NRZ = fftshift(abs(fft(ifftshift(Rx_padded_polar_NRZ))));
-
-figure;
-plot(freq, PSD_final_polar_NRZ, 'LineWidth', 2, 'Color', [0 0.4470 0.7410]);
-grid on;
-title('PSD of Polar NRZ Signaling');
-xlabel('Frequency (Hz)');
-ylabel('Magnitude');
-xlim([-120, 120]);
-
-
-% ============== Polar RZ Ensemble ======== %
-fprintf('\n========== POLAR RZ ANALYSIS ==========\n');
-
-% Transmitter.
-Tx_RZ = (2*data - 1) * A;
+%% Polar RZ
+fprintf('\nPolar RZ\n');
 pulse_RZ = [ones(1, floor(L/2)), zeros(1, ceil(L/2))];
-ensample_RZ = kron(Tx_RZ, pulse_RZ);
+ylim_RZ  = [-A-1, A+1];
+color_RZ = [0.4940 0.1840 0.5560];
 
-% Add random delays.
-Td_RZ = randi([0, L-1], N_realizations, 1);
-for i = 1:N_realizations
-    ensample_RZ(i, :) = circshift(ensample_RZ(i, :), [0, Td_RZ(i)]);
+ensample_RZ = build_ensemble(data, A, pulse_RZ, N_realizations, L, 'polar');
+
+[Ex_RZ, Ux_RZ] = compute_means(ensample_RZ, 0);
+
+[Rx_RZ, tau_RZ]            = correlation_manual(ensample_RZ,       100, 'ensemble');
+[Rx_time_RZ, lags_time_RZ] = correlation_manual(ensample_RZ(10,:), 100, 'time');
+
+plot_realizations(ensample_RZ, 'Polar RZ', ylim_RZ);
+plot_autocorr(tau_RZ, Rx_RZ, lags_time_RZ, Rx_time_RZ, 'Polar RZ', Ts);
+plot_means(Ex_RZ, Ux_RZ, 'Polar RZ', [-1, 1]);
+plot_stationarity(ensample_RZ, Ts, 'Polar RZ');
+compute_psd(Rx_RZ, N_fft, center, half_len, freq, Fs, ...
+            0, color_RZ, 'PSD - Polar RZ', 'Magnitude');
+
+%% Functions
+
+function plot_realizations(ensample, name, ylim_range)
+    figure;
+    subplot(2,1,1);
+    stairs(ensample(1, 1:140), 'LineWidth', 1.5);
+    title([name, ' - Realization #1']); ylim(ylim_range); grid on; ylabel('Voltage (V)');
+    subplot(2,1,2);
+    stairs(ensample(2, 1:140), 'LineWidth', 1.5, 'Color', 'r');
+    title([name, ' - Realization #2']); ylim(ylim_range); grid on;
+    ylabel('Voltage (V)'); xlabel('Sample Index');
+    sgtitle([name, ' Realizations']);
 end
 
-% Plot realizations for Polar RZ.
-figure;
-subplot(2, 1, 1);
-stairs(ensample_RZ(1, 1:140), 'LineWidth', 1.5);
-title('Polar RZ - Realization #1');
-ylim([-A-1, A+1]);
-grid on;
-ylabel('Voltage (V)');
+function plot_autocorr(tau, Rx_ens, lags_t, Rx_t, name, Ts)
+    figure;
+    subplot(2,1,1);
+    plot(tau*Ts, Rx_ens, 'LineWidth', 1.5);
+    title([name, ' - Ensemble R_x(\tau)']); grid on;
+    xlabel('\tau (s)'); ylabel('R_x(\tau)'); xlim([-0.75 0.75]);
+    subplot(2,1,2);
+    plot(lags_t*Ts, Rx_t, 'g', 'LineWidth', 1.5);
+    title([name, ' - Time R_x(\tau) for Realization #10']); grid on;
+    xlabel('\tau (s)'); ylabel('R_T(\tau)');
+    sgtitle([name, ': Ensemble vs Time Autocorrelation']);
+end
 
-subplot(2, 1, 2);
-stairs(ensample_RZ(2, 1:140), 'LineWidth', 1.5, 'Color', 'r');
-title('Polar RZ - Realization #2');
-ylim([-A-1, A+1]);
-grid on;
-ylabel('Voltage (V)');
-xlabel('Sample Index');
-sgtitle('Polar RZ Realizations with Random Delays');
+function plot_means(Ex, Ux, name, ylim_range)
+    figure;
+    subplot(2,1,1);
+    plot(Ex); ylim(ylim_range); grid on;
+    title([name, ' - E[X(t)]']); xlabel('Sample Index'); ylabel('Mean (V)');
+    subplot(2,1,2);
+    plot(Ux); ylim(ylim_range); grid on;
+    title([name, ' - <X(t)> per Realization']); xlabel('Realization'); ylabel('Mean (V)');
+    sgtitle([name, ': E[x(t)] vs <x(t)>']);
+end
 
-% Mean calculations.
-Ex_RZ = manual_mean(ensample_RZ, 1);
-E_samp_RZ = manual_mean(ensample_RZ(:, 10));
-fprintf('Ensemble Mean of sample 10 = %.4f V (Theoretical: 0 V)\n', E_samp_RZ);
+function plot_stationarity(ensample, Ts, name)
+    t1 = 10; t2 = 50; window_size = 350;
+    [R_t1, lags_t1] = correlation_manual(ensample(:, t1:t1+window_size), 50, 'ensemble');
+    [R_t2, lags_t2] = correlation_manual(ensample(:, t2:t2+window_size), 50, 'ensemble');
+    figure;
+    plot(lags_t1*Ts, R_t1, 'b', 'LineWidth', 1.5); hold on;
+    plot(lags_t2*Ts, R_t2, 'r--', 'LineWidth', 1.5);
+    grid on; legend('R_x at t_1', 'R_x at t_2');
+    title([name, ' - Stationarity Check']); xlabel('\tau (s)'); ylabel('R_x(\tau)');
+end
 
-% Autocorrelation - Ensemble.
-[Rx_RZ, tau_RZ] = correlation_manual(ensample_RZ, 100, 'ensemble');
+function compute_psd(Rx, N_fft, center, half_len, freq, Fs, dc_mean, color, title_str, ylabel_str)
+    Rx_padded = zeros(1, N_fft);
+    Rx_padded(center-half_len : center+half_len) = Rx - dc_mean^2;  % Subtract DC, zero-pad.
+    PSD = fftshift(abs(fft(ifftshift(Rx_padded))));                  % FFT to get PSD.
+    if dc_mean ~= 0                                                  % Add DC spike if non-zero mean.
+        DC_spike = zeros(1, N_fft);
+        DC_spike(center) = dc_mean^2 / (Fs/N_fft);
+        PSD = PSD + DC_spike;
+    end
+    figure;
+    plot(freq, PSD, 'LineWidth', 2, 'Color', color);
+    grid on; title(title_str); xlabel('Frequency (Hz)'); ylabel(ylabel_str); xlim([-120, 120]);
+end
 
-% Time means.
-Ux_RZ = manual_mean(ensample_RZ, 2);
-E_time_RZ = manual_mean(ensample_RZ(15, :));
-fprintf('Time Mean of realization 15 = %.4f V (Theoretical: 0 V)\n', E_time_RZ);
+function [Ex, Ux] = compute_means(ensample, theoretical_mean)
+    Ex = manual_mean(ensample, 1);   % Ensemble mean (across realizations).
+    Ux = manual_mean(ensample, 2);   % Time mean (across samples).
+    fprintf('  Sample 10 ensemble mean  = %.4f V (Theoretical: %.2f V)\n', manual_mean(ensample(:,10)),  theoretical_mean);
+    fprintf('  Realization 15 time mean = %.4f V (Theoretical: %.2f V)\n', manual_mean(ensample(15,:)), theoretical_mean);
+end
 
-% Time autocorrelation.
-[Rx_time_RZ, lags_time_RZ] = correlation_manual(ensample_RZ(10, :), 100, 'time');
-
-% Plot autocorrelation for Polar RZ.
-figure;
-subplot(2, 1, 1);
-plot(tau_RZ*Ts, Rx_RZ, 'LineWidth', 1.5);
-grid on;
-title('Polar RZ - Ensemble Autocorrelation R_x(\tau)');
-xlabel('\tau (seconds)');
-ylabel('R_x(\tau)');
-xlim([-0.75 0.75]);
-
-subplot(2, 1, 2);
-plot(lags_time_RZ*Ts, Rx_time_RZ, 'g', 'LineWidth', 1.5);
-grid on;
-title('Polar RZ - Time Autocorrelation for Realization #10');
-xlabel('\tau (seconds)');
-ylabel('R_T(\tau)');
-sgtitle('Polar RZ: Ensemble vs Time Autocorrelation');
-
-% Plot mean comparison for Polar RZ.
-figure;
-subplot(2, 1, 1);
-plot(Ex_RZ);
-ylim([-1, 1]);
-grid on;
-title('Polar RZ - Statistical Mean E[X(t)]');
-xlabel('Sample Index (t)');
-ylabel('Mean Value (V)');
-
-subplot(2, 1, 2);
-plot(Ux_RZ);
-ylim([-1, 1]);
-grid on;
-title('Polar RZ - Time Mean <X(t)> for Each Realization');
-xlabel('Realization Number');
-ylabel('Mean Value (V)');
-sgtitle('Polar RZ: E[x(t)] vs <x(t)>');
-
-% Stationarity check for Polar RZ.
-t1 = 10;
-t2 = 50;
-window_size = 350;
-
-segment1 = ensample_RZ(:, t1:t1+window_size);
-[R_t1, lags_t1] = correlation_manual(segment1, 50, 'ensemble');
-
-segment2 = ensample_RZ(:, t2:t2+window_size);
-[R_t2, lags_t2] = correlation_manual(segment2, 50, 'ensemble');
-
-figure;
-plot(lags_t1 * Ts, R_t1, 'b', 'LineWidth', 1.5);
-hold on;
-plot(lags_t2 * Ts, R_t2, 'r--', 'LineWidth', 1.5);
-grid on;
-legend('R_x(\tau) at t_1', 'R_x(\tau) at t_2');
-title('Polar RZ - Stationarity Check');
-xlabel('\tau (seconds)');
-ylabel('R_x(\tau)');
-
-% ---- PSD for Polar RZ ---- %
-Rx_padded_RZ = zeros(1, N_fft);
-Rx_padded_RZ(center - half_len : center + half_len) = Rx_RZ;
-PSD_final_RZ = fftshift(abs(fft(ifftshift(Rx_padded_RZ))));
-
-figure;
-plot(freq, PSD_final_RZ, 'LineWidth', 2, 'Color', [0.4940 0.1840 0.5560]);
-grid on;
-title('PSD of Polar RZ Signaling');
-xlabel('Frequency (Hz)');
-ylabel('Magnitude');
-xlim([-120, 120]);
-
-
-% ======================================== %
-% FUNCTIONS
-% ======================================== %
-
-% MEAN CALCULATIONS
-% manual_mean(x)          % Auto-detects vector.
-% manual_mean(matrix, 1)  % Ensemble mean.
-% manual_mean(matrix, 2)  % Time mean.
-function mean_val = manual_mean(data, dim)
-
-    % Case 1: Compute average of all elements in the array.
-    if nargin == 1
-        mean_val = sum(data, 'all') / numel(data);
-
-    % Case 2: Compute average of each column (down the rows).
-    elseif dim == 1
-        mean_val = sum(data, 1) / size(data, 1);
-
-    % Case 3: Compute average of each row (across the columns).
-    elseif dim == 2
-        mean_val = sum(data, 2) / size(data, 2);
+function ensample = build_ensemble(data, A, pulse, N_realizations, L, type)
+    if strcmp(type, 'unipolar'), Tx = data * A;           % Map bits to {0, A}.
+    else,                        Tx = (2*data - 1) * A;   % Map bits to {-A, +A}.
+    end
+    ensample = kron(Tx, pulse);                           % Upsample with pulse shape.
+    Td = randi([0, L-1], N_realizations, 1);              % Random delay per realization.
+    for i = 1:N_realizations
+        ensample(i,:) = circshift(ensample(i,:), [0, Td(i)]);
     end
 end
 
-% CORRELATION
-% One function for BOTH ensemble and time autocorrelation.
-% 
-% INPUTS:
-%   max_tau: Maximum time shift.
-%   type: 'ensemble' or 'time'.
-%
-% OUTPUTS:
-%   Rx: Autocorrelation values.
-%   tau: Lag values.
-function [Rx, tau] = correlation_manual(signal, max_tau, type)
-    tau = -max_tau:max_tau;       % Create lag vector from -max_tau to +max_tau.
-    Rx = zeros(1, length(tau));   % Initialize output array with zeros (size = 2*max_tau + 1).
-    
-    % CASE 1: ENSEMBLE AUTOCORRELATION.
-    if strcmp(type, 'ensemble')
-        [N_realizations, N_samples] = size(signal);
+function mean_val = manual_mean(data, dim)
+    if nargin == 1,    mean_val = sum(data, 'all') / numel(data);  % All elements.
+    elseif dim == 1,   mean_val = sum(data, 1) / size(data, 1);    % Column-wise (ensemble).
+    elseif dim == 2,   mean_val = sum(data, 2) / size(data, 2);    % Row-wise (time).
+    end
+end
 
+function [Rx, tau] = correlation_manual(signal, max_tau, type)
+    tau = -max_tau:max_tau;      % Lag vector.
+    Rx  = zeros(1, length(tau)); % Output array.
+    if strcmp(type, 'ensemble')
+        [~, N_samples] = size(signal);
         for i = 1:length(tau)
             shift = tau(i);
-            sum_val = 0;
-            count = 0;
             if shift >= 0
-                for t_idx = 1:(N_samples - shift)
-                    for j = 1:N_realizations
-                        sum_val = sum_val + signal(j, t_idx) * signal(j, t_idx + shift);
-                    end
-                    count = count + 1;
-                end
+                Rx(i) = manual_mean(signal(:, 1:N_samples-shift) .* signal(:, 1+shift:N_samples));
             else
-                for t_idx = (1 - shift):N_samples
-                    for j = 1:N_realizations
-                        sum_val = sum_val + signal(j, t_idx) * signal(j, t_idx + shift);
-                    end
-                    count = count + 1;
-                end
-            end
-
-            if count > 0
-                Rx(i) = sum_val / (N_realizations * count);
-            else
-                Rx(i) = 0;
+                Rx(i) = manual_mean(signal(:, 1-shift:N_samples) .* signal(:, 1:N_samples+shift));
             end
         end
-        
-    % CASE 2: TIME AUTOCORRELATION.
     elseif strcmp(type, 'time')
-        if isvector(signal)
-            signal = signal(:)'; % Ensure signal is a row vector (1 x N).
-        end
+        if isvector(signal), signal = signal(:)'; end  % Ensure row vector.
         N = length(signal);
-        
-        % Loop through each lag value.
         for i = 1:length(tau)
             lag = tau(i);
-            sum_val = 0; % Accumulator for sum of products.
-            count = 0;   % Counter for number of valid samples.
-            
-            % ================================================================
-            % POSITIVE LAG (tau >= 0): Shift signal to the right.
-            % Valid indices: n = 1 to N-tau.
-            % ================================================================
             if lag >= 0
-                for n = 1:N-lag
-                    sum_val = sum_val + signal(n) * signal(n+lag);
-                    count = count + 1;
-                end
-                
-            % ================================================================
-            % NEGATIVE LAG (tau < 0): Shift signal to the left.
-            % Valid indices: n = 1-tau to N (since lag is negative).
-            % Equivalent to positive lag with symmetric property: R(-tau) = R(tau).
-            % ================================================================
+                Rx(i) = manual_mean(signal(1:N-lag) .* signal(1+lag:N));
             else
-                for n = 1:N+lag     % Note: Lag is negative, so N+lag < N.
-                    sum_val = sum_val + signal(n) * signal(n-lag);
-                    count = count + 1;
-                end
-            end
-            
-            % Average the sum (unbiased estimate: divide by actual number of pairs).
-            if count > 0
-                Rx(i) = sum_val / count;
-            else
-                Rx(i) = 0;
+                Rx(i) = manual_mean(signal(1-lag:N) .* signal(1:N+lag));
             end
         end
     end
