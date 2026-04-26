@@ -17,15 +17,7 @@ data = randi([0 1], N_realizations, N_bits);
 fprintf('\n========== UNIPOLAR NRZ ANALYSIS ==========\n');
 
 % Transmitter.
-Tx_Unipolar = data * A;       % Mapping.
-pulse_unipolar = ones(1, L);  % Pulse shape.
-ensample_unipolar = kron(Tx_Unipolar, pulse_unipolar); % Upsampling.
-
-% Add random delays.
-Td_unipolar = randi([0, L-1], N_realizations, 1);
-for i = 1:N_realizations
-    ensample_unipolar(i, :) = circshift(ensample_unipolar(i, :), [0, Td_unipolar(i)]);
-end
+ensample_unipolar = build_ensemble(data, A, ones(1,L), N_realizations, L, 'unipolar');
 
 % Plot realizations for Unipolar NRZ.
 figure;
@@ -130,16 +122,15 @@ Rx_ac_unipolar = Rx_unipolar - mx_unipolar^2;
 Rx_padded_unipolar = zeros(1, N_fft);
 center   = floor(N_fft/2) + 1;
 half_len = 100;     % Max_tau used in correlation_manual.
-Rx_padded_unipolar(center - half_len : center + half_len) = Rx_ac_unipolar; % Places the AC autocorrelation in the center of a zero-padded array.
+Rx_padded_unipolar(center - half_len : center + half_len) = Rx_ac_unipolar;
 
 % 3) FFT.
 PSD_ac_unipolar = fftshift(abs(fft(ifftshift(Rx_padded_unipolar))));
 
 % 4) Represent the DC impulse as a single raised bin (area = mx^2).
-%    Scale so the spike is visually comparable to the sinc^2 lobe.
 PSD_dc_unipolar = zeros(1, N_fft);
-DC_spike_height = mx_unipolar^2 / (Fs / N_fft); % Impulse strength / freq-res.
-PSD_dc_unipolar(center) = DC_spike_height;      % Narrow spike at f = 0.
+DC_spike_height = mx_unipolar^2 / (Fs / N_fft);
+PSD_dc_unipolar(center) = DC_spike_height;
 
 PSD_final_unipolar = PSD_ac_unipolar + PSD_dc_unipolar;
 % S(f) = (A^2/4) * delta(f) + (A^2 * T/4) * sinc^2(fT).
@@ -157,15 +148,7 @@ xlim([-120, 120]);
 fprintf('\n========== POLAR NRZ ANALYSIS ==========\n');
 
 % Transmitter.
-Tx_Polar_NRZ = (2*data - 1) * A;
-pulse_polar_NRZ = ones(1, L);
-ensample_polar_NRZ = kron(Tx_Polar_NRZ, pulse_polar_NRZ);
-
-% Add random delays.
-Td_polar_NRZ = randi([0, L-1], N_realizations, 1);
-for i = 1:N_realizations
-    ensample_polar_NRZ(i, :) = circshift(ensample_polar_NRZ(i, :), [0, Td_polar_NRZ(i)]);
-end
+ensample_polar_NRZ = build_ensemble(data, A, ones(1,L), N_realizations, L, 'polar');
 
 % Plot realizations for Polar NRZ.
 figure;
@@ -277,15 +260,7 @@ xlim([-120, 120]);
 fprintf('\n========== POLAR RZ ANALYSIS ==========\n');
 
 % Transmitter.
-Tx_RZ = (2*data - 1) * A;
-pulse_RZ = [ones(1, floor(L/2)), zeros(1, ceil(L/2))];
-ensample_RZ = kron(Tx_RZ, pulse_RZ);
-
-% Add random delays.
-Td_RZ = randi([0, L-1], N_realizations, 1);
-for i = 1:N_realizations
-    ensample_RZ(i, :) = circshift(ensample_RZ(i, :), [0, Td_RZ(i)]);
-end
+ensample_RZ = build_ensemble(data, A, [ones(1,floor(L/2)), zeros(1,ceil(L/2))], N_realizations, L, 'polar');
 
 % Plot realizations for Polar RZ.
 figure;
@@ -392,26 +367,31 @@ xlabel('Frequency (Hz)');
 ylabel('Magnitude');
 xlim([-120, 120]);
 
+%% FUNCTIONS
 
-% ======================================== %
-% FUNCTIONS
-% ======================================== %
+% BUILD ENSEMBLE
+function ensample = build_ensemble(data, A, pulse, N_realizations, L, type)
+    if strcmp(type, 'unipolar')
+        Tx = data * A;
+    else
+        Tx = (2*data - 1) * A;
+    end
+    ensample = kron(Tx, pulse);
+    Td = randi([0, L-1], N_realizations, 1);
+    for i = 1:N_realizations
+        ensample(i, :) = circshift(ensample(i, :), [0, Td(i)]);
+    end
+end
 
 % MEAN CALCULATIONS
 % manual_mean(x)          % Auto-detects vector.
 % manual_mean(matrix, 1)  % Ensemble mean.
 % manual_mean(matrix, 2)  % Time mean.
 function mean_val = manual_mean(data, dim)
-
-    % Case 1: Compute average of all elements in the array.
     if nargin == 1
         mean_val = sum(data, 'all') / numel(data);
-
-    % Case 2: Compute average of each column (down the rows).
     elseif dim == 1
         mean_val = sum(data, 1) / size(data, 1);
-
-    % Case 3: Compute average of each row (across the columns).
     elseif dim == 2
         mean_val = sum(data, 2) / size(data, 2);
     end
@@ -419,7 +399,7 @@ end
 
 % CORRELATION
 % One function for BOTH ensemble and time autocorrelation.
-% 
+%
 % INPUTS:
 %   max_tau: Maximum time shift.
 %   type: 'ensemble' or 'time'.
@@ -428,80 +408,33 @@ end
 %   Rx: Autocorrelation values.
 %   tau: Lag values.
 function [Rx, tau] = correlation_manual(signal, max_tau, type)
-    tau = -max_tau:max_tau;       % Create lag vector from -max_tau to +max_tau.
-    Rx = zeros(1, length(tau));   % Initialize output array with zeros (size = 2*max_tau + 1).
-    
+    tau = -max_tau:max_tau;
+    Rx  = zeros(1, length(tau));
+
     % CASE 1: ENSEMBLE AUTOCORRELATION.
     if strcmp(type, 'ensemble')
-        [N_realizations, N_samples] = size(signal);
-
+        [~, N_samples] = size(signal);
         for i = 1:length(tau)
             shift = tau(i);
-            sum_val = 0;
-            count = 0;
             if shift >= 0
-                for t_idx = 1:(N_samples - shift)
-                    for j = 1:N_realizations
-                        sum_val = sum_val + signal(j, t_idx) * signal(j, t_idx + shift);
-                    end
-                    count = count + 1;
-                end
+                Rx(i) = manual_mean(signal(:, 1:N_samples-shift) .* signal(:, 1+shift:N_samples));
             else
-                for t_idx = (1 - shift):N_samples
-                    for j = 1:N_realizations
-                        sum_val = sum_val + signal(j, t_idx) * signal(j, t_idx + shift);
-                    end
-                    count = count + 1;
-                end
-            end
-
-            if count > 0
-                Rx(i) = sum_val / (N_realizations * count);
-            else
-                Rx(i) = 0;
+                Rx(i) = manual_mean(signal(:, 1-shift:N_samples) .* signal(:, 1:N_samples+shift));
             end
         end
-        
+
     % CASE 2: TIME AUTOCORRELATION.
     elseif strcmp(type, 'time')
         if isvector(signal)
-            signal = signal(:)'; % Ensure signal is a row vector (1 x N).
+            signal = signal(:)';
         end
         N = length(signal);
-        
-        % Loop through each lag value.
         for i = 1:length(tau)
             lag = tau(i);
-            sum_val = 0; % Accumulator for sum of products.
-            count = 0;   % Counter for number of valid samples.
-            
-            % ================================================================
-            % POSITIVE LAG (tau >= 0): Shift signal to the right.
-            % Valid indices: n = 1 to N-tau.
-            % ================================================================
             if lag >= 0
-                for n = 1:N-lag
-                    sum_val = sum_val + signal(n) * signal(n+lag);
-                    count = count + 1;
-                end
-                
-            % ================================================================
-            % NEGATIVE LAG (tau < 0): Shift signal to the left.
-            % Valid indices: n = 1-tau to N (since lag is negative).
-            % Equivalent to positive lag with symmetric property: R(-tau) = R(tau).
-            % ================================================================
+                Rx(i) = manual_mean(signal(1:N-lag) .* signal(1+lag:N));
             else
-                for n = 1:N+lag     % Note: Lag is negative, so N+lag < N.
-                    sum_val = sum_val + signal(n) * signal(n-lag);
-                    count = count + 1;
-                end
-            end
-            
-            % Average the sum (unbiased estimate: divide by actual number of pairs).
-            if count > 0
-                Rx(i) = sum_val / count;
-            else
-                Rx(i) = 0;
+                Rx(i) = manual_mean(signal(1-lag:N) .* signal(1:N+lag));
             end
         end
     end
