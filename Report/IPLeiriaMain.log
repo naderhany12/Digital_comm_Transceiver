@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.3.7)  29 APR 2026 22:21
+This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.3.7)  29 APR 2026 22:37
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -2299,76 +2299,21 @@ Package fontspec Info:
 
 ]
 Appendix A.
-Package hyperref Info: bookmark level for unknown listing defaults to 0 on input line 4.
-\pydata@fh@0=\write12
-\openout12 = `_79592720F62061E1E8E9E2E536A33C2E.data.minted'.
-
-runsystem(latexminted config  --timestamp 20260429222129 79592720F62061E1E8E9E2E536A33C2E)...executed safely (allowed).
-
-(./_79592720F62061E1E8E9E2E536A33C2E.config.minted)
-runsystem(latexminted cleanconfig  --timestamp 20260429222129 79592720F62061E1E8E9E2E536A33C2E)...executed safely (allowed).
-
- (./_minted/default.style.minted) (./_minted/C894D5D0810229EE563C5E3B67C31C25.highlight.minted [18
-
-]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [19]) (./_minted/D52ADAA93769317DF26BD20B6FE207C3.highlight.minted
-LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <9> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 9.
-LaTeX Font Info:    Font shape `TU/TeXGyrePagella(0)/bx/n' in size <9> not available
-(Font)              Font shape `TU/TeXGyrePagella(0)/b/n' tried instead on input line 9.
- [20]) (./_minted/6954E11312EC67BECF98C1D8B2B6E241.highlight.minted [21]) (./_minted/95729BCB142035BFDBD09E3E0EC7D61E.highlight.minted) [22] (./_minted/59CD843E3580A81E9850ED470D45EB5B.highlight.minted))
+)
 
 LaTeX Warning: Empty bibliography on input line 101.
 
-(./Matter/10-Back-Page.tex [23]
-File: Figures/Theme/Back-Page-BG.pdf Graphic file (type pdf)
-<use Figures/Theme/Back-Page-BG.pdf>
- [24
-
-]
-*geometry* verbose mode - [ newgeometry ] result:
-* driver: xetex
-* paper: a4paper
-* layout: <same size as paper>
-* layoutoffset:(h,v)=(0.0pt,0.0pt)
-* modes: twoside 
-* h-part:(L,W,R)=(56.33633pt, 484.8352pt, 56.33633pt)
-* v-part:(T,H,B)=(41.82558pt, 761.39569pt, 41.82558pt)
-* \paperwidth=597.50787pt
-* \paperheight=845.04684pt
-* \textwidth=484.8352pt
-* \textheight=761.39569pt
-* \oddsidemargin=-15.93365pt
-* \evensidemargin=-15.93365pt
-* \topmargin=-71.78397pt
-* \headheight=20.0pt
-* \headsep=21.33955pt
-* \topskip=11.0pt
-* \footskip=45.52458pt
-* \marginparwidth=89.62619pt
-* \marginparsep=12.8401pt
-* \columnsep=10.0pt
-* \skip\footins=10.0pt plus 4.0pt minus 2.0pt
-* \hoffset=0.0pt
-* \voffset=0.0pt
-* \mag=1000
-* \@twocolumnfalse
-* \@twosidetrue
-* \@mparswitchtrue
-* \@reversemarginfalse
-* (1in=72.27pt=25.4mm, 1cm=28.453pt)
-
- [25
-
-])
 
 Package glossaries Warning: No \printglossary or \printglossaries found. 
 (Remove \makeglossaries if you don't want any glossaries.) 
 This document will not have a glossary.
 
-(./IPLeiriaMain.aux (./Matter/00-Cover.aux) (./Matter/01-Front-Page.aux) (./Chapters/00-Abstract.aux) (./Chapters/01-Problem-Description.aux) (./Chapters/02-Introduction.aux) (./Chapters/03-Control-Flags.aux) (./Chapters/04-Generation-of-Data.aux) (./Chapters/05-Creating-the-Unipolar-Ensemble.aux) (./Chapters/06-Creating-The-Polar-NRZ-Ensemble.aux) (./Chapters/07-Creating-The-Polar-RZ-Ensemble.aux) (./Chapters/08-Applying-Random-Initial-Time-Shifts.aux) (./Chapters/09-Preparing-Cell-Arrays-For-Analysis.aux) (./Chapters/10-Q1-Statistical-Mean-Calculation.aux) (./Chapters/11-Q2-Is-the-Process-Stationary.aux) (./Chapters/12-Q3-Statistical-Autocorrelation.aux) (./Chapters/13-Q4-Time-Mean-&-Autocorrelation-of-One-Waveform.aux) (./Chapters/14-Q5-Is-the-Random-Process-Ergodic.aux) (./Chapters/15-Plotting-the-PSD-of-the-Ensemble.aux) (./Chapters/16-Q6-Signal Bandwidth.aux))
+[18
+
+]
+runsystem(latexminted cleantemp  --timestamp 20260429223737 79592720F62061E1E8E9E2E536A33C2E)...executed safely (allowed).
+
+ (./IPLeiriaMain.aux (./Matter/00-Cover.aux) (./Matter/01-Front-Page.aux) (./Chapters/00-Abstract.aux) (./Chapters/01-Problem-Description.aux) (./Chapters/02-Introduction.aux) (./Chapters/03-Control-Flags.aux) (./Chapters/04-Generation-of-Data.aux) (./Chapters/05-Creating-the-Unipolar-Ensemble.aux) (./Chapters/06-Creating-The-Polar-NRZ-Ensemble.aux) (./Chapters/07-Creating-The-Polar-RZ-Ensemble.aux) (./Chapters/08-Applying-Random-Initial-Time-Shifts.aux) (./Chapters/09-Preparing-Cell-Arrays-For-Analysis.aux) (./Chapters/10-Q1-Statistical-Mean-Calculation.aux) (./Chapters/11-Q2-Is-the-Process-Stationary.aux) (./Chapters/12-Q3-Statistical-Autocorrelation.aux) (./Chapters/13-Q4-Time-Mean-&-Autocorrelation-of-One-Waveform.aux) (./Chapters/14-Q5-Is-the-Random-Process-Ergodic.aux) (./Chapters/15-Plotting-the-PSD-of-the-Ensemble.aux) (./Chapters/16-Q6-Signal Bandwidth.aux))
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -2380,12 +2325,12 @@ Package logreq Info: Writing requests to 'IPLeiriaMain.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 66269 strings out of 468168
- 1453638 string characters out of 5436525
- 2701540 words of memory out of 5000000
- 93627 multiletter control sequences out of 15000+600000
- 682614 words of font info for 200 fonts, out of 8000000 for 9000
+ 65658 strings out of 468168
+ 1438164 string characters out of 5436525
+ 2681539 words of memory out of 5000000
+ 93061 multiletter control sequences out of 15000+600000
+ 669867 words of font info for 169 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 123i,12n,122p,2628b,5156s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 123i,12n,122p,2628b,4275s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on IPLeiriaMain.pdf (28 pages).
+Output written on IPLeiriaMain.pdf (21 pages).
