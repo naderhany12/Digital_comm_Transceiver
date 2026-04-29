@@ -1,0 +1,114 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{c}{\PYGZpc{} main.m}
+\PYG{c}{\PYGZpc{} Authors : Youssef Hisham Ahmed, Youssef Mohammed Ibrahim}
+\PYG{c}{\PYGZpc{} Date : 4/4/2026}
+\PYG{c}{\PYGZpc{} Subject : Modulation schemes for various signals}
+
+\PYG{n+nb}{clear}\PYG{p}{;}\PYG{+w}{ }\PYG{n+nb}{clc}\PYG{p}{;}\PYG{+w}{ }\PYG{n}{close}\PYG{+w}{ }\PYG{l+s}{all}\PYG{p}{;}
+
+\PYG{c}{\PYGZpc{}\PYGZpc{} Run Preprocessing and Modulator}
+\PYG{n}{preprocessing}\PYG{p}{;}
+\PYG{n}{modulator}\PYG{p}{;}
+
+\PYG{c}{\PYGZpc{}\PYGZpc{} Shared Filters Setup (IF \PYGZam{} LPF)}
+\PYG{n}{F\PYGZus{}IF}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+m+mf}{15e3}\PYG{p}{;}
+
+\PYG{c}{\PYGZpc{} IF Filtering Specs}
+\PYG{n}{IF\PYGZus{}Filter\PYGZus{}Order}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+m+mi}{8}\PYG{p}{;}
+\PYG{n}{IF\PYGZus{}PassBand\PYGZus{}Low}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+m+mf}{5e3}\PYG{p}{;}
+\PYG{n}{IF\PYGZus{}PassBand\PYGZus{}High}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+m+mf}{30e3}\PYG{p}{;}
+\PYG{n}{IF\PYGZus{}Filter\PYGZus{}Specs}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{fdesign}\PYG{p}{.}\PYG{n}{bandpass}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}N,F3dB1,F3dB2\PYGZsq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{IF\PYGZus{}Filter\PYGZus{}Order}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{IF\PYGZus{}PassBand\PYGZus{}Low}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{IF\PYGZus{}PassBand\PYGZus{}High}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Fs1}\PYG{p}{);}
+\PYG{n}{IF\PYGZus{}filter}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{design}\PYG{p}{(}\PYG{n}{IF\PYGZus{}Filter\PYGZus{}Specs}\PYG{p}{,}\PYG{+w}{ }\PYG{l+s}{\PYGZsq{}butter\PYGZsq{}}\PYG{p}{);}
+
+\PYG{c}{\PYGZpc{} LPF Specs}
+\PYG{n}{LPF\PYGZus{}Filter\PYGZus{}Order}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+m+mi}{8}\PYG{p}{;}
+\PYG{n}{LPF\PYGZus{}Cutoff}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+m+mf}{10e3}\PYG{p}{;}\PYG{+w}{ }\PYG{c}{\PYGZpc{} 10 kHz cutoff}
+\PYG{n}{LPF\PYGZus{}Specs}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{fdesign}\PYG{p}{.}\PYG{n}{lowpass}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}N,F3dB\PYGZsq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{LPF\PYGZus{}Filter\PYGZus{}Order}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{LPF\PYGZus{}Cutoff}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Fs1}\PYG{p}{);}
+\PYG{n}{LPF\PYGZus{}filter}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{design}\PYG{p}{(}\PYG{n}{LPF\PYGZus{}Specs}\PYG{p}{,}\PYG{+w}{ }\PYG{l+s}{\PYGZsq{}butter\PYGZsq{}}\PYG{p}{);}
+
+\PYG{c}{\PYGZpc{}\PYGZpc{} Channel Specific RF Filters \PYGZam{} Oscillators}
+\PYG{n}{RF\PYGZus{}Filter\PYGZus{}Order}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+m+mi}{26}\PYG{p}{;}
+
+\PYG{c}{\PYGZpc{} Quran Channel RF Filter (100 kHz Center)}
+\PYG{n}{RF\PYGZus{}PassBand\PYGZus{}Low\PYGZus{}Quran}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+m+mf}{85e3}\PYG{p}{;}
+\PYG{n}{RF\PYGZus{}PassBand\PYGZus{}High\PYGZus{}Quran}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+m+mf}{115e3}\PYG{p}{;}
+\PYG{n}{RF\PYGZus{}Filter\PYGZus{}Specs\PYGZus{}Quran}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{fdesign}\PYG{p}{.}\PYG{n}{bandpass}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}N,F3dB1,F3dB2\PYGZsq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{RF\PYGZus{}Filter\PYGZus{}Order}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{RF\PYGZus{}PassBand\PYGZus{}Low\PYGZus{}Quran}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{RF\PYGZus{}PassBand\PYGZus{}High\PYGZus{}Quran}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Fs1}\PYG{p}{);}
+\PYG{n}{RF\PYGZus{}filter\PYGZus{}Quran}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{design}\PYG{p}{(}\PYG{n}{RF\PYGZus{}Filter\PYGZus{}Specs\PYGZus{}Quran}\PYG{p}{,}\PYG{+w}{ }\PYG{l+s}{\PYGZsq{}butter\PYGZsq{}}\PYG{p}{);}
+\PYG{n}{RF\PYGZus{}output\PYGZus{}Quran}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{filter}\PYG{p}{(}\PYG{n}{RF\PYGZus{}filter\PYGZus{}Quran}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{FDM}\PYG{p}{);}
+\PYG{n}{F\PYGZus{}osc\PYGZus{}Quran}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{fc1}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{F\PYGZus{}IF}\PYG{p}{;}
+
+\PYG{c}{\PYGZpc{} BBC Channel RF Filter (130 kHz Center)}
+\PYG{n}{RF\PYGZus{}PassBand\PYGZus{}Low\PYGZus{}BBC}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+m+mf}{115e3}\PYG{p}{;}
+\PYG{n}{RF\PYGZus{}PassBand\PYGZus{}High\PYGZus{}BBC}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+m+mf}{145e3}\PYG{p}{;}
+\PYG{n}{RF\PYGZus{}Filter\PYGZus{}Specs\PYGZus{}BBC}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{fdesign}\PYG{p}{.}\PYG{n}{bandpass}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}N,F3dB1,F3dB2\PYGZsq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{RF\PYGZus{}Filter\PYGZus{}Order}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{RF\PYGZus{}PassBand\PYGZus{}Low\PYGZus{}BBC}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{RF\PYGZus{}PassBand\PYGZus{}High\PYGZus{}BBC}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Fs1}\PYG{p}{);}
+\PYG{n}{RF\PYGZus{}filter\PYGZus{}BBC}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{design}\PYG{p}{(}\PYG{n}{RF\PYGZus{}Filter\PYGZus{}Specs\PYGZus{}BBC}\PYG{p}{,}\PYG{+w}{ }\PYG{l+s}{\PYGZsq{}butter\PYGZsq{}}\PYG{p}{);}
+\PYG{n}{RF\PYGZus{}output\PYGZus{}BBC}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{filter}\PYG{p}{(}\PYG{n}{RF\PYGZus{}filter\PYGZus{}BBC}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{FDM}\PYG{p}{);}
+\PYG{n}{F\PYGZus{}osc\PYGZus{}BBC}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{fc2}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{F\PYGZus{}IF}\PYG{p}{;}
+
+\PYG{c}{\PYGZpc{}\PYGZpc{} DEMODULATION}
+
+\PYG{c}{\PYGZpc{} Quran}
+\PYG{n}{current\PYGZus{}RF\PYGZus{}in}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{RF\PYGZus{}output\PYGZus{}Quran}\PYG{p}{;}
+\PYG{n}{current\PYGZus{}F\PYGZus{}osc}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{F\PYGZus{}osc\PYGZus{}Quran}\PYG{p}{;}
+\PYG{n}{station\PYGZus{}name}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+s}{\PYGZsq{}Quran Channel\PYGZsq{}}\PYG{p}{;}
+\PYG{n}{current\PYGZus{}condition}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+s}{\PYGZsq{}Ideal\PYGZsq{}}\PYG{p}{;}
+\PYG{n}{receiver}\PYG{p}{;}
+
+\PYG{c}{\PYGZpc{} BBC}
+\PYG{n}{current\PYGZus{}RF\PYGZus{}in}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{RF\PYGZus{}output\PYGZus{}BBC}\PYG{p}{;}
+\PYG{n}{current\PYGZus{}F\PYGZus{}osc}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{F\PYGZus{}osc\PYGZus{}BBC}\PYG{p}{;}
+\PYG{n}{station\PYGZus{}name}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+s}{\PYGZsq{}BBC Channel\PYGZsq{}}\PYG{p}{;}
+\PYG{n}{current\PYGZus{}condition}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+s}{\PYGZsq{}Ideal\PYGZsq{}}\PYG{p}{;}
+\PYG{n}{receiver}\PYG{p}{;}
+
+\PYG{c}{\PYGZpc{}\PYGZpc{} Q4 \PYGZhy{} NO RF Filter}
+
+\PYG{c}{\PYGZpc{} Quran Q4}
+\PYG{n}{current\PYGZus{}RF\PYGZus{}in}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{FDM}\PYG{p}{;}\PYG{+w}{ }\PYG{c}{\PYGZpc{} Using raw FDM instead of filtered RF}
+\PYG{n}{current\PYGZus{}F\PYGZus{}osc}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{F\PYGZus{}osc\PYGZus{}Quran}\PYG{p}{;}
+\PYG{n}{station\PYGZus{}name}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+s}{\PYGZsq{}Quran Channel\PYGZsq{}}\PYG{p}{;}
+\PYG{n}{current\PYGZus{}condition}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+s}{\PYGZsq{}Q4 (No BPF)\PYGZsq{}}\PYG{p}{;}
+\PYG{n}{receiver}\PYG{p}{;}
+
+\PYG{c}{\PYGZpc{} BBC Q4}
+\PYG{n}{current\PYGZus{}RF\PYGZus{}in}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{FDM}\PYG{p}{;}\PYG{+w}{ }\PYG{c}{\PYGZpc{} Using raw FDM instead of filtered RF}
+\PYG{n}{current\PYGZus{}F\PYGZus{}osc}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{F\PYGZus{}osc\PYGZus{}BBC}\PYG{p}{;}
+\PYG{n}{station\PYGZus{}name}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+s}{\PYGZsq{}BBC Channel\PYGZsq{}}\PYG{p}{;}
+\PYG{n}{current\PYGZus{}condition}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+s}{\PYGZsq{}Q4 (No BPF)\PYGZsq{}}\PYG{p}{;}
+\PYG{n}{receiver}\PYG{p}{;}
+
+\PYG{c}{\PYGZpc{}\PYGZpc{} Q5 \PYGZhy{} MIXER OFFSET (0.1 kHz)}
+
+\PYG{c}{\PYGZpc{} Quran Q5 (0.1kHz)}
+\PYG{n}{current\PYGZus{}RF\PYGZus{}in}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{RF\PYGZus{}output\PYGZus{}Quran}\PYG{p}{;}
+\PYG{n}{current\PYGZus{}F\PYGZus{}osc}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{F\PYGZus{}osc\PYGZus{}Quran}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+m+mf}{0.1e3}\PYG{p}{;}
+\PYG{n}{station\PYGZus{}name}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+s}{\PYGZsq{}Quran Channel\PYGZsq{}}\PYG{p}{;}
+\PYG{n}{current\PYGZus{}condition}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+s}{\PYGZsq{}Q5 (0.1kHz Offset)\PYGZsq{}}\PYG{p}{;}
+\PYG{n}{receiver}\PYG{p}{;}
+
+\PYG{c}{\PYGZpc{} BBC Q5 (0.1kHz)}
+\PYG{n}{current\PYGZus{}RF\PYGZus{}in}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{RF\PYGZus{}output\PYGZus{}BBC}\PYG{p}{;}
+\PYG{n}{current\PYGZus{}F\PYGZus{}osc}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{F\PYGZus{}osc\PYGZus{}BBC}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+m+mf}{0.1e3}\PYG{p}{;}
+\PYG{n}{station\PYGZus{}name}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+s}{\PYGZsq{}BBC Channel\PYGZsq{}}\PYG{p}{;}
+\PYG{n}{current\PYGZus{}condition}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+s}{\PYGZsq{}Q5 (0.1kHz Offset)\PYGZsq{}}\PYG{p}{;}
+\PYG{n}{receiver}\PYG{p}{;}
+
+\PYG{c}{\PYGZpc{}\PYGZpc{} Q5 \PYGZhy{} MIXER OFFSET (1 kHz)}
+
+\PYG{c}{\PYGZpc{} Quran Q5 (1kHz)}
+\PYG{n}{current\PYGZus{}RF\PYGZus{}in}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{RF\PYGZus{}output\PYGZus{}Quran}\PYG{p}{;}
+\PYG{n}{current\PYGZus{}F\PYGZus{}osc}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{F\PYGZus{}osc\PYGZus{}Quran}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+m+mf}{1e3}\PYG{p}{;}
+\PYG{n}{station\PYGZus{}name}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+s}{\PYGZsq{}Quran Channel\PYGZsq{}}\PYG{p}{;}
+\PYG{n}{current\PYGZus{}condition}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+s}{\PYGZsq{}Q5 (1kHz Offset)\PYGZsq{}}\PYG{p}{;}
+\PYG{n}{receiver}\PYG{p}{;}
+
+\PYG{c}{\PYGZpc{} BBC Q5 (1kHz)}
+\PYG{n}{current\PYGZus{}RF\PYGZus{}in}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{RF\PYGZus{}output\PYGZus{}BBC}\PYG{p}{;}
+\PYG{n}{current\PYGZus{}F\PYGZus{}osc}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{F\PYGZus{}osc\PYGZus{}BBC}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+m+mf}{1e3}\PYG{p}{;}
+\PYG{n}{station\PYGZus{}name}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+s}{\PYGZsq{}BBC Channel\PYGZsq{}}\PYG{p}{;}
+\PYG{n}{current\PYGZus{}condition}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+s}{\PYGZsq{}Q5 (1kHz Offset)\PYGZsq{}}\PYG{p}{;}
+\PYG{n}{receiver}\PYG{p}{;}
+
+\PYG{n+nb}{disp}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}All processing complete!\PYGZsq{}}\PYG{p}{);}
+\PYG{n}{export\PYGZus{}figures}\PYG{p}{;}
+\end{MintedVerbatim}
