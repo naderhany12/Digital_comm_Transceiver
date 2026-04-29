@@ -1,0 +1,30 @@
+%%% Chapters and Sections %%%
+
+% Classic Style: Aligned Left and Moved Up
+\ifthenelse{\equal{\ChapterOption}{classic}}{
+    \titleformat{\chapter}[display]%
+    {\raggedright\huge}% Changed from \raggedleft
+    {\raggedright\fontsize{98}{10}\bfseries{\color{chapterdarkred}{\thechapter}}}% Changed from \raggedleft
+    {-20pt}% Reduced spacing between number and title
+    {\crimsonfont\fontsize{26.8}{30}\selectfont}%
+}{}
+
+% Fancy Style: Aligned Left and Moved Up
+\ifthenelse{\equal{\ChapterOption}{fancy}}{
+    \titleformat{\chapter}[display]
+    {\raggedright\normalsize\huge\color{black}}% Changed from \flushright
+    {\raggedright\normalsize% Changed from \flushright
+    {\fontsize{25}{25}\selectfont\rule[-2pt]{.1pt}{30pt}\hspace{0.5em}\raisebox{4.5pt}{\thechapter}}}%
+    {0pt}% Reduced spacing
+    {\addfontfeature{LetterSpace=6}\huge\scshape}%
+}{}
+
+% Modern Style: Aligned Left and Moved Up
+\ifthenelse{\equal{\ChapterOption}{modern}}{
+    \titleformat{\chapter}[display]
+    {\raggedright\normalsize\huge\color{black}}% Changed from \flushright
+    {\crimsonfont\raggedright\fontsize{84}{10}\bfseries% Changed from \flushright
+    {\color{chaptergray}\thechapter}%
+    }{0pt}% Reduced spacing
+    {\crimsonfont\addfontfeature{LetterSpace=6}\fontsize{28}{32}\MakeUppercase}%
+}{}

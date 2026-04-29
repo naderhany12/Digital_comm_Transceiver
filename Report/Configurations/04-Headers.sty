@@ -1,0 +1,35 @@
+%%% Header and Footer Configuration %%%
+\usepackage{fancyhdr} 
+\usepackage[bottom,hang]{footmisc} 
+\pagestyle{fancy} 
+\fancyhf{} 
+
+% 1. Global Rule Width
+\renewcommand{\headrulewidth}{.3pt} 
+\setlength{\footnotemargin}{1pt} 
+
+% 2. Formatting Marks (Italics as seen in your image)
+\renewcommand{\chaptermark}[1]{\markboth{\textit{\thechapter. #1}}{}}
+\renewcommand{\sectionmark}[1]{\markright{\textit{\thesection. #1}}}
+
+% 3. Standard Fancy Page Header
+\fancyhead[L]{\textit{\nouppercase{\leftmark}}\vspace{3pt}} % Section/Chapter on Left
+\fancyhead[R]{\thepage\vspace{3pt}} % Page number on Right
+
+% 4. Adjust Plain Style (Applied to Chapter Start Pages)
+\fancypagestyle{plain}{%
+    \fancyhf{} 
+    \renewcommand{\headrulewidth}{.3pt} % Keep the line on all pages
+    \fancyhead[L]{\textit{\nouppercase{\leftmark}}\vspace{3pt}}
+    \fancyhead[R]{\thepage\vspace{3pt}}
+    
+    % Versioning Footer for Working Stage
+    \ifthenelse{\equal{\DocStageOption}{working}}{
+        \fancyfoot[C]{\small\GetDocumentVersion~-~\textit{\today}}
+    }{}
+}
+
+% 5. Document Version Footer for all other pages
+\ifthenelse{\equal{\DocStageOption}{working}}{%
+    \fancyfoot[C]{\small\GetDocumentVersion~-~\textit{\today}}%
+}{}

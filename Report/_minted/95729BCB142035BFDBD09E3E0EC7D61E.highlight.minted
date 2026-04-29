@@ -1,0 +1,25 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{c}{\PYGZpc{} receiver.m}
+
+\PYG{c}{\PYGZpc{} Mixer Stage}
+\PYG{n}{Mixer\PYGZus{}Output}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{current\PYGZus{}RF\PYGZus{}in}\PYG{+w}{ }\PYG{o}{.*}\PYG{+w}{ }\PYG{n+nb}{cos}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n+nb}{pi}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{current\PYGZus{}F\PYGZus{}osc}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{t}\PYG{p}{);}
+
+\PYG{c}{\PYGZpc{} IF Filtering Process}
+\PYG{n}{IF\PYGZus{}Channel}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{filter}\PYG{p}{(}\PYG{n}{IF\PYGZus{}filter}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Mixer\PYGZus{}Output}\PYG{p}{);}
+
+\PYG{c}{\PYGZpc{} Return to Baseband \PYGZam{} Low\PYGZhy{}Pass Filtering}
+\PYG{n}{baseband\PYGZus{}mixed}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{IF\PYGZus{}Channel}\PYG{+w}{ }\PYG{o}{.*}\PYG{+w}{ }\PYG{n+nb}{cos}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n+nb}{pi}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{F\PYGZus{}IF}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{t}\PYG{p}{);}
+\PYG{n}{demodulated}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{filter}\PYG{p}{(}\PYG{n}{LPF\PYGZus{}filter}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{baseband\PYGZus{}mixed}\PYG{p}{);}
+\PYG{n}{demodulated}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{demodulated}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n+nb}{mean}\PYG{p}{(}\PYG{n}{demodulated}\PYG{p}{);}\PYG{+w}{ }\PYG{c}{\PYGZpc{} Remove DC offset}
+
+\PYG{c}{\PYGZpc{} Downsample back \PYGZam{} Normalize}
+\PYG{n}{demod\PYGZus{}down}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{downsample}\PYG{p}{(}\PYG{n}{demodulated}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{upsample\PYGZus{}factor}\PYG{p}{);}
+\PYG{n}{demod\PYGZus{}down}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{demod\PYGZus{}down}\PYG{+w}{ }\PYG{o}{/}\PYG{+w}{ }\PYG{n+nb}{max}\PYG{p}{(}\PYG{n+nb}{abs}\PYG{p}{(}\PYG{n}{demod\PYGZus{}down}\PYG{p}{));}
+
+\PYG{c}{\PYGZpc{} Plotting}
+\PYG{n}{plot\PYGZus{}spectra}\PYG{p}{(}\PYG{n}{current\PYGZus{}RF\PYGZus{}in}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{IF\PYGZus{}Channel}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{demodulated}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{freq\PYGZus{}plot}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{station\PYGZus{}name}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{current\PYGZus{}condition}\PYG{p}{);}
+
+\PYG{c}{\PYGZpc{} Audio Playback}
+\PYG{n+nb}{sound}\PYG{p}{(}\PYG{n}{demod\PYGZus{}down}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{original\PYGZus{}Fs}\PYG{p}{);}
+\PYG{n+nb}{pause}\PYG{p}{((}\PYG{n+nb}{length}\PYG{p}{(}\PYG{n}{demod\PYGZus{}down}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{/}\PYG{+w}{ }\PYG{n}{original\PYGZus{}Fs}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{);}
+\end{MintedVerbatim}
