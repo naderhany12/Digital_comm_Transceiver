@@ -1,30 +1,30 @@
 %%% Chapters and Sections %%%
-
-% Classic Style: Aligned Left and Moved Up
 \ifthenelse{\equal{\ChapterOption}{classic}}{
     \titleformat{\chapter}[display]%
-    {\raggedright\huge}% Changed from \raggedleft
-    {\raggedright\fontsize{98}{10}\bfseries{\color{chapterdarkred}{\thechapter}}}% Changed from \raggedleft
-    {-20pt}% Reduced spacing between number and title
-    {\crimsonfont\fontsize{26.8}{30}\selectfont}%
+    {\raggedright\huge}% Moved to left
+    {\vspace{-2cm}\raggedright\fontsize{98}{10}\bfseries{\color{chapterdarkred}{\thechapter}}}% Moved up with -2cm
+    {0pt}%
+    {\minionfont\fontsize{28}{30}\selectfont}%
 }{}
 
-% Fancy Style: Aligned Left and Moved Up
 \ifthenelse{\equal{\ChapterOption}{fancy}}{
     \titleformat{\chapter}[display]
-    {\raggedright\normalsize\huge\color{black}}% Changed from \flushright
-    {\raggedright\normalsize% Changed from \flushright
+    {\flushleft\normalsize\huge\color{black}}% Moved to left
+    {\vspace{-1cm}\flushleft\normalsize% Moved up
     {\fontsize{25}{25}\selectfont\rule[-2pt]{.1pt}{30pt}\hspace{0.5em}\raisebox{4.5pt}{\thechapter}}}%
-    {0pt}% Reduced spacing
+    {5pt}% Reduced spacing
     {\addfontfeature{LetterSpace=6}\huge\scshape}%
 }{}
 
-% Modern Style: Aligned Left and Moved Up
 \ifthenelse{\equal{\ChapterOption}{modern}}{
     \titleformat{\chapter}[display]
-    {\raggedright\normalsize\huge\color{black}}% Changed from \flushright
-    {\crimsonfont\raggedright\fontsize{84}{10}\bfseries% Changed from \flushright
+    {\normalsize\huge\color{black}}%
+    {\vspace{-4cm}\minionfont\flushleft\fontsize{84}{10}\bfseries% Moved up and left
     {\color{chaptergray}\thechapter}%
-    }{0pt}% Reduced spacing
-    {\crimsonfont\addfontfeature{LetterSpace=6}\fontsize{28}{32}\MakeUppercase}%
+    }{5pt}% Reduced spacing
+    {\minionfont\addfontfeature{LetterSpace=6}\fontsize{28}{32}\MakeUppercase}%
 }{}
+
+% Sections shifted left (default)
+\titleformat{\section}{\raggedright\minionfont\fontsize{15pt}{17pt}\selectfont\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\raggedright\minionfont\fontsize{13.5pt}{15.5pt}\selectfont\bfseries}{\thesubsection}{1em}{}

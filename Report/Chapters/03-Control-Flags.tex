@@ -1,15 +1,11 @@
 \chapter[Control Flags]{Control Flags}
 \label{cp:control-flags}
 
-In the start of our MATLAB code, we will define some variables which we will
-call the control flags, these variables are set to control the output and the
-process in the whole code without rewriting each one in each line and to make
-the process easier.
 
 \begin{listing}[!htpb]
-\caption{Defining the control flags.}
-\label{listing:control-flags}
-\begin{minted}{matlab}
+    \caption{Defining the control flags.}
+    \label{listing:control-flags}
+    \begin{minted}{matlab}
 %% Control Flags
 N_bits         = 100;           % Number of bits per realization.
 N_realizations = 500;           % Number of realizations.
@@ -24,3 +20,18 @@ center         = floor(N_fft/2) + 1;                  % Center bin.
 half_len       = 100;           % Max tau used in correlation_manual.
 \end{minted}
 \end{listing}
+
+
+\begin{itemize}
+    \item \texttt{N\_bits}: Defines the number of bits generated in each realization of the random process. It controls the length of the bit stream.
+    \item \texttt{N\_realizations}: Specifies the number of independent realizations of the random process.
+    \item \texttt{Pw}: Represents the pulse width (bit duration) in seconds. It determines the time-domain duration of each bit and directly affects the signal's bandwidth.
+    \item \texttt{Ts}: The time sampling interval in seconds.
+    \item \texttt{L}: It determines how many discrete samples represent a single bit.
+    \item \texttt{A}: Sets the peak amplitude of the transmitted signal.
+    \item \texttt{N\_fft}: Specifies the size of the Fast Fourier Transform (FFT).
+    \item \texttt{Fs}: The sampling frequency ($1/Ts$). It defines the frequency range of the simulation and must be high enough to satisfy the Nyquist criterion.
+    \item \texttt{freq}: The frequency axis vector used for spectral analysis, mapped from $-Fs/2$ to $Fs/2$ to allow for centered Power Spectral Density (PSD) plots.
+    \item \texttt{center}: The index of the zero-frequency (DC) component in the FFT output, used to correctly align and shift the spectrum for plotting.
+    \item \texttt{half\_len}: Defines the maximum lag ($\tau$) for the manual calculation of the autocorrelation function.
+\end{itemize}
