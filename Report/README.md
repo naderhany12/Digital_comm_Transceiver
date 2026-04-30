@@ -1,2 +1,0 @@
-# LatexReportForCommProject
-PersonalWorkForReport

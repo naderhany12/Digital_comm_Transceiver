@@ -1,2 +1,78 @@
 \chapter[Problem Description]{Problem Description}
 \label{cp:problem-description}
+In this project, we are simulating a software radio. Software radio is a technique that uses software to perform radio signal processing tasks that were traditionally done by hardware. The software radio allows for greater flexibility and adaptability in radio communication systems, as it can be easily reconfigured and updated through software changes.
+ In this project, we will be simulating a software radio using MATLAB.
+ We will be implementing various components of the software radio, such as modulation, demodulation, filtering, and channel coding, to create a complete simulation of a software radio system and see the problems ourselves and try design a proper solution.
+
+
+
+\vspace{1cm}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    font=\sffamily,
+    block/.style={draw=black!50, rectangle, minimum height=1.2cm, minimum width=2.5cm, align=center},
+    codeblock/.style={draw=black!50, rectangle, rounded corners=3mm, minimum height=2.5cm, minimum width=2cm, align=center},
+    adc/.style={draw=black!50, shape=signal, signal to=east, signal from=nowhere, minimum height=1.2cm, minimum width=2cm, align=center},
+    dac/.style={draw=black!50, shape=signal, signal to=west, signal from=nowhere, minimum height=1.2cm, minimum width=2cm, align=center},
+    arrow/.style={-Latex, draw=black!70}
+]
+
+% ====================
+%     Receive Path    
+% ====================
+
+% Antenna (Receive)
+\coordinate (rx_base) at (0, 0);
+\draw[black!70] (rx_base) -- +(0, 1.5) coordinate (rx_top);
+\draw[black!70] (rx_top) -- +(-0.5, 0.7);
+\draw[black!70] (rx_top) -- +(0, 0.7);
+\draw[black!70] (rx_top) -- +(0.5, 0.7);
+
+% Nodes
+\node[block] (rx_rf) at (3, 0) {Receive RF\\Front End};
+\node[adc] (adc) at (6.5, 0) {ADC};
+\node[codeblock] (rx_code) at (10.5, 0) {\textit{My}\\\textit{Code}\\\textit{Here}};
+
+% Connections
+\draw[arrow] (rx_base) -- (rx_rf.west);
+\draw[arrow] (rx_rf.east) -- (adc.west);
+\draw[arrow] (adc.east) -- (rx_code.west);
+
+% Label
+\node[below=1.5cm of adc, font=\sffamily\large] {Receive Path};
+
+
+% ====================
+%    Transmit Path    
+% ====================
+\begin{scope}[yshift=-6cm]
+
+% Antenna (Transmit)
+\coordinate (tx_base) at (0, 0);
+\draw[black!70] (tx_base) -- +(0, 1.5) coordinate (tx_top);
+\draw[black!70] (tx_top) -- +(-0.5, 0.7);
+\draw[black!70] (tx_top) -- +(0, 0.7);
+\draw[black!70] (tx_top) -- +(0.5, 0.7);
+
+% Nodes
+\node[block] (tx_rf) at (3, 0) {Xmit RF\\Front End};
+\node[dac] (dac) at (6.5, 0) {DAC};
+\node[codeblock] (tx_code) at (10.5, 0) {\textit{My}\\\textit{Code}\\\textit{Here}};
+
+% Connections
+\draw[arrow] (tx_rf.west) -- (tx_base);
+\draw[arrow] (dac.west) -- (tx_rf.east);
+\draw[arrow] (tx_code.west) -- (dac.east);
+
+% Label
+\node[below=1.5cm of dac, font=\sffamily\large] {Transmit Path};
+
+\end{scope}
+
+\end{tikzpicture}
+\vspace{0.5cm}
+\caption{Software Radio Transmit and Receive Paths.}
+\label{fig:software_radio}
+\end{figure}

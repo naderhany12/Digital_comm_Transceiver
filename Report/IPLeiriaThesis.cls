@@ -184,6 +184,7 @@
 \usepackage{Configurations/04-Headers}
 \usepackage{Configurations/05-Contents}
 \usepackage{Configurations/06-Glossary}
+\RequirePackage{bidi} % RTL support — must load after hyperref and before titlesec chapter configs.
 \usepackage{Configurations/07-Chapters}
 \usepackage{Configurations/08-Tables}
 \usepackage{Configurations/09-Code}
