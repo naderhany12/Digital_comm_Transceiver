@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.3.7)  30 APR 2026 08:35
+This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.3.7)  30 APR 2026 17:05
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -2160,6 +2160,8 @@ LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <10.95> not available
 
  (./Chapters/02-Introduction.tex
 Chapter 2.
+File: Figures/LineCoding.jpg Graphic file (type bmp)
+<Figures/LineCoding.jpg>
 ) [3
 
 
@@ -2170,7 +2172,21 @@ Chapter 2.
 
  (./Chapters/03-Control-Flags.tex
 Chapter 3.
-) [4
+Package hyperref Info: bookmark level for unknown listing defaults to 0 on input line 10.
+\pydata@fh@0=\write12
+\openout12 = `_79592720F62061E1E8E9E2E536A33C2E.data.minted'.
+
+runsystem(latexminted config  --timestamp 20260430170519 79592720F62061E1E8E9E2E536A33C2E)...executed safely (allowed).
+
+(./_79592720F62061E1E8E9E2E536A33C2E.config.minted)
+runsystem(latexminted cleanconfig  --timestamp 20260430170519 79592720F62061E1E8E9E2E536A33C2E)...executed safely (allowed).
+
+ (./_minted/default.style.minted)
+\openout12 = `_79592720F62061E1E8E9E2E536A33C2E.data.minted'.
+
+runsystem(latexminted highlight  --timestamp 20260430170519 79592720F62061E1E8E9E2E536A33C2E)...executed safely (allowed).
+
+ (./_minted/F5D828EA6FEBE2CE8F54A40D82DD8271.highlight.minted)) [4
 
 
 
@@ -2305,24 +2321,33 @@ Chapter 15.
 ] (./Matter/08-Appendices.tex
 
 Package fontspec Info: 
-(fontspec)             Font family 'Crimson(0)' created for font 'Crimson'
-(fontspec)             with options [LetterSpace=-0.5].
+(fontspec)             Font family 'MinionPro(0)' created for font 'Minion
+(fontspec)             Pro' with options [Path =
+(fontspec)             Configurations/Fonts/,UprightFont =
+(fontspec)             Minion-Pro-Display.otf,BoldFont =
+(fontspec)             Minion-Pro-Bold.ttf,ItalicFont =
+(fontspec)             Minion-Pro-Italic.ttf,BoldItalicFont =
+(fontspec)             Minion-Pro-Bold-Italic.ttf].
 (fontspec)              
 (fontspec)              This font family consists of the following NFSS
 (fontspec)             series/shapes:
 (fontspec)              
 (fontspec)             - 'normal' (m/n) with NFSS spec.:
-(fontspec)             <->"Crimson/OT:script=latn;language=dflt;letterspace=-0.5;"
+(fontspec)             <->"[Configurations/Fonts/Minion-Pro-Display.otf]/OT:script=latn;language=dflt;"
 (fontspec)             - 'small caps'  (m/sc) with NFSS spec.:
-(fontspec)             <->"Crimson/OT:script=latn;language=dflt;letterspace=-0.5;+smcp;"
+(fontspec)             <->"[Configurations/Fonts/Minion-Pro-Display.otf]/OT:script=latn;language=dflt;+smcp;"
 (fontspec)             - 'bold' (b/n) with NFSS spec.:
-(fontspec)             <->"Crimson/B/OT:script=latn;language=dflt;letterspace=-0.5;"
+(fontspec)             <->"[Configurations/Fonts/Minion-Pro-Bold.ttf]/OT:script=latn;language=dflt;"
+(fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.:
+(fontspec)             <->"[Configurations/Fonts/Minion-Pro-Bold.ttf]/OT:script=latn;language=dflt;+smcp;"
 (fontspec)             - 'italic' (m/it) with NFSS spec.:
-(fontspec)             <->"Crimson/I/OT:script=latn;language=dflt;letterspace=-0.5;"
+(fontspec)             <->"[Configurations/Fonts/Minion-Pro-Italic.ttf]/OT:script=latn;language=dflt;"
 (fontspec)             - 'italic small caps'  (m/scit) with NFSS spec.:
-(fontspec)             <->"Crimson/I/OT:script=latn;language=dflt;letterspace=-0.5;+smcp;"
+(fontspec)             <->"[Configurations/Fonts/Minion-Pro-Italic.ttf]/OT:script=latn;language=dflt;+smcp;"
 (fontspec)             - 'bold italic' (b/it) with NFSS spec.:
-(fontspec)             <->"Crimson/BI/OT:script=latn;language=dflt;letterspace=-0.5;"
+(fontspec)             <->"[Configurations/Fonts/Minion-Pro-Bold-Italic.ttf]/OT:script=latn;language=dflt;"
+(fontspec)             - 'bold italic small caps'  (b/scit) with NFSS spec.:
+(fontspec)             <->"[Configurations/Fonts/Minion-Pro-Bold-Italic.ttf]/OT:script=latn;language=dflt;+smcp;"
 
 ) (./Chapters/Appendices/00-AppendixA.tex [17
 \def\@LN@column{1}
@@ -2343,17 +2368,15 @@ This document will not have a glossary.
 [18
 
 ]
-runsystem(latexminted cleantemp  --timestamp 20260430083513 79592720F62061E1E8E9E2E536A33C2E)...executed safely (allowed).
+\openout12 = `_79592720F62061E1E8E9E2E536A33C2E.data.minted'.
+
+runsystem(latexminted clean  --timestamp 20260430170519 79592720F62061E1E8E9E2E536A33C2E)...executed safely (allowed).
 
  (./IPLeiriaMain.aux (./Matter/00-Cover.aux) (./Matter/01-Front-Page.aux) (./Chapters/00-Abstract.aux) (./Chapters/01-Problem-Description.aux) (./Chapters/02-Introduction.aux) (./Chapters/03-Control-Flags.aux) (./Chapters/04-Generation-of-Data.aux) (./Chapters/05-Creating-the-Unipolar-Ensemble.aux) (./Chapters/06-Creating-The-Polar-NRZ-Ensemble.aux) (./Chapters/07-Creating-The-Polar-RZ-Ensemble.aux) (./Chapters/08-Applying-Random-Initial-Time-Shifts.aux) (./Chapters/09-Preparing-Cell-Arrays-For-Analysis.aux) (./Chapters/10-Q1-Statistical-Mean-Calculation.aux) (./Chapters/11-Q2-Is-the-Process-Stationary.aux) (./Chapters/12-Q3-Statistical-Autocorrelation.aux) (./Chapters/13-Q4-Time-Mean-&-Autocorrelation-of-One-Waveform.aux) (./Chapters/14-Q5-Is-the-Random-Process-Ergodic.aux) (./Chapters/15-Plotting-the-PSD-of-the-Ensemble.aux) (./Chapters/16-Q6-Signal Bandwidth.aux))
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package rerunfilecheck Info: File `IPLeiriaMain.out' has not changed.
 (rerunfilecheck)             Checksum: 27CA832ECE4F30C0651C0C3D434D141A;3414.
 Package logreq Info: Writing requests to 'IPLeiriaMain.run.xml'.
@@ -2361,10 +2384,10 @@ Package logreq Info: Writing requests to 'IPLeiriaMain.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 65877 strings out of 468168
- 1443911 string characters out of 5436525
- 2685158 words of memory out of 5000000
- 93260 multiletter control sequences out of 15000+600000
+ 66208 strings out of 468168
+ 1451864 string characters out of 5436525
+ 2686472 words of memory out of 5000000
+ 93576 multiletter control sequences out of 15000+600000
  669987 words of font info for 184 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  123i,12n,122p,2628b,4275s stack positions out of 10000i,1000n,20000p,200000b,200000s

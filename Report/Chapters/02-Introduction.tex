@@ -1,2 +1,25 @@
 \chapter[Introduction]{Introduction}
 \label{cp:introduction}
+
+In this project, we are going to use the software radio technique to simulate
+the hardware problems and try to make it as close as it is with the antenna,
+while also using the techniques we learned through our communications course.
+We are going to design the transmitter first. Our code at the transmitter will
+define the modulation technique and the coding used. Once the digital data is
+generated, it goes through a Digital-to-Analog Converter (DAC) so it can
+actually take the form of three different transmitted signals: Polar RZ, Polar
+NRZ, and Unipolar. However, the bit-stream generated at the transmitter is
+actually random, and there can also be asynchronization between the transmitter
+and the receiver, which is also random. Therefore, in our simulation, we will
+generate a random bit-stream, and the output will be treated as a random
+process. Then, for each generated ensemble, we will calculate its statistical
+mean, the time mean, the ensemble and time autocorrelation functions, and the
+bandwidth. We will also determine whether the random process is stationary and
+ergodic.
+\vspace{1cm}
+\begin{figure}[!htpb]
+    \centering
+    \includegraphics[width=\linewidth]{Figures/LineCoding.jpg}
+    \caption[A simple illustration of the line coding process.]{A simple illustration of the line coding process.}
+    \label{fig:LineCoding}
+\end{figure}

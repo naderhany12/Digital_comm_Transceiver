@@ -1,2 +1,26 @@
 \chapter[Control Flags]{Control Flags}
 \label{cp:control-flags}
+
+In the start of our MATLAB code, we will define some variables which we will
+call the control flags, these variables are set to control the output and the
+process in the whole code without rewriting each one in each line and to make
+the process easier.
+
+\begin{listing}[!htpb]
+\caption{Defining the control flags.}
+\label{listing:control-flags}
+\begin{minted}{matlab}
+%% Control Flags
+N_bits         = 100;           % Number of bits per realization.
+N_realizations = 500;           % Number of realizations.
+Pw             = 0.07;          % Pulse width of the bit.
+Ts             = 0.01;          % Time sample.
+L              = round(Pw/Ts);  % Samples per symbol period (L=7).
+A              = 4;             % Amplitude.
+N_fft          = 1024;          % FFT size.
+Fs             = 1/Ts;          % Sampling frequency.
+freq           = (-N_fft/2:N_fft/2-1) * (Fs/N_fft);  % Frequency axis.
+center         = floor(N_fft/2) + 1;                  % Center bin.
+half_len       = 100;           % Max tau used in correlation_manual.
+\end{minted}
+\end{listing}

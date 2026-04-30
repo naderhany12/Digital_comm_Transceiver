@@ -6,12 +6,18 @@
 \usepackage{fontspec} % Required for custom fonts with XeLaTeX or LuaLaTeX.
 
 \linespread{1.2} % Slightly increase line spacing.
-\setmainfont{TeX Gyre Pagella}[Ligatures=TeX,LetterSpace=0.7]
-\newcommand{\garamondfont}{\fontspec{EB Garamond}}
+\setmainfont{TeX Gyre Pagella}[Ligatures=TeX,LetterSpace=0.7] % Set TeX Gyre Pagella as the main font.
+
 \newcommand{\latofont}{\fontspec{Lato}}
-\newcommand{\crimsonfont}{\fontspec{Crimson}[LetterSpace=-0.5]}
+\newcommand{\garamondfont}{\fontspec{EB Garamond}}
+\newcommand{\minionfont}{\fontspec[
+    Path = Configurations/Fonts/,
+    UprightFont = Minion-Pro-Display.otf,
+    BoldFont = Minion-Pro-Bold.ttf,
+    ItalicFont = Minion-Pro-Italic.ttf,
+    BoldItalicFont = Minion-Pro-Bold-Italic.ttf,
+]{Minion Pro}}
 
 %%% Arabic Language Support %%%
 \newfontfamily{\arabicfont}[Script=Arabic, Scale=1.2]{Amiri}
-% Requires \usepackage{bidi} in IPLeiriaMain.tex (after tikz)
 \newcommand{\arabictext}[1]{{\arabicfont\RLE{#1}}}
