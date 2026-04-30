@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.3.7)  30 APR 2026 22:10
+This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.3.7)  30 APR 2026 22:54
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -2180,10 +2180,10 @@ Package hyperref Info: bookmark level for unknown listing defaults to 0 on input
 \pydata@fh@0=\write12
 \openout12 = `_5E7C8F4B5C50DC0799216130799B03E2.data.minted'.
 
-runsystem(latexminted config  --timestamp 20260430221016 5E7C8F4B5C50DC0799216130799B03E2)...executed safely (allowed).
+runsystem(latexminted config  --timestamp 20260430225439 5E7C8F4B5C50DC0799216130799B03E2)...executed safely (allowed).
 
 (./_5E7C8F4B5C50DC0799216130799B03E2.config.minted)
-runsystem(latexminted cleanconfig  --timestamp 20260430221016 5E7C8F4B5C50DC0799216130799B03E2)...executed safely (allowed).
+runsystem(latexminted cleanconfig  --timestamp 20260430225439 5E7C8F4B5C50DC0799216130799B03E2)...executed safely (allowed).
 
  (./_minted/default.style.minted) (./_minted/F5D828EA6FEBE2CE8F54A40D82DD8271.highlight.minted)) [4
 
@@ -2219,16 +2219,22 @@ File: Figures/Unipolar_NRZ_-_Realization_2.png Graphic file (type bmp)
 ) [7]
 \openout2 = `Chapters/06-Creating-The-Polar-NRZ-Ensemble.aux'.
 
-
-No file Chapters/06-Creating-The-Polar-NRZ-Ensemble.tex.
-\openout2 = `Chapters/07-Creating-The-Polar-RZ-Ensemble.aux'.
-
-(./Chapters/07-Creating-The-Polar-RZ-Ensemble.tex
+ (./Chapters/06-Creating-The-Polar-NRZ-Ensemble.tex
 Chapter 6.
+(./_minted/8B91E1E988F0091B7CB799051175994C.highlight.minted)
+File: Figures/Polar_NRZ_-_Realization_2.png Graphic file (type bmp)
+<Figures/Polar_NRZ_-_Realization_2.png>
 ) [8
 
 
 
+
+]
+\openout2 = `Chapters/07-Creating-The-Polar-RZ-Ensemble.aux'.
+
+ (./Chapters/07-Creating-The-Polar-RZ-Ensemble.tex
+Chapter 7.
+) [9
 
 
 
@@ -2237,8 +2243,8 @@ Chapter 6.
 \openout2 = `Chapters/08-Applying-Random-Initial-Time-Shifts.aux'.
 
  (./Chapters/08-Applying-Random-Initial-Time-Shifts.tex
-Chapter 7.
-) [9
+Chapter 8.
+) [10
 
 
 
@@ -2247,8 +2253,8 @@ Chapter 7.
 \openout2 = `Chapters/09-Preparing-Cell-Arrays-For-Analysis.aux'.
 
  (./Chapters/09-Preparing-Cell-Arrays-For-Analysis.tex
-Chapter 8.
-) [10
+Chapter 9.
+) [11
 
 
 
@@ -2257,8 +2263,8 @@ Chapter 8.
 \openout2 = `Chapters/10-Q1-Statistical-Mean-Calculation.aux'.
 
  (./Chapters/10-Q1-Statistical-Mean-Calculation.tex
-Chapter 9.
-) [11
+Chapter 10.
+) [12
 
 
 
@@ -2267,8 +2273,8 @@ Chapter 9.
 \openout2 = `Chapters/11-Q2-Is-the-Process-Stationary.aux'.
 
  (./Chapters/11-Q2-Is-the-Process-Stationary.tex
-Chapter 10.
-) [12
+Chapter 11.
+) [13
 
 
 
@@ -2277,8 +2283,8 @@ Chapter 10.
 \openout2 = `Chapters/12-Q3-Statistical-Autocorrelation.aux'.
 
  (./Chapters/12-Q3-Statistical-Autocorrelation.tex
-Chapter 11.
-) [13
+Chapter 12.
+) [14
 
 
 
@@ -2287,8 +2293,8 @@ Chapter 11.
 \openout2 = `Chapters/13-Q4-Time-Mean-&-Autocorrelation-of-One-Waveform.aux'.
 
  (./Chapters/13-Q4-Time-Mean-&-Autocorrelation-of-One-Waveform.tex
-Chapter 12.
-) [14
+Chapter 13.
+) [15
 
 
 
@@ -2297,8 +2303,8 @@ Chapter 12.
 \openout2 = `Chapters/14-Q5-Is-the-Random-Process-Ergodic.aux'.
 
  (./Chapters/14-Q5-Is-the-Random-Process-Ergodic.tex
-Chapter 13.
-) [15
+Chapter 14.
+) [16
 
 
 
@@ -2307,8 +2313,8 @@ Chapter 13.
 \openout2 = `Chapters/15-Plotting-the-PSD-of-the-Ensemble.aux'.
 
  (./Chapters/15-Plotting-the-PSD-of-the-Ensemble.tex
-Chapter 14.
-) [16
+Chapter 15.
+) [17
 
 
 
@@ -2317,8 +2323,8 @@ Chapter 14.
 \openout2 = `"Chapters/16-Q6-Signal Bandwidth.aux"'.
 
  (./Chapters/16-Q6-Signal Bandwidth.tex
-Chapter 15.
-) [17
+Chapter 16.
+) [18
 
 
 
@@ -2354,7 +2360,7 @@ Package fontspec Info:
 (fontspec)             - 'bold italic small caps'  (b/scit) with NFSS spec.:
 (fontspec)             <->"[Configurations/Fonts/Minion-Pro-Bold-Italic.ttf]/OT:script=latn;language=dflt;+smcp;"
 
-) (./Chapters/Appendices/00-AppendixA.tex [18
+) (./Chapters/Appendices/00-AppendixA.tex [19
 \def\@LN@column{1}
 
 
@@ -2370,7 +2376,7 @@ Package glossaries Warning: No \printglossary or \printglossaries found.
 (Remove \makeglossaries if you don't want any glossaries.) 
 This document will not have a glossary.
 
-[19
+[20
 
 ] (./P2_T01.aux (./Matter/00-Cover.aux) (./Matter/01-Front-Page.aux) (./Chapters/00-Abstract.aux) (./Chapters/01-Problem-Description.aux) (./Chapters/02-Introduction.aux) (./Chapters/03-Control-Flags.aux) (./Chapters/04-Generation-of-Data.aux) (./Chapters/05-Creating-the-Unipolar-Ensemble.aux) (./Chapters/06-Creating-The-Polar-NRZ-Ensemble.aux) (./Chapters/07-Creating-The-Polar-RZ-Ensemble.aux) (./Chapters/08-Applying-Random-Initial-Time-Shifts.aux) (./Chapters/09-Preparing-Cell-Arrays-For-Analysis.aux) (./Chapters/10-Q1-Statistical-Mean-Calculation.aux) (./Chapters/11-Q2-Is-the-Process-Stationary.aux) (./Chapters/12-Q3-Statistical-Autocorrelation.aux) (./Chapters/13-Q4-Time-Mean-&-Autocorrelation-of-One-Waveform.aux) (./Chapters/14-Q5-Is-the-Random-Process-Ergodic.aux) (./Chapters/15-Plotting-the-PSD-of-the-Ensemble.aux) (./Chapters/16-Q6-Signal Bandwidth.aux))
  ***********
@@ -2382,18 +2388,18 @@ L3 programming layer <2026-01-19>
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `P2_T01.out' has not changed.
-(rerunfilecheck)             Checksum: 27CA832ECE4F30C0651C0C3D434D141A;3414.
+(rerunfilecheck)             Checksum: 76CDB8A400B15E07F4B5D3805C0492E0;3649.
 Package logreq Info: Writing requests to 'P2_T01.run.xml'.
 \openout1 = `P2_T01.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 66412 strings out of 468168
- 1456530 string characters out of 5436525
- 2732285 words of memory out of 5000000
- 93762 multiletter control sequences out of 15000+600000
+ 66438 strings out of 468168
+ 1457569 string characters out of 5436525
+ 2732752 words of memory out of 5000000
+ 93782 multiletter control sequences out of 15000+600000
  708010 words of font info for 250 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  123i,12n,122p,2622b,4301s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on P2_T01.pdf (22 pages).
+Output written on P2_T01.pdf (23 pages).
