@@ -1,0 +1,12 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k}{function}\PYG{+w}{ }ensample\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{build\PYGZus{}ensemble}\PYG{p}{(}data, A, pulse, N\PYGZus{}realizations, L, type\PYG{p}{)}
+\PYG{k}{if}\PYG{+w}{ }\PYG{n+nb}{strcmp}\PYG{p}{(}\PYG{n+nb}{type}\PYG{p}{,}\PYG{+w}{ }\PYG{l+s}{\PYGZsq{}unipolar\PYGZsq{}}\PYG{p}{),}\PYG{+w}{ }\PYG{n}{Tx}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{data}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{A}\PYG{p}{;}\PYG{+w}{           }\PYG{c}{\PYGZpc{} Map bits to \PYGZob{}0, A\PYGZcb{}.}
+\PYG{k}{else}\PYG{p}{,}\PYG{+w}{                        }\PYG{n}{Tx}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{o}{*}\PYG{n}{data}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{A}\PYG{p}{;}\PYG{+w}{   }\PYG{c}{\PYGZpc{} Map bits to \PYGZob{}\PYGZhy{}A, +A\PYGZcb{}.}
+\PYG{k}{end}
+\PYG{n}{ensample}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{kron}\PYG{p}{(}\PYG{n}{Tx}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{pulse}\PYG{p}{);}\PYG{+w}{                           }\PYG{c}{\PYGZpc{} Upsample with pulse shape.}
+\PYG{n}{Td}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{randi}\PYG{p}{([}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{L}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{],}\PYG{+w}{ }\PYG{n}{N\PYGZus{}realizations}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{);}\PYG{+w}{              }\PYG{c}{\PYGZpc{} Random delay per realization.}
+\PYG{k}{for}\PYG{+w}{ }\PYG{n+nb}{i}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{:}\PYG{n}{N\PYGZus{}realizations}
+\PYG{+w}{    }\PYG{n}{ensample}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{,:)}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{circshift}\PYG{p}{(}\PYG{n}{ensample}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{,:),}\PYG{+w}{ }\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{Td}\PYG{p}{(}\PYG{n+nb}{i}\PYG{p}{)]);}
+\PYG{k}{end}
+\PYG{k}{end}
+\end{MintedVerbatim}

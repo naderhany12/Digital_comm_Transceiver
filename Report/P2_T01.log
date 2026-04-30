@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.3.7)  30 APR 2026 19:48
+This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.3.7)  30 APR 2026 22:10
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1610,8 +1610,8 @@ Package biblatex Info: ... and expl3
  (c:/texlive/2026/texmf-dist/tex/latex/biblatex/blx-case-expl3.sty
 Package: blx-case-expl3 2025/07/10 v3.21 expl3 case changing code for biblatex
 ))
-Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 65.
-Package hyperref Info: Option `colorlinks' set `true' on input line 65.
+Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 64.
+Package hyperref Info: Option `colorlinks' set `true' on input line 64.
 ) (./Configurations/04-Headers.sty (c:/texlive/2026/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
 Package: fancyhdr 2025/02/07 v5.2 Extensive control of page headers and footers
 \f@nch@headwidth=\skip110
@@ -1842,7 +1842,11 @@ Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
 Package csquotes Info: Adjusting default style.
 Package csquotes Info: Redefining alias 'default' -> 'english'.
- (./P2_T01.aux (./Matter/00-Cover.aux) (./Matter/01-Front-Page.aux) (./Chapters/00-Abstract.aux) (./Chapters/01-Problem-Description.aux) (./Chapters/02-Introduction.aux) (./Chapters/03-Control-Flags.aux) (./Chapters/04-Generation-of-Data.aux) (./Chapters/05-Creating-the-Unipolar-Ensemble.aux) (./Chapters/06-Creating-The-Polar-NRZ-Ensemble.aux) (./Chapters/07-Creating-The-Polar-RZ-Ensemble.aux) (./Chapters/08-Applying-Random-Initial-Time-Shifts.aux) (./Chapters/09-Preparing-Cell-Arrays-For-Analysis.aux) (./Chapters/10-Q1-Statistical-Mean-Calculation.aux) (./Chapters/11-Q2-Is-the-Process-Stationary.aux) (./Chapters/12-Q3-Statistical-Autocorrelation.aux) (./Chapters/13-Q4-Time-Mean-&-Autocorrelation-of-One-Waveform.aux) (./Chapters/14-Q5-Is-the-Random-Process-Ergodic.aux) (./Chapters/15-Plotting-the-PSD-of-the-Ensemble.aux) (./Chapters/16-Q6-Signal Bandwidth.aux))
+ (./P2_T01.aux (./Matter/00-Cover.aux) (./Matter/01-Front-Page.aux) (./Chapters/00-Abstract.aux) (./Chapters/01-Problem-Description.aux) (./Chapters/02-Introduction.aux) (./Chapters/03-Control-Flags.aux) (./Chapters/04-Generation-of-Data.aux) (./Chapters/05-Creating-the-Unipolar-Ensemble.aux
+
+LaTeX Warning: Label `listing:Data-Generation' multiply defined.
+
+) (./Chapters/06-Creating-The-Polar-NRZ-Ensemble.aux) (./Chapters/07-Creating-The-Polar-RZ-Ensemble.aux) (./Chapters/08-Applying-Random-Initial-Time-Shifts.aux) (./Chapters/09-Preparing-Cell-Arrays-For-Analysis.aux) (./Chapters/10-Q1-Statistical-Mean-Calculation.aux) (./Chapters/11-Q2-Is-the-Process-Stationary.aux) (./Chapters/12-Q3-Statistical-Autocorrelation.aux) (./Chapters/13-Q4-Time-Mean-&-Autocorrelation-of-One-Waveform.aux) (./Chapters/14-Q5-Is-the-Random-Process-Ergodic.aux) (./Chapters/15-Plotting-the-PSD-of-the-Ensemble.aux) (./Chapters/16-Q6-Signal Bandwidth.aux))
 \openout1 = `P2_T01.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/npxmi/m/it on input line 38.
@@ -2176,10 +2180,10 @@ Package hyperref Info: bookmark level for unknown listing defaults to 0 on input
 \pydata@fh@0=\write12
 \openout12 = `_5E7C8F4B5C50DC0799216130799B03E2.data.minted'.
 
-runsystem(latexminted config  --timestamp 20260430194810 5E7C8F4B5C50DC0799216130799B03E2)...executed safely (allowed).
+runsystem(latexminted config  --timestamp 20260430221016 5E7C8F4B5C50DC0799216130799B03E2)...executed safely (allowed).
 
 (./_5E7C8F4B5C50DC0799216130799B03E2.config.minted)
-runsystem(latexminted cleanconfig  --timestamp 20260430194810 5E7C8F4B5C50DC0799216130799B03E2)...executed safely (allowed).
+runsystem(latexminted cleanconfig  --timestamp 20260430221016 5E7C8F4B5C50DC0799216130799B03E2)...executed safely (allowed).
 
  (./_minted/default.style.minted) (./_minted/F5D828EA6FEBE2CE8F54A40D82DD8271.highlight.minted)) [4
 
@@ -2201,12 +2205,18 @@ Chapter 4.
 
  (./Chapters/05-Creating-the-Unipolar-Ensemble.tex
 Chapter 5.
-) [6
+(./_minted/07934758F74050AA189DB9D109C6B103.highlight.minted
+LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <9> not available
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 2.
+) (./_minted/19E6B309AFC899795FF8143470D175B0.highlight.minted) [6
 
 
 
 
 ]
+File: Figures/Unipolar_NRZ_-_Realization_2.png Graphic file (type bmp)
+<Figures/Unipolar_NRZ_-_Realization_2.png>
+) [7]
 \openout2 = `Chapters/06-Creating-The-Polar-NRZ-Ensemble.aux'.
 
 
@@ -2215,7 +2225,7 @@ No file Chapters/06-Creating-The-Polar-NRZ-Ensemble.tex.
 
 (./Chapters/07-Creating-The-Polar-RZ-Ensemble.tex
 Chapter 6.
-) [7
+) [8
 
 
 
@@ -2228,7 +2238,7 @@ Chapter 6.
 
  (./Chapters/08-Applying-Random-Initial-Time-Shifts.tex
 Chapter 7.
-) [8
+) [9
 
 
 
@@ -2238,7 +2248,7 @@ Chapter 7.
 
  (./Chapters/09-Preparing-Cell-Arrays-For-Analysis.tex
 Chapter 8.
-) [9
+) [10
 
 
 
@@ -2248,7 +2258,7 @@ Chapter 8.
 
  (./Chapters/10-Q1-Statistical-Mean-Calculation.tex
 Chapter 9.
-) [10
+) [11
 
 
 
@@ -2258,7 +2268,7 @@ Chapter 9.
 
  (./Chapters/11-Q2-Is-the-Process-Stationary.tex
 Chapter 10.
-) [11
+) [12
 
 
 
@@ -2268,7 +2278,7 @@ Chapter 10.
 
  (./Chapters/12-Q3-Statistical-Autocorrelation.tex
 Chapter 11.
-) [12
+) [13
 
 
 
@@ -2278,7 +2288,7 @@ Chapter 11.
 
  (./Chapters/13-Q4-Time-Mean-&-Autocorrelation-of-One-Waveform.tex
 Chapter 12.
-) [13
+) [14
 
 
 
@@ -2288,7 +2298,7 @@ Chapter 12.
 
  (./Chapters/14-Q5-Is-the-Random-Process-Ergodic.tex
 Chapter 13.
-) [14
+) [15
 
 
 
@@ -2298,7 +2308,7 @@ Chapter 13.
 
  (./Chapters/15-Plotting-the-PSD-of-the-Ensemble.tex
 Chapter 14.
-) [15
+) [16
 
 
 
@@ -2308,7 +2318,7 @@ Chapter 14.
 
  (./Chapters/16-Q6-Signal Bandwidth.tex
 Chapter 15.
-) [16
+) [17
 
 
 
@@ -2344,7 +2354,7 @@ Package fontspec Info:
 (fontspec)             - 'bold italic small caps'  (b/scit) with NFSS spec.:
 (fontspec)             <->"[Configurations/Fonts/Minion-Pro-Bold-Italic.ttf]/OT:script=latn;language=dflt;+smcp;"
 
-) (./Chapters/Appendices/00-AppendixA.tex [17
+) (./Chapters/Appendices/00-AppendixA.tex [18
 \def\@LN@column{1}
 
 
@@ -2360,13 +2370,17 @@ Package glossaries Warning: No \printglossary or \printglossaries found.
 (Remove \makeglossaries if you don't want any glossaries.) 
 This document will not have a glossary.
 
-[18
+[19
 
 ] (./P2_T01.aux (./Matter/00-Cover.aux) (./Matter/01-Front-Page.aux) (./Chapters/00-Abstract.aux) (./Chapters/01-Problem-Description.aux) (./Chapters/02-Introduction.aux) (./Chapters/03-Control-Flags.aux) (./Chapters/04-Generation-of-Data.aux) (./Chapters/05-Creating-the-Unipolar-Ensemble.aux) (./Chapters/06-Creating-The-Polar-NRZ-Ensemble.aux) (./Chapters/07-Creating-The-Polar-RZ-Ensemble.aux) (./Chapters/08-Applying-Random-Initial-Time-Shifts.aux) (./Chapters/09-Preparing-Cell-Arrays-For-Analysis.aux) (./Chapters/10-Q1-Statistical-Mean-Calculation.aux) (./Chapters/11-Q2-Is-the-Process-Stationary.aux) (./Chapters/12-Q3-Statistical-Autocorrelation.aux) (./Chapters/13-Q4-Time-Mean-&-Autocorrelation-of-One-Waveform.aux) (./Chapters/14-Q5-Is-the-Random-Process-Ergodic.aux) (./Chapters/15-Plotting-the-PSD-of-the-Ensemble.aux) (./Chapters/16-Q6-Signal Bandwidth.aux))
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
+
+
+LaTeX Warning: There were multiply-defined labels.
+
 Package rerunfilecheck Info: File `P2_T01.out' has not changed.
 (rerunfilecheck)             Checksum: 27CA832ECE4F30C0651C0C3D434D141A;3414.
 Package logreq Info: Writing requests to 'P2_T01.run.xml'.
@@ -2374,12 +2388,12 @@ Package logreq Info: Writing requests to 'P2_T01.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 66388 strings out of 468168
- 1455417 string characters out of 5436525
- 2732379 words of memory out of 5000000
- 93747 multiletter control sequences out of 15000+600000
- 708002 words of font info for 249 fonts, out of 8000000 for 9000
+ 66412 strings out of 468168
+ 1456530 string characters out of 5436525
+ 2732285 words of memory out of 5000000
+ 93762 multiletter control sequences out of 15000+600000
+ 708010 words of font info for 250 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 123i,12n,122p,2622b,4275s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 123i,12n,122p,2622b,4301s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on P2_T01.pdf (21 pages).
+Output written on P2_T01.pdf (22 pages).
