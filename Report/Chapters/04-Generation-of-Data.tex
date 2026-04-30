@@ -1,3 +1,105 @@
 \chapter[Generation of Data]{Generation of Data}
 \label{cp:generation-of-data}
 
+Now that the control flags are defined, we can proceed with the first step of
+the simulation: generating the raw binary data. To accurately simulate a
+real-world communication source, we use the MATLAB function \texttt{randi} to
+produce a random bit-stream.
+
+\begin{listing}[!htpb]
+    \caption{Generation of Data.}
+    \label{listing:Data-Generation}
+    \begin{minted}{matlab}
+%% Data Generation
+data = randi([0 1], N_realizations, N_bits);
+    \end{minted}
+\end{listing}
+
+The function \texttt{randi([0 1], $N_{\text{realizations}}$,
+    $N_{\text{bits}}$)} generates a matrix of independent random integers. In this
+setup, each row represents a unique \textit{realization} of the random process,
+while each column represents a \textit{bit} in the sequence.
+
+This matrix structure is fundamental to our analysis; it allows us to treat the
+entire project as a discrete ensemble. By performing operations across the
+rows, we can calculate ensemble statistics (like the statistical mean), and by
+operating across the columns, we can determine time-domain characteristics
+(like the time average). Furthermore, using a range of $[0, 1]$ ensures an
+equiprobable source where the probability of a "0" or a "1" is exactly $0.5$,
+providing a neutral baseline for comparing the efficiency of different line
+codes.
+
+\begin{figure}[htbp]
+    \centering
+    \resizebox{\textwidth}{!}{%
+        \begin{tikzpicture}[
+                font=\sffamily,
+                % Added anchor=east to push the text to the left of the specified coordinate
+                label/.style={font=\bfseries\itshape\large, anchor=east},
+                char/.style={font=\bfseries, anchor=center} ]
+
+            % ==============================
+            %          Axes
+            % ==============================
+            % Horizontal Axis (Time)
+            \draw[->, thick] (0.5, 1.0) -- (24.8, 1.0) node[right, font=\Large] {$t$};
+
+            % Vertical Axis (Ensemble / Realizations)
+            \draw[->, thick] (0.5, 1.0) -- (0.5, 9.8) node[above, font=\Large] {Realizations};
+
+            % ==============================
+            %      Realization Rows
+            % ==============================
+
+            % Row 1: Realization 1
+            \node[label] at (0.2, 9) {Realization 1};
+            \foreach \char [count=\i] in {1,0,1,0,1,1,0,1,0,1,0,0,0,0,1,0,1,0,0,1,0,1,1,0} {
+                    \node[char] at (\i*1.0, 9) {\char};
+                }
+
+            % Row 2: Realization 2
+            \node[label] at (0.2, 8) {Realization 2};
+            \foreach \char [count=\i] in {1,0,0,1,0,1,0,1,0,1,0,1,1,1,1,1,1,0,0,0,0,0,0,0} {
+                    \node[char] at (\i*1.0, 8) {\char};
+                }
+
+            % Row 3: Realization 3
+            \node[label] at (0.2, 7) {Realization 3};
+            \foreach \char [count=\i] in {0,1,1,0,1,0,1,0,1,0,0,0,0,0,0,1,1,1,1,0,1,0,1,0} {
+                    \node[char] at (\i*1.0, 7) {\char};
+                }
+
+            % Row 4: Realization 5
+            \node[label] at (0.2, 6) {Realization 5};
+            \foreach \char [count=\i] in {1,0,0,1,0,1,1,1,1,1,1,1,0,0,0,1,1,1,0,0,1,1,1,1} {
+                    \node[char] at (\i*1.0, 6) {\char};
+                }
+
+            % Row 5: Realization 1000
+            \node[label] at (0.2, 5) {Realization 1000};
+            \foreach \char [count=\i] in {0,1,0,1,0,0,1,1,1,1,0,0,0,0,0,0,1,1,1,0,1,1,0,0} {
+                    \node[char] at (\i*1.0, 5) {\char};
+                }
+
+            % Row 6: Realization 9999
+            \node[label] at (0.2, 4) {Realization 9999};
+            \foreach \char [count=\i] in {1,0,1,0,0,0,0,1,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0} {
+                    \node[char] at (\i*1.0, 4) {\char};
+                }
+
+            % Row 7: Realization 10^9
+            \node[label] at (0.2, 3) {Realization $10^9$};
+            \foreach \char [count=\i] in {0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0} {
+                    \node[char] at (\i*1.0, 3) {\char};
+                }
+
+            % Row 8: Realization infinity
+            \node[label] at (0.2, 2) {Realization $\infty$};
+            \foreach \char [count=\i] in {1,1,0,1,0,0,0,1,0,1,0,0,1,1,1,1,1,1,1,1,1,0,0,0} {
+                    \node[char] at (\i*1.0, 2) {\char};
+                }
+
+        \end{tikzpicture}%
+    }
+    \caption{A visual example of the generated data matrix.}
+\end{figure}
