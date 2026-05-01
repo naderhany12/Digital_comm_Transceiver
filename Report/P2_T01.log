@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.3.7)  1 MAY 2026 15:45
+This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.3.7)  1 MAY 2026 15:57
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -2195,10 +2195,10 @@ Package hyperref Info: bookmark level for unknown listing defaults to 0 on input
 \pydata@fh@0=\write12
 \openout12 = `_5E7C8F4B5C50DC0799216130799B03E2.data.minted'.
 
-runsystem(latexminted config  --timestamp 20260501154544 5E7C8F4B5C50DC0799216130799B03E2)...executed safely (allowed).
+runsystem(latexminted config  --timestamp 20260501155719 5E7C8F4B5C50DC0799216130799B03E2)...executed safely (allowed).
 
 (./_5E7C8F4B5C50DC0799216130799B03E2.config.minted)
-runsystem(latexminted cleanconfig  --timestamp 20260501154544 5E7C8F4B5C50DC0799216130799B03E2)...executed safely (allowed).
+runsystem(latexminted cleanconfig  --timestamp 20260501155719 5E7C8F4B5C50DC0799216130799B03E2)...executed safely (allowed).
 
  (./_minted/default.style.minted) (./_minted/F5D828EA6FEBE2CE8F54A40D82DD8271.highlight.minted)) [4
 
@@ -2398,10 +2398,10 @@ Package logreq Info: Writing requests to 'P2_T01.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 66779 strings out of 468168
- 1465738 string characters out of 5436525
+ 66822 strings out of 468168
+ 1466756 string characters out of 5436525
  2724526 words of memory out of 5000000
- 94099 multiletter control sequences out of 15000+600000
+ 94142 multiletter control sequences out of 15000+600000
  720701 words of font info for 274 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  123i,13n,122p,2622b,4999s stack positions out of 10000i,1000n,20000p,200000b,200000s
