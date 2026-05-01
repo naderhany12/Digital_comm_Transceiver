@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.3.7)  2 MAY 2026 00:47
+This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.3.7)  2 MAY 2026 01:11
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -2208,10 +2208,10 @@ Package hyperref Info: bookmark level for unknown listing defaults to 0 on input
 \pydata@fh@0=\write12
 \openout12 = `_5E7C8F4B5C50DC0799216130799B03E2.data.minted'.
 
-runsystem(latexminted config  --timestamp 20260502004713 5E7C8F4B5C50DC0799216130799B03E2)...executed safely (allowed).
+runsystem(latexminted config  --timestamp 20260502011104 5E7C8F4B5C50DC0799216130799B03E2)...executed safely (allowed).
 
 (./_5E7C8F4B5C50DC0799216130799B03E2.config.minted)
-runsystem(latexminted cleanconfig  --timestamp 20260502004713 5E7C8F4B5C50DC0799216130799B03E2)...executed safely (allowed).
+runsystem(latexminted cleanconfig  --timestamp 20260502011104 5E7C8F4B5C50DC0799216130799B03E2)...executed safely (allowed).
 
  (./_minted/default.style.minted) (./_minted/F5D828EA6FEBE2CE8F54A40D82DD8271.highlight.minted)) [4
 
@@ -2392,15 +2392,30 @@ Package fontspec Info:
 
 ]
 Appendix A.
-) [23
+(./_minted/5DBC39005E1BE93C8E2544579F7B383F.highlight.minted [23
 
 ]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [24]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [25]
+LaTeX Font Info:    Font shape `TU/TeXGyrePagella(0)/bx/n' in size <9> not available
+(Font)              Font shape `TU/TeXGyrePagella(0)/b/n' tried instead on input line 167.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [26]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [27])) [28]
 
 Package glossaries Warning: No \printglossary or \printglossaries found. 
 (Remove \makeglossaries if you don't want any glossaries.) 
 This document will not have a glossary.
 
-[24
+[29
 
 ] (./P2_T01.aux (./Matter/00-Cover.aux) (./Matter/01-Front-Page.aux) (./Chapters/00-Abstract.aux) (./Chapters/01-Problem-Description.aux) (./Chapters/02-Introduction.aux) (./Chapters/03-Control-Flags.aux) (./Chapters/04-Generation-of-Data.aux) (./Chapters/05-Creating-the-Unipolar-Ensemble.aux) (./Chapters/06-Creating-The-Polar-NRZ-Ensemble.aux) (./Chapters/07-Creating-The-Polar-RZ-Ensemble.aux) (./Chapters/10-Q1-Statistical-Mean-Calculation.aux) (./Chapters/11-Q2-Is-the-Process-Stationary.aux) (./Chapters/12-Q3-Statistical-Autocorrelation.aux) (./Chapters/14-Q5-Is-the-Random-Process-Ergodic.aux) (./Chapters/15-Plotting-the-PSD-of-the-Ensemble.aux) (./Chapters/16-Q6-Signal Bandwidth.aux))
  ***********
@@ -2412,18 +2427,18 @@ L3 programming layer <2026-01-19>
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `P2_T01.out' has not changed.
-(rerunfilecheck)             Checksum: 3BD1A8F9ED87DD172D7E3BB6584FDFE7;3194.
+(rerunfilecheck)             Checksum: 6AEC787EBE8E1C95F59FA1C0CA939262;3194.
 Package logreq Info: Writing requests to 'P2_T01.run.xml'.
 \openout1 = `P2_T01.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 66992 strings out of 468168
- 1471656 string characters out of 5436525
- 2724403 words of memory out of 5000000
- 94292 multiletter control sequences out of 15000+600000
- 720701 words of font info for 274 fonts, out of 8000000 for 9000
+ 67505 strings out of 468168
+ 1485616 string characters out of 5436525
+ 2724530 words of memory out of 5000000
+ 94800 multiletter control sequences out of 15000+600000
+ 720709 words of font info for 275 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 123i,13n,122p,2622b,4997s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 123i,13n,122p,2622b,5352s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on P2_T01.pdf (27 pages).
+Output written on P2_T01.pdf (32 pages).

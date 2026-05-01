@@ -102,6 +102,34 @@
       \verb Section 4 - Digital Communications:E\:/EECE/Second year/Second term/Communications/Digital Communications/Sections/Eng.MohammedKhalidOldSections/Tutorial 4.pdf:PDF
       \endverb
     \endentry
+    \entry{Nafie2026b}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=32c370d07b548a04bdf70e5ba404c38d}{%
+           family={Nafie},
+           familyi={N\bibinitperiod},
+           given={Dr.\bibnamedelimi Mohammed},
+           giveni={D\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+      }
+      \strng{namehash}{32c370d07b548a04bdf70e5ba404c38d}
+      \strng{fullhash}{32c370d07b548a04bdf70e5ba404c38d}
+      \strng{fullhashraw}{32c370d07b548a04bdf70e5ba404c38d}
+      \strng{bibnamehash}{32c370d07b548a04bdf70e5ba404c38d}
+      \strng{authorbibnamehash}{32c370d07b548a04bdf70e5ba404c38d}
+      \strng{authornamehash}{32c370d07b548a04bdf70e5ba404c38d}
+      \strng{authorfullhash}{32c370d07b548a04bdf70e5ba404c38d}
+      \strng{authorfullhashraw}{32c370d07b548a04bdf70e5ba404c38d}
+      \field{extraname}{3}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{3}
+      \field{title}{Digital Communciations Lecture 4}
+      \field{year}{2026}
+      \verb{file}
+      \verb Digital Communications Lecture 4:E\:/EECE/Second year/Second term/Communications/Digital Communications/Lectures/Lecture 4 Digital Comm..pdf:PDF
+      \endverb
+    \endentry
   \enddatalist
 \endrefsection
 \endinput
