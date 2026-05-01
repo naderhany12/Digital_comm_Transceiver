@@ -1,0 +1,8 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k}{function}\PYG{+w}{ }mean\PYGZus{}val\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{manual\PYGZus{}mean}\PYG{p}{(}data, dim\PYG{p}{)}
+\PYG{k}{if}\PYG{+w}{ }\PYG{n+nb}{nargin}\PYG{+w}{ }\PYG{o}{==}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{+w}{    }\PYG{n}{mean\PYGZus{}val}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{sum}\PYG{p}{(}\PYG{n}{data}\PYG{p}{,}\PYG{+w}{ }\PYG{l+s}{\PYGZsq{}all\PYGZsq{}}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{/}\PYG{+w}{ }\PYG{n+nb}{numel}\PYG{p}{(}\PYG{n}{data}\PYG{p}{);}\PYG{+w}{  }\PYG{c}{\PYGZpc{} All elements.}
+\PYG{k}{elseif}\PYG{+w}{ }\PYG{n}{dim}\PYG{+w}{ }\PYG{o}{==}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{+w}{   }\PYG{n}{mean\PYGZus{}val}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{sum}\PYG{p}{(}\PYG{n}{data}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{/}\PYG{+w}{ }\PYG{n+nb}{size}\PYG{p}{(}\PYG{n}{data}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{);}\PYG{+w}{    }\PYG{c}{\PYGZpc{} Column\PYGZhy{}wise (ensemble).}
+\PYG{k}{elseif}\PYG{+w}{ }\PYG{n}{dim}\PYG{+w}{ }\PYG{o}{==}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{p}{,}\PYG{+w}{   }\PYG{n}{mean\PYGZus{}val}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{sum}\PYG{p}{(}\PYG{n}{data}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{/}\PYG{+w}{ }\PYG{n+nb}{size}\PYG{p}{(}\PYG{n}{data}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{p}{);}\PYG{+w}{    }\PYG{c}{\PYGZpc{} Row\PYGZhy{}wise (time).}
+\PYG{k}{end}
+\PYG{k}{end}
+\end{MintedVerbatim}

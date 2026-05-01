@@ -6,6 +6,7 @@
 
 %%% Document Options %%%
 % !TEX program = xelatex
+% !BIB program = biber
 \documentclass[
     language=english,
     school=estg,
@@ -34,6 +35,7 @@
 \loadglsentries{Matter/05-Glossary}
 \loadglsentries[\acronymtype]{Matter/06-Acronyms}
 \loadglsentries[\symboltype]{Matter/07-Symbols}
+
 
 \begin{document}
 
@@ -77,8 +79,8 @@
 \include{Chapters/05-Creating-the-Unipolar-Ensemble}
 \include{Chapters/06-Creating-The-Polar-NRZ-Ensemble}
 \include{Chapters/07-Creating-The-Polar-RZ-Ensemble}
-\include{Chapters/08-Applying-Random-Initial-Time-Shifts}
-\include{Chapters/09-Preparing-Cell-Arrays-For-Analysis}
+%\include{Chapters/08-Applying-Random-Initial-Time-Shifts}
+%\include{Chapters/09-Preparing-Cell-Arrays-For-Analysis}
 \include{Chapters/10-Q1-Statistical-Mean-Calculation}
 \include{Chapters/11-Q2-Is-the-Process-Stationary}
 \include{Chapters/12-Q3-Statistical-Autocorrelation}
@@ -94,7 +96,8 @@
 %\input{Chapters/Appendices/01-AppendixB}
 
 %%% Bibliography %%%
-\renewcommand{\refname}{Bibliography}
+\renewcommand{\refname}{References}
+\nocite{*}
 \printbibliography[title={\refname},heading=bibintoc]
 
 %%% Annexes: Work that *YOU DID NOT* Develop %%%

@@ -27,7 +27,10 @@ end
 
 The function \texttt{build\_ensemble} takes the raw binary data and transforms
 it into a matrix of time-domain signals, where each row corresponds to a
-different realization of the random process.
+different realization of the random process. Also a random time delay is added
+using \texttt{randi} function, then \texttt{circshift} is used to apply the
+random delay to each realization, ensuring that each signal starts at a
+different time instant.
 \begin{itemize}
 
     \item \texttt{data} parameter is the generated random bits from
@@ -61,9 +64,9 @@ ensample_unipolar = build_ensemble(data, A, pulse_unipolar, N_realizations, L, '
     \end{minted}
 \end{listing}
 
-All we did in \autoref{listing:Unipolar-Ensemble} is setting the pulse parameter
-and passing all the existing parameters to the \texttt{build\_ensemble}
-function, for the data we used the generated data from
+All we did in \autoref{listing:Unipolar-Ensemble} is setting the pulse
+parameter and passing all the existing parameters to the
+\texttt{build\_ensemble} function, for the data we used the generated data from
 \autoref{listing:Data-Generation}, for \texttt{A}, \texttt{$N_{realizations}$},
 \texttt{L} we used the defined amplitude, number of realizations, and Samples
 per symbol period from the control flags in \autoref{listing:control-flags}.
@@ -75,10 +78,12 @@ per symbol period from the control flags in \autoref{listing:control-flags}.
     \label{fig:UNIPOLAR-ENSEMBLE}
 \end{figure}
 
-Now we can see in \autoref{fig:UNIPOLAR-ENSEMBLE} the first two realizations of the
-unipolar ensemble, the signal is a rectangular pulse as we expected from the
-input pulse, and the amplitude maps to $0$ and $4$ as how we assigned A earlier
-in the control flags. This output confirms that we succefully created the unipolar ensemble as we met the required specifications for the unipolar line code.
+Now we can see in \autoref{fig:UNIPOLAR-ENSEMBLE} the first two realizations of
+the unipolar ensemble, the signal is a rectangular pulse as we expected from
+the input pulse, and the amplitude maps to $0$ and $4$ as how we assigned A
+earlier in the control flags. This output confirms that we succefully created
+the unipolar ensemble as we met the required specifications for the unipolar
+line code.
 
 \begin{itemize}
     \item The amplitude of the signal is either $0$ (for bit "0") or $A$ (for bit "1").

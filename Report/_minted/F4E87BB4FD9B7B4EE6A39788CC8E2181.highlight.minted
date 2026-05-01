@@ -1,0 +1,8 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{+w}{        }\PYG{k}{function}\PYG{+w}{ }\PYG{n+nf}{[Ex, Ux] = compute\PYGZus{}means}\PYG{p}{(}ensample, theoretical\PYGZus{}mean\PYG{p}{)}
+\PYG{n}{Ex}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{manual\PYGZus{}mean}\PYG{p}{(}\PYG{n}{ensample}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{);}\PYG{+w}{   }\PYG{c}{\PYGZpc{} Ensemble mean (across realizations).}
+\PYG{n}{Ux}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{manual\PYGZus{}mean}\PYG{p}{(}\PYG{n}{ensample}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{p}{);}\PYG{+w}{   }\PYG{c}{\PYGZpc{} Time mean (across samples).}
+\PYG{n+nb}{fprintf}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}  Sample 10 ensemble mean  = \PYGZpc{}.4f V (Theoretical: \PYGZpc{}.2f V)\PYGZbs{}n\PYGZsq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{manual\PYGZus{}mean}\PYG{p}{(}\PYG{n}{ensample}\PYG{p}{(:,}\PYG{l+m+mi}{10}\PYG{p}{)),}\PYG{+w}{  }\PYG{n}{theoretical\PYGZus{}mean}\PYG{p}{);}
+\PYG{n+nb}{fprintf}\PYG{p}{(}\PYG{l+s}{\PYGZsq{}  Realization 15 time mean = \PYGZpc{}.4f V (Theoretical: \PYGZpc{}.2f V)\PYGZbs{}n\PYGZsq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{manual\PYGZus{}mean}\PYG{p}{(}\PYG{n}{ensample}\PYG{p}{(}\PYG{l+m+mi}{15}\PYG{p}{,:)),}\PYG{+w}{ }\PYG{n}{theoretical\PYGZus{}mean}\PYG{p}{);}
+\PYG{k}{end}
+\end{MintedVerbatim}

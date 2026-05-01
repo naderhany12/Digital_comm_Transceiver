@@ -6,7 +6,7 @@ unipolar ensemble, we will apply the same steps to create the polar NRZ
 ensemble.
 \begin{listing} [!htpb]
     \caption{Creating the Polar NRZ Ensemble.}
-    \label{listing:Polar-Ensemble}
+    \label{listing:Polar-NRZ-Ensemble}
     \begin{minted}{matlab}
 %% Polar NRZ
 fprintf('\nPolar NRZ\n');
@@ -21,11 +21,11 @@ ensample_polar_NRZ = build_ensemble(data, A, pulse_polar_NRZ, N_realizations, L,
 \begin{figure}[!htpb]
     \centering
     \includegraphics[width=0.75\linewidth]{Figures/Polar_NRZ_-_Realization_2.png}
-    \caption[Realization 1 and Realzation 2 from the Polar Ensemble]{Realization 1 and Realzation 2 from the Polar Ensemble.}
-    \label{fig:POLAR-ENSEMBLE}
+    \caption[Realization 1 and Realzation 2 from the Polar NRZ Ensemble]{Realization 1 and Realzation 2 from the Polar NRZ Ensemble.}
+    \label{fig:POLAR-NRZ-ENSEMBLE}
 \end{figure}
 
-As we can see in \autoref{fig:POLAR-ENSEMBLE}
+As we can see in \autoref{fig:POLAR-NRZ-ENSEMBLE}
 \begin{itemize}
     \item The signal is either at $-A$ or at $+A$, which is the expected behavior for the
           polar NRZ line code.

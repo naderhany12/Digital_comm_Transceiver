@@ -1,2 +1,101 @@
 \chapter[Q1 Statistical Mean Calculation]{Q1 Statistical Mean Calculation}
 \label{cp:q1-statistical-mean-calculation}
+
+First, we will create a function that can caluclate the mean of the ensemble of
+any signal we generated.
+
+\begin{listing} [!htpb]
+    \caption{Manual Mean Calculation Function.}
+    \label{listing:MeanCalculationFunction}
+    \begin{minted}{matlab}
+function mean_val = manual_mean(data, dim)
+if nargin == 1,    mean_val = sum(data, 'all') / numel(data);  % All elements.
+elseif dim == 1,   mean_val = sum(data, 1) / size(data, 1);    % Column-wise (ensemble).
+elseif dim == 2,   mean_val = sum(data, 2) / size(data, 2);    % Row-wise (time).
+end
+end
+    \end{minted}
+\end{listing}
+
+The function \texttt{manual\_mean} is designed to compute the mean of any
+signal passed to it,
+
+The logic of the function is designed as how we were taught in the course on
+how to calculate the mean specfically in \cite{Nafie2026a}
+\begin{equation}
+    \mu = \sum_{i=1}^{N} p(x_i) x_i
+    \label{eq:mean-calculation}
+\end{equation}
+
+\autoref{eq:mean-calculation} shows the general expression for calculating the mean of a random variable,
+now since the $p(x_i)$ is always the same for all bits, so we can simplify the equation to be:
+\begin{equation}
+    \mu = \frac{1}{N} \sum_{i=1}^{N} x_i
+    \label{eq:mean-calculation-simplified}
+\end{equation}
+
+In \autoref{listing:MeanCalculationFunction} we have implemented
+\autoref{eq:mean-calculation-simplified} to calculate the mean of any input to
+this function, then we adjusted the input parameters to be able to calculate
+the mean either for the ensemble or for the time samples.
+
+\begin{itemize}
+    \item If the user does not specify the dimenstion, the function will calculate the
+          mean of all the elements in the input data.
+    \item If the user specifies the dimension as 1, the function will calculate the mean
+          column-wise, which is the mean of the ensemble for each time sample.
+    \item If the user specifies the dimension as 2, the function will calculate the mean
+          row-wise, which is the mean of the time samples for each ensemble member.
+\end{itemize}
+
+Now after creating the functio to calculate the mean manually, we will create
+another function to make the code easier and more readable, its only purpose is
+to use the \texttt{manual\_mean} and make the code less messy.
+
+\begin{listing} [!htpb]
+    \caption{Mean Calculation Wrapper Function.}
+    \label{listing:MeanCalculationWrapperFunction}
+    \begin{minted}{matlab}
+        function [Ex, Ux] = compute_means(ensample, theoretical_mean)
+Ex = manual_mean(ensample, 1);   % Ensemble mean (across realizations).
+Ux = manual_mean(ensample, 2);   % Time mean (across samples).
+fprintf('  Sample 10 ensemble mean  = %.4f V (Theoretical: %.2f V)\n', manual_mean(ensample(:,10)),  theoretical_mean);
+fprintf('  Realization 15 time mean = %.4f V (Theoretical: %.2f V)\n', manual_mean(ensample(15,:)), theoretical_mean);
+end
+    \end{minted}
+
+\end{listing}
+
+The \texttt{compute\_means} function takes the ensemble as an argument, also we
+pass the theoretical mean as an argument to this function to compare the output
+of the ensemble to the theortical mean calculated by the techniques learned in
+the course. Now after creating the two functions needed to claculate the mean
+easily and in an organized order, we can use these functions to calculate the
+mean of each ensemble we created in one line of code.
+
+
+\begin{listing} [!htpb]
+    \caption{Mean Calculation for Unipolar}
+    \label{listing:MeanCalculationUnipolar}
+    \begin{minted}{matlab}
+    [Ex_unipolar, Ux_unipolar] = compute_means(ensample_unipolar, A/2);
+    \end{minted}
+\end{listing}
+
+\begin{listing} [!htpb]
+    \caption{Mean Calculation for Polar NRZ}
+    \label{listing:MeanCalculationPolarNRZ}
+    \begin{minted}{matlab}
+    [Ex_polar_NRZ, Ux_polar_NRZ] = compute_means(ensample_polar_NRZ, 0);
+    \end{minted}
+
+\end{listing}
+
+\begin{listing} [!htpb]
+    \caption{Mean Calculation for Polar RZ}
+    \label{listing:MeanCalculationPolarRZ}
+    \begin{minted}{matlab}
+    [Ex_RZ, Ux_RZ] = compute_means(ensample_RZ, 0);
+    \end{minted}
+\end{listing}
+
