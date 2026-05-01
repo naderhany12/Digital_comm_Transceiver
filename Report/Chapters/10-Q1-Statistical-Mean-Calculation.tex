@@ -105,7 +105,7 @@ can use \autoref{eq:mean-calculation-simplified}.
     \item For the unipolar ensemble, since the bits are represented by $A$ and $0$, the
           mean can be calculated as:
           \begin{equation}
-              \mu_{unipolar} = \frac{1}{2} (A + 0) = \frac{A}{2}
+              \mu_{unipolar} = \frac{1}{2} (A + 0) = \frac{A}{2} = 2 V
               \label{eq:mean-unipolar}
           \end{equation}
     \item For the Polar NRZ ensemble, since the bits are represented by $A$ and $-A$, the
@@ -124,7 +124,7 @@ can use \autoref{eq:mean-calculation-simplified}.
 
 \begin{figure}[!htpb]
     \centering
-    \includegraphics[width=0.48\linewidth]{Figures/Unipolar_NRZ_-_Time_Mean_X(t)_for_Each_Realization.png}
+    \includegraphics[width=0.48\linewidth]{Figures/Unipolar_NRZ_-_X(t)_per_Realization.png}
     \caption[UNIPOLAR NRZ MEAN]{UNIPOLAR NRZ mean across time and across realizations.}
     \label{fig:UNIPOLAR_NRZ_MEAN}
 \end{figure}
@@ -133,14 +133,14 @@ can use \autoref{eq:mean-calculation-simplified}.
     \centering
     \begin{minipage}{0.48\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{Figures/Polar_NRZ_-_Time_Mean_X(t)_for_Each_Realization.png}
+        \includegraphics[width=\textwidth]{Figures/Polar_NRZ_-_X(t)_per_Realization.png}
         \caption[POLAR NRZ MEAN]{POLAR NRZ mean across time and across realizations.}
         \label{fig:POLAR_NRZ_MEAN}
     \end{minipage}
     \hfill
     \begin{minipage}{0.48\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{Figures/Polar_RZ_-_Time_Mean_X(t)_for_Each_Realization.png}
+        \includegraphics[width=\textwidth]{Figures/Polar_RZ_-_X(t)_per_Realization.png}
         \caption[POLAR RZ MEAN]{POLAR RZ mean across time and across realizations.}
         \label{fig:POLAR_RZ_MEAN}
     \end{minipage}
@@ -148,13 +148,13 @@ can use \autoref{eq:mean-calculation-simplified}.
 
 \begin{itemize}
     \item In \autoref{fig:UNIPOLAR_NRZ_MEAN} we can see that the mean across realizations
-          is around $A/2$ which is nearly the theoretical mean calculated in
+          is $1.7840 V$ (Calculated from MATLAB itself) which is nearly the theoretical mean calculated in
           \autoref{eq:mean-unipolar}
     \item In \autoref{fig:POLAR_NRZ_MEAN} we can see that the mean across realizations is
-          around $0$ which is nearly the theoretical mean calculated in
+          around $ -0.1920 V $ which is nearly the theoretical mean calculated in
           \autoref{eq:mean-polar-nrz}
     \item In \autoref{fig:POLAR_RZ_MEAN} we can see that the mean across realizations is
-          around $0$ which is nearly the theoretical mean calculated in
+          around $-0.2560 V$ which is nearly the theoretical mean calculated in
           \autoref{eq:mean-polar-rz}
 \end{itemize}
 

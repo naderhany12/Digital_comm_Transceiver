@@ -1,9 +1,9 @@
 %% Control Flags
 N_bits         = 100;           % Number of bits per realization.
 N_realizations = 500;           % Number of realizations.
-Pw             = 0.07;          % Pulse width of the bit.
+Pw             = 0.08;          % Pulse width (changed to 0.08 for even L=8).
 Ts             = 0.01;          % Time sample.
-L              = round(Pw/Ts);  % Samples per symbol period (L=7).
+L              = round(Pw/Ts);  % Samples per symbol period (L=8).
 A              = 4;             % Amplitude.
 N_fft          = 1024;          % FFT size.
 Fs             = 1/Ts;          % Sampling frequency.
@@ -29,11 +29,11 @@ ensample_unipolar = build_ensemble(data, A, pulse_unipolar, N_realizations, L, '
 
 plot_realizations(ensample_unipolar, 'Unipolar NRZ', ylim_unipolar);
 plot_autocorr(tau_unipolar, Rx_unipolar, ...
-    lags_time_unipolar, Rx_time_unipolar, 'Unipolar NRZ', Ts);
-plot_means(Ex_unipolar, Ux_unipolar, 'Unipolar NRZ', ylim_unipolar);
+    lags_time_unipolar, Rx_time_unipolar, 'Unipolar NRZ', Ts, A, L, 'unipolar');
+plot_means(Ex_unipolar, Ux_unipolar, 'Unipolar NRZ', ylim_unipolar, A/2);
 plot_stationarity(ensample_unipolar, Ts, 'Unipolar NRZ');
 compute_psd(Rx_unipolar, N_fft, center, half_len, freq, Fs, ...
-    A/2, color_unipolar, 'PSD - Unipolar NRZ', 'S_x(f) [V^2/Hz]');
+    A/2, color_unipolar, 'PSD - Unipolar NRZ', 'S_x(f) [V^2/Hz]', A, Pw, 'unipolar');
 
 %% Polar NRZ
 fprintf('\nPolar NRZ\n');
@@ -50,15 +50,15 @@ ensample_polar_NRZ = build_ensemble(data, A, pulse_polar_NRZ, N_realizations, L,
 
 plot_realizations(ensample_polar_NRZ, 'Polar NRZ', ylim_polar_NRZ);
 plot_autocorr(tau_polar_NRZ, Rx_polar_NRZ, ...
-    lags_time_polar_NRZ, Rx_time_polar_NRZ, 'Polar NRZ', Ts);
-plot_means(Ex_polar_NRZ, Ux_polar_NRZ, 'Polar NRZ', ylim_polar_NRZ);
+    lags_time_polar_NRZ, Rx_time_polar_NRZ, 'Polar NRZ', Ts, A, L, 'polar_nrz');
+plot_means(Ex_polar_NRZ, Ux_polar_NRZ, 'Polar NRZ', ylim_polar_NRZ, 0);
 plot_stationarity(ensample_polar_NRZ, Ts, 'Polar NRZ');
 compute_psd(Rx_polar_NRZ, N_fft, center, half_len, freq, Fs, ...
-    0, color_polar_NRZ, 'PSD - Polar NRZ', 'Magnitude');
+    0, color_polar_NRZ, 'PSD - Polar NRZ', 'Magnitude', A, Pw, 'polar_nrz');
 
 %% Polar RZ
 fprintf('\nPolar RZ\n');
-pulse_RZ = [ones(1, floor(L/2)), zeros(1, ceil(L/2))];
+pulse_RZ = [ones(1, L/2), zeros(1, L/2)];
 ylim_RZ  = [-A-1, A+1];
 color_RZ = [0.4940 0.1840 0.5560];
 
@@ -70,11 +70,11 @@ ensample_RZ = build_ensemble(data, A, pulse_RZ, N_realizations, L, 'polar');
 [Rx_time_RZ, lags_time_RZ] = correlation_manual(ensample_RZ(10,:), 100, 'time');
 
 plot_realizations(ensample_RZ, 'Polar RZ', ylim_RZ);
-plot_autocorr(tau_RZ, Rx_RZ, lags_time_RZ, Rx_time_RZ, 'Polar RZ', Ts);
-plot_means(Ex_RZ, Ux_RZ, 'Polar RZ', [-1, 1]);
+plot_autocorr(tau_RZ, Rx_RZ, lags_time_RZ, Rx_time_RZ, 'Polar RZ', Ts, A, L, 'polar_rz');
+plot_means(Ex_RZ, Ux_RZ, 'Polar RZ', [-1, 1], 0);
 plot_stationarity(ensample_RZ, Ts, 'Polar RZ');
 compute_psd(Rx_RZ, N_fft, center, half_len, freq, Fs, ...
-    0, color_RZ, 'PSD - Polar RZ', 'Magnitude');
+    0, color_RZ, 'PSD - Polar RZ', 'Magnitude', A, Pw, 'polar_rz');
 
 %% Functions
 
@@ -90,28 +90,66 @@ ylabel('Voltage (V)'); xlabel('Sample Index');
 sgtitle([name, ' Realizations']);
 end
 
-function plot_autocorr(tau, Rx_ens, lags_t, Rx_t, name, Ts)
-figure;
-subplot(2,1,1);
-plot(tau*Ts, Rx_ens, 'LineWidth', 1.5);
-title([name, ' - Ensemble R_x(\tau)']); grid on;
-xlabel('\tau (s)'); ylabel('R_x(\tau)'); xlim([-0.75 0.75]);
-subplot(2,1,2);
-plot(lags_t*Ts, Rx_t, 'g', 'LineWidth', 1.5);
-title([name, ' - Time R_x(\tau) for Realization #10']); grid on;
-xlabel('\tau (s)'); ylabel('R_T(\tau)');
-sgtitle([name, ': Ensemble vs Time Autocorrelation']);
+function plot_autocorr(tau, Rx_ens, lags_t, Rx_t, name, Ts, A, L, type)
+    Tb      = L * Ts;
+    tau_sec = tau    * Ts;
+    lag_sec = lags_t * Ts;
+    
+    % Define high-contrast theoretical color based on scheme
+    switch type
+        case 'polar_nrz', theo_color = [1 0 1]; % Magenta
+        case 'unipolar',  theo_color = [0 1 1]; % Cyan
+        case 'polar_rz',  theo_color = [1 0.8 0]; % Gold/Yellow
+    end
+
+    switch type
+        case 'polar_nrz'
+            Rx_theo_ens  = A^2 * max(0, 1 - abs(tau_sec)/Tb);
+            Rx_theo_time = A^2 * max(0, 1 - abs(lag_sec)/Tb);
+        case 'unipolar'
+            Rx_theo_ens  = (A^2/4) * max(0, 1 - abs(tau_sec)/Tb) + (A/2)^2;
+            Rx_theo_time = (A^2/4) * max(0, 1 - abs(lag_sec)/Tb) + (A/2)^2;
+        case 'polar_rz'
+            Rx_theo_ens  = (A^2/2) * max(0, 1 - abs(tau_sec)/(Tb/2));
+            Rx_theo_time = (A^2/2) * max(0, 1 - abs(lag_sec)/(Tb/2));
+    end
+
+    figure;
+    subplot(2,1,1);
+    plot(tau*Ts, Rx_ens, 'LineWidth', 1.5); hold on;
+    plot(tau_sec, Rx_theo_ens, '--', 'Color', theo_color, 'LineWidth', 2);
+    title([name, ' - Ensemble R_x(\tau)']); grid on;
+    xlabel('\tau (s)'); ylabel('R_x(\tau)'); xlim([-0.75 0.75]);
+    legend('Simulated', 'Theoretical');
+
+    subplot(2,1,2);
+    plot(lags_t*Ts, Rx_t, 'g', 'LineWidth', 1.5); hold on;
+    plot(lag_sec, Rx_theo_time, '--', 'Color', theo_color, 'LineWidth', 2);
+    title([name, ' - Time R_x(\tau) for Realization #10']); grid on;
+    xlabel('\tau (s)'); ylabel('R_T(\tau)');
+    legend('Simulated', 'Theoretical');
+    sgtitle([name, ': Ensemble vs Time Autocorrelation']);
 end
 
-function plot_means(Ex, Ux, name, ylim_range)
-figure;
-subplot(2,1,1);
-plot(Ex); ylim(ylim_range); grid on;
-title([name, ' - E[X(t)]']); xlabel('Sample Index'); ylabel('Mean (V)');
-subplot(2,1,2);
-plot(Ux); ylim(ylim_range); grid on;
-title([name, ' - <X(t)> per Realization']); xlabel('Realization'); ylabel('Mean (V)');
-sgtitle([name, ': E[x(t)] vs <x(t)>']);
+function plot_means(Ex, Ux, name, ylim_range, theo_mean)
+    % Using a universal bright contrast color for horizontal mean lines
+    contrast_mean = [1 0.2 0.2]; % Bright Coral Red
+    
+    figure;
+    subplot(2,1,1);
+    plot(Ex); hold on;
+    yline(theo_mean, '--', 'Color', contrast_mean, 'LineWidth', 2);
+    ylim(ylim_range); grid on;
+    title([name, ' - E[X(t)]']); xlabel('Sample Index'); ylabel('Mean (V)');
+    legend('Simulated', 'Theoretical');
+
+    subplot(2,1,2);
+    plot(Ux); hold on;
+    yline(theo_mean, '--', 'Color', contrast_mean, 'LineWidth', 2);
+    ylim(ylim_range); grid on;
+    title([name, ' - <X(t)> per Realization']); xlabel('Realization'); ylabel('Mean (V)');
+    legend('Simulated', 'Theoretical');
+    sgtitle([name, ': E[x(t)] vs <x(t)>']);
 end
 
 function plot_stationarity(ensample, Ts, name)
@@ -125,18 +163,62 @@ grid on; legend('R_x at t_1', 'R_x at t_2');
 title([name, ' - Stationarity Check']); xlabel('\tau (s)'); ylabel('R_x(\tau)');
 end
 
-function compute_psd(Rx, N_fft, center, half_len, freq, Fs, dc_mean, color, title_str, ylabel_str)
-Rx_padded = zeros(1, N_fft);
-Rx_padded(center-half_len : center+half_len) = Rx - dc_mean^2;  % Subtract DC, zero-pad.
-PSD = fftshift(abs(fft(ifftshift(Rx_padded))));                  % FFT to get PSD.
-if dc_mean ~= 0                                                  % Add DC spike if non-zero mean.
-    DC_spike = zeros(1, N_fft);
-    DC_spike(center) = dc_mean^2 / (Fs/N_fft);
-    PSD = PSD + DC_spike;
-end
-figure;
-plot(freq, PSD, 'LineWidth', 2, 'Color', color);
-grid on; title(title_str); xlabel('Frequency (Hz)'); ylabel(ylabel_str); xlim([-120, 120]);
+function compute_psd(Rx, N_fft, center, half_len, freq, Fs, dc_mean, color, title_str, ylabel_str, A, Tb, type)
+    Ts = 1/Fs;
+    df = Fs / N_fft;
+    
+    % 1. Compute Simulated PSD from Rx
+    Rx_padded = zeros(1, N_fft);
+    Rx_padded(center-half_len : center+half_len) = Rx; 
+    PSD_sim = fftshift(abs(fft(ifftshift(Rx_padded)))) * Ts;
+
+    % 2. Theoretical PSD Calculation
+    f = freq;
+    f_eps = f + 1e-12; % Avoid division by zero
+    
+    switch type
+        case 'polar_nrz'
+            PSD_theo = (A^2 * Tb) * (sinc(f_eps * Tb)).^2;
+            theo_color = [1 0 1]; % Magenta
+            
+        case 'unipolar'
+            PSD_theo = (A^2 * Tb / 4) * (sinc(f_eps * Tb)).^2;
+            [~, dc_idx] = min(abs(f));
+            PSD_theo(dc_idx) = PSD_theo(dc_idx) + (A^2/4) / df;
+            theo_color = [0 0.9 0.9]; % Cyan
+            
+        case 'polar_rz'
+            PSD_theo = (A^2 * Tb / 4) * (sinc(f_eps * (Tb/2))).^2;
+            theo_color = [1 0.8 0]; % Gold
+    end
+
+    % --- 3. Visualization (Original Background) ---
+    figure; % Default MATLAB gray background
+    
+    % Calculation of Shared Y-Axis Limits
+    [~, dc_idx] = min(abs(f));
+    mask = true(size(PSD_sim));
+    mask(max(1, dc_idx-1):min(length(f), dc_idx+1)) = false; 
+    
+    if strcmp(type, 'unipolar')
+        y_max = max(PSD_sim(mask)) * 1.5;
+    else
+        y_max = max(PSD_sim) * 1.1;
+    end
+
+    % Top Plot: Simulated
+    subplot(2,1,1);
+    plot(freq, PSD_sim, 'LineWidth', 2, 'Color', color);
+    grid on; title([title_str, ' - Simulated']); 
+    xlabel('Frequency (Hz)'); ylabel(ylabel_str);
+    xlim([-3/Tb, 3/Tb]); ylim([0, y_max]);
+
+    % Bottom Plot: Theoretical
+    subplot(2,1,2);
+    plot(freq, PSD_theo, 'LineWidth', 2, 'Color', theo_color);
+    grid on; title([title_str, ' - Theoretical']); 
+    xlabel('Frequency (Hz)'); ylabel(ylabel_str);
+    xlim([-3/Tb, 3/Tb]); ylim([0, y_max]);
 end
 
 function [Ex, Ux] = compute_means(ensample, theoretical_mean)
@@ -190,3 +272,5 @@ elseif strcmp(type, 'time')
     end
 end
 end
+
+ExportFigures;

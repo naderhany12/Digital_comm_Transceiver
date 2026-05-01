@@ -1,15 +1,15 @@
 [0] Config.pm:328> INFO - This is Biber 2.21
 [0] Config.pm:331> INFO - Logfile is 'P2_T01.blg'
-[125] biber-MSWIN64:342> INFO - === 
-[161] Biber.pm:421> INFO - Reading 'P2_T01.bcf'
-[286] Biber.pm:999> INFO - Using all citekeys in bib section 0
-[316] Biber.pm:4487> INFO - Processing section 0
-[328] Biber.pm:4678> INFO - Looking for bibtex file 'Bibliography/Bibliography.bib' for section 0
-[374] bibtex.pm:1713> INFO - LaTeX decoding ...
-[383] bibtex.pm:1519> INFO - Found BibTeX data source 'Bibliography/Bibliography.bib'
-[429] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[429] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
-[429] Biber.pm:4307> INFO - Sorting list 'none/global//global/global/global' of type 'entry' with template 'none' and locale 'en-US'
-[429] Biber.pm:4313> INFO - No sort tailoring available for locale 'en-US'
-[431] bbl.pm:676> INFO - Writing 'P2_T01.bbl' with encoding 'UTF-8'
-[432] bbl.pm:779> INFO - Output to P2_T01.bbl
+[116] biber-MSWIN64:342> INFO - === 
+[156] Biber.pm:421> INFO - Reading 'P2_T01.bcf'
+[280] Biber.pm:999> INFO - Using all citekeys in bib section 0
+[297] Biber.pm:4487> INFO - Processing section 0
+[313] Biber.pm:4678> INFO - Looking for bibtex file 'Bibliography/Bibliography.bib' for section 0
+[356] bibtex.pm:1713> INFO - LaTeX decoding ...
+[363] bibtex.pm:1519> INFO - Found BibTeX data source 'Bibliography/Bibliography.bib'
+[415] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'variable = shifted' with 'variable = non-ignorable'
+[415] UCollate.pm:68> INFO - Overriding locale 'en-US' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[415] Biber.pm:4307> INFO - Sorting list 'none/global//global/global/global' of type 'entry' with template 'none' and locale 'en-US'
+[415] Biber.pm:4313> INFO - No sort tailoring available for locale 'en-US'
+[418] bbl.pm:676> INFO - Writing 'P2_T01.bbl' with encoding 'UTF-8'
+[420] bbl.pm:779> INFO - Output to P2_T01.bbl

@@ -8,11 +8,10 @@
 \contentsline {chapter}{\numberline {7}Creating The Polar RZ Ensemble}{9}{chapter.7}%
 \contentsline {chapter}{\numberline {8}Q1 Statistical Mean Calculation}{10}{chapter.8}%
 \contentsline {chapter}{\numberline {9}Q2 Is the Process Stationary}{13}{chapter.9}%
-\contentsline {chapter}{\numberline {10}Q3 Statistical Autocorrelation}{14}{chapter.10}%
-\contentsline {chapter}{\numberline {11}Q4 Time Mean \& Autocorrelation of One Waveform}{15}{chapter.11}%
-\contentsline {chapter}{\numberline {12}Q5 Is the Random Process Ergodic}{16}{chapter.12}%
-\contentsline {chapter}{\numberline {13}Plotting the PSD of the Ensemble}{17}{chapter.13}%
-\contentsline {chapter}{\numberline {14}Q6 Signal Bandwidth}{18}{chapter.14}%
+\contentsline {chapter}{\numberline {10}Q3 Statistical Autocorrelation + Q4 Time Mean \& Autocorrelation of One Waveform}{16}{chapter.10}%
+\contentsline {chapter}{\numberline {11}Q5 Is the Random Process Ergodic}{19}{chapter.11}%
+\contentsline {chapter}{\numberline {12}Plotting the PSD of the Ensemble}{20}{chapter.12}%
+\contentsline {chapter}{\numberline {13}Q6 Signal Bandwidth}{21}{chapter.13}%
 \contentsline {chapter}{Appendices}{}{}
-\contentsline {chapter}{\numberline {A}Appendix}{20}{appendix.A}%
-\contentsline {backmatter}{References}{21}{appendix*.22}%
+\contentsline {chapter}{\numberline {A}Appendix}{23}{appendix.A}%
+\contentsline {backmatter}{References}{24}{appendix*.30}%

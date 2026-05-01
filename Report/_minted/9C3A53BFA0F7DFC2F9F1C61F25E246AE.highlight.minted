@@ -1,0 +1,4 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{+w}{        }\PYG{p}{[}\PYG{n}{Rx\PYGZus{}RZ}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{tau\PYGZus{}RZ}\PYG{p}{]}\PYG{+w}{            }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{correlation\PYGZus{}manual}\PYG{p}{(}\PYG{n}{ensample\PYGZus{}RZ}\PYG{p}{,}\PYG{+w}{       }\PYG{l+m+mi}{100}\PYG{p}{,}\PYG{+w}{ }\PYG{l+s}{\PYGZsq{}ensemble\PYGZsq{}}\PYG{p}{);}
+\PYG{+w}{        }\PYG{p}{[}\PYG{n}{Rx\PYGZus{}time\PYGZus{}RZ}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{lags\PYGZus{}time\PYGZus{}RZ}\PYG{p}{]}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{correlation\PYGZus{}manual}\PYG{p}{(}\PYG{n}{ensample\PYGZus{}RZ}\PYG{p}{(}\PYG{l+m+mi}{10}\PYG{p}{,:),}\PYG{+w}{ }\PYG{l+m+mi}{100}\PYG{p}{,}\PYG{+w}{ }\PYG{l+s}{\PYGZsq{}time\PYGZsq{}}\PYG{p}{);}
+\end{MintedVerbatim}

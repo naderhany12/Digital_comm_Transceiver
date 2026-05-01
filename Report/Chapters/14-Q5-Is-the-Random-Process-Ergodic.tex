@@ -1,2 +1,17 @@
 \chapter[Q5 Is the Random Process Ergodic]{Q5 Is the Random Process Ergodic}
 \label{cp:q5-is-the-random-process-ergodic}
+
+To determine if a random process is ergodic, we need to satisfy the following
+conditions as learned in \cite{Nafie2026b}, statistics across time are the same
+as their statistics across the ensemble, which means:
+\begin{enumerate}
+    \item \begin{equation}
+              m(t) = E(X(t)) = \langle X(t) \rangle
+          \end{equation}
+
+    \item \begin{equation}
+              R_x(\tau) = E[X(t) X(t + \tau)] = \langle X(t) X(t + \tau) \rangle
+          \end{equation}
+\end{enumerate}
+
+Where $E$ is the expectation across the ensemble and $\langle \cdot \rangle$ is the time average. 

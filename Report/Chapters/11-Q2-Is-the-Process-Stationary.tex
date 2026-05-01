@@ -1,2 +1,136 @@
 \chapter[Q2 Is the Process Stationary]{Q2 Is the Process Stationary}
 \label{cp:q2-is-the-process-stationary}
+
+To answe this question, we must know what conditions make a process stationary.
+As we learned in \cite{Nafie2026} for a process to be stationary :
+\begin{enumerate}
+    \item All random variables must be identically distributed. \begin{equation}
+              p(x(t_1)) = p(x(t_2)) = \ldots = p(x(t_n)) \quad \forall t_1, t_2, \ldots, t_n
+          \end{equation}
+    \item All joint distributions must depend only on the time differences. \begin{equation}
+              p(x(t_1), x(t_2), \ldots, x(t_n)) = p(x(t_1 + \tau), x(t_2 + \tau), \ldots, x(t_n + \tau)) \quad \forall \tau
+          \end{equation}
+\end{enumerate}
+
+Now from simplicity we can use the Wide-Sense Stationarity (WSS) conditions to
+check if the process is stationary,
+\begin{enumerate}
+    \item The mean of the process must be constant over time. \begin{equation}
+              E[x(t)] = \mu \quad \forall t
+          \end{equation}
+    \item The autocorrelation function must depend only on the time difference. \begin{equation}
+              R_x(t_1, t_2) = R_x(t_1 - t_2) \quad \forall t_1, t_2
+          \end{equation}
+\end{enumerate}
+
+From the previous chapter, we have already calculated the mean of the process
+across time and it was constant for all signals in equations
+\ref{eq:mean-unipolar}, \ref{eq:mean-polar-nrz}, \ref{eq:mean-polar-rz} so
+condition one is already satisfied. Now to check the second condition, we need
+to calculate the autocorrelation across different time instances with the same
+difference and check if it is the same for all time instances. To do this, we
+will create a function that calculates the autocorrelation. The equation we
+want to implement in the function is the following equation from
+\cite{Nafie2026}:
+\begin{equation}
+    R_x(\tau) = E[x(t) x(t + \tau)]
+    \label{eq:autocorrelation-calculation}
+\end{equation}
+
+Where we get the expectation value of a random variable multiplied by a shifted
+version of itself. After this question we will use this equation or pretty much
+the function by getting its \texttt{FT} to calculate the power spectral
+density.
+
+\begin{listing} [H]
+    \caption{Autocorrelation Calculation Function}
+    \label{listing:AutocorrelationCalculationFunction}
+    \begin{minted}{matlab}
+        function [Rx, tau] = correlation_manual(signal, max_tau, type)
+tau = -max_tau:max_tau;      % Lag vector.
+Rx  = zeros(1, length(tau)); % Output array.
+if strcmp(type, 'ensemble')
+    [~, N_samples] = size(signal);
+    for i = 1:length(tau)
+        shift = tau(i);
+        if shift >= 0
+            Rx(i) = manual_mean(signal(:, 1:N_samples-shift) .* signal(:, 1+shift:N_samples));
+        else
+            Rx(i) = manual_mean(signal(:, 1-shift:N_samples) .* signal(:, 1:N_samples+shift));
+        end
+    end
+elseif strcmp(type, 'time')
+    if isvector(signal), signal = signal(:)'; end  % Ensure row vector.
+    N = length(signal);
+    for i = 1:length(tau)
+        lag = tau(i);
+        if lag >= 0
+            Rx(i) = manual_mean(signal(1:N-lag) .* signal(1+lag:N));
+        else
+            Rx(i) = manual_mean(signal(1-lag:N) .* signal(1:N+lag));
+        end
+    end
+end
+end
+    \end{minted}
+\end{listing}
+
+This function does exactly what \autoref{eq:autocorrelation-calculation} says,
+it calculates the expectation value of the signal, using the
+\texttt{manual\_mean} function we created ealier, mulitplied by a shifted
+version of itself for different values of the shift $\tau$.
+
+\begin{listing} [!htpb]
+    \caption{Getting Autocorrelation for Unipolar}
+    \label{Listing:UNIPOLARCORRELATION}
+    \begin{minted}{matlab}
+        [Rx_unipolar, tau_unipolar]            = correlation_manual(ensample_unipolar,       100, 'ensemble');
+        [Rx_time_unipolar, lags_time_unipolar] = correlation_manual(ensample_unipolar(10,:), 100, 'time');
+    \end{minted}
+\end{listing}
+
+\begin{listing} [!htpb]
+    \caption{Getting Autocorrelation for Polar NRZ}
+    \label{Listing:POLARNRZCORRELATION}
+    \begin{minted}{matlab}
+        [Rx_polar_NRZ, tau_polar_NRZ]            = correlation_manual(ensample_polar_NRZ,       100, 'ensemble');
+        [Rx_time_polar_NRZ, lags_time_polar_NRZ] = correlation_manual(ensample_polar_NRZ(10,:), 100, 'time');
+    \end{minted}
+\end{listing}
+
+\begin{listing} [H]
+    \caption{Getting Autocorrelation for Polar RZ}
+    \label{Listing:POLARRZCORRELATION}
+    \begin{minted}{matlab}
+        [Rx_RZ, tau_RZ]            = correlation_manual(ensample_RZ,       100, 'ensemble');
+        [Rx_time_RZ, lags_time_RZ] = correlation_manual(ensample_RZ(10,:), 100, 'time');
+    \end{minted}
+\end{listing}
+
+\begin{figure}[!htpb]
+    \centering
+    \includegraphics[width=0.48\linewidth]{Figures/Unipolar_NRZ_-_Stationarity_Check.png}
+    \caption[UNIPOLAR NRZ STATIONARITY]{UNIPOLAR NRZ stationarity check.}
+    \label{fig:UNIPOLAR_NRZ_STATIONARITY}
+\end{figure}
+
+\begin{figure}[!htpb]
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Figures/Polar_NRZ_-_Stationarity_Check.png}
+        \caption[POLAR NRZ STATIONARITY]{POLAR NRZ stationarity check.}
+        \label{fig:POLAR_NRZ_STATIONARITY}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Figures/Polar_RZ_-_Stationarity_Check.png}
+        \caption[POLAR RZ STATIONARITY]{POLAR RZ stationarity check.}
+        \label{fig:POLAR_RZ_STATIONARITY}
+    \end{minipage}
+\end{figure}
+
+As we can see from the figures above, the autocorrelatoion across time at two
+different instances is almost or exactly the same as they have the same time
+difference, therefore we can safely say that all of our three signals are stationary.

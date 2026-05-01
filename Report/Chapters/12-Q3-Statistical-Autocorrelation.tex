@@ -1,2 +1,142 @@
-\chapter[Q3 Statistical Autocorrelation]{Q3 Statistical Autocorrelation}
+\chapter[Q3 Statistical Autocorrelation + Q4 Time Mean \& Autocorrelation of One Waveform]{Q3 Statistical Autocorrelation + Q4 Time Mean \& Autocorrelation of One Waveform}
 \label{cp:q3-statistical-autocorrelation}
+
+In this question, we can use our already established function that we created
+in the previous question in
+\autoref{listing:AutocorrelationCalculationFunction} to calculate the
+autocorrelation of each signal. For the Polar NRZ signal we can get the
+autocorrelation by using the following equation from \cite{Khalid2026} :
+\begin{equation}
+    R_x(\tau) = \frac{A^2}{2} \left( 1 - \frac{|\tau|}{T_b} \right) \text{ for } |\tau| \leq T_b
+    \label{eq:autocorrelation-polar-nrz}
+\end{equation}
+
+Also for the Unipolar NRZ signal we can get the autocorrelation by using the
+following equation from \cite{Khalid2026} :
+\begin{equation}
+    R(\tau) = \frac{A^2}{4} + \frac{A^2}{4} \Delta\left(\frac{t}{T}\right)
+    \label{eq:autocorrelation-unipolar}
+\end{equation}
+
+Now we are going to derive the autocorrelation expression for the Polar RZ
+signal.
+
+For a Polar RZ signal, symbols are represented by $+A$ and $-A$, but the active
+pulse only lasts for half the bit duration ($T/2$), returning to zero for the
+second half.
+\begin{itemize}
+    \item $P(X(t) = A) = P(\text{Bit 1}) \times P(\text{in pulse}) = 0.5 \times 0.5 = 0.25$
+    \item $P(X(t) = -A) = P(\text{Bit 0}) \times P(\text{in pulse}) = 0.5 \times 0.5 = 0.25$
+    \item $P(X(t) = 0) = P(\text{in zero region}) = 0.5$
+\end{itemize}
+
+For $\tau < T/2$:
+\begin{equation}
+    R(\tau) = E[X(t)X(t+\tau)] = \sum X(t)X(t+\tau) P(X(t)X(t+\tau))
+\end{equation}
+\begin{equation}
+    R(\tau) = A^2 P(A,A) + (-A)^2 P(-A,-A) - A^2 P(-A,A) - A^2 P(A,-A)
+\end{equation}
+
+By symmetry, $P(A,A) = P(-A,-A)$ and $P(-A,A) = P(A,-A)$:
+\begin{equation}
+    R(\tau) = 2A^2 P(A,A) - 2A^2 P(-A,A)
+\end{equation}
+
+\textbf{Step 1: Finding $P(A,A)$}
+\begin{equation}
+    P(A,A) = P(X(t+\tau)=A \mid X(t)=A) P(X(t)=A)
+\end{equation}
+Given $X(t)=A$, we know we are currently inside an active pulse of width $T/2$. The probability of \textbf{not transitioning} out of this pulse is $1 - \frac{\tau}{T/2} = 1 - \frac{2\tau}{T}$. If it does transition, it drops to the 0 region. Thus:
+\begin{equation}
+    P(A,A) = \left(1 - \frac{2\tau}{T}\right) \times 0.25
+\end{equation}
+
+\textbf{Step 2: Finding $P(-A,A)$}
+\begin{equation}
+    P(-A,A) = P(X(t+\tau)=A \mid X(t)=-A) P(X(t)=-A)
+\end{equation}
+To go from $-A$ to $A$, the signal must transition to the next bit interval. However, because $\tau < T/2$, the shift $\tau$ is too small to cross the $T/2$ zero-region gap between active pulses.
+\begin{equation}
+    P(X(t+\tau)=A \mid X(t)=-A) = 0 \implies P(-A,A) = 0
+\end{equation}
+
+\textbf{Final $R(\tau)$ for $\tau < T/2$:}
+\begin{align}
+    R(\tau) & = 2A^2 \left[ \left(1 - \frac{2\tau}{T}\right) \times 0.25 \right] - 0 \nonumber \\
+    R(\tau) & = \frac{A^2}{2} \left(1 - \frac{2\tau}{T}\right)
+\end{align}
+
+For $\tau \ge T/2$, the autocorrelation is 0. This gives us the final triangle
+function
+\begin{equation}
+    \label{eq:autocorrelation-polar-rz}
+    R(\tau) = \frac{A^2}{2} \Delta\left(\frac{2\tau}{T}\right)
+\end{equation}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Figures/Unipolar_NRZ_-_Time_R_x(tau)_for_Realization_10.png}
+    \caption[UNIPOLAR NRZ Autocorrelation]{UNIPOLAR NRZ Autocorrelation.}
+    \label{fig:UNIPOLAR_NRZ_AUTOCORRELATION}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Figures/Polar_NRZ_-_Time_R_x(tau)_for_Realization_10.png}
+        \caption[POLAR NRZ Autocorrelation]{POLAR NRZ Autocorrelation.}
+        \label{fig:POLAR_NRZ_AUTOCORRELATION}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Figures/Polar_RZ_-_Time_R_x(tau)_for_Realization_10.png}
+        \caption[POLAR RZ Autocorrelation]{POLAR RZ Autocorrelation.}
+        \label{fig:POLAR_RZ_AUTOCORRELATION}
+    \end{minipage}
+\end{figure}
+
+\begin{itemize}
+    \item In \autoref{fig:UNIPOLAR_NRZ_AUTOCORRELATION}, the autocorrelation value across
+          realizations is exactly as we expected from
+          \autoref{eq:autocorrelation-unipolar}, as if we put $\tau = 0$ we get $R(0) =
+              \frac{A^2}{4} + \frac{A^2}{4} = \frac{A^2}{2} = 8 V^2$
+    \item In \autoref{fig:POLAR_NRZ_AUTOCORRELATION}, the autocorrelation value across
+          realizations is exactly as we expected from
+          \autoref{eq:autocorrelation-polar-nrz}, as if we put $\tau = 0$ we get $R(0) =
+              A^2 = 16 V^2$
+    \item In \autoref{fig:POLAR_RZ_AUTOCORRELATION}, the autocorrelation value across
+          realizations is exactly as we expected from
+          \autoref{eq:autocorrelation-polar-rz}, as if we put $\tau = 0$ we get $R(0) =
+              \frac{A^2}{2} = 8 V^2$
+\end{itemize}
+
+We can further verify these simulated $R(0)$ values mathematically by
+calculating the expected value of the squared signal, $E[X(t)^2]$, which
+represents the average power of the process:
+\begin{itemize}
+    \item \textbf{Unipolar NRZ:}
+          \begin{equation}
+              E[X(t)^2] = A^2 P(X(t)=A) + 0^2 P(X(t)=0) = A^2(0.5) + 0 = \frac{A^2}{2} = 8 V^2
+          \end{equation}
+
+    \item \textbf{Polar NRZ:}
+          \begin{equation}
+              E[X(t)^2] = A^2 P(X(t)=A) + (-A)^2 P(X(t)=-A) = A^2(0.5) + A^2(0.5) = A^2 = 16 V^2
+          \end{equation}
+
+    \item \textbf{Polar RZ:}
+          \begin{equation}
+              E[X(t)^2] = A^2(0.25) + (-A)^2(0.25) + 0^2(0.5) = \frac{A^2}{4} + \frac{A^2}{4} = \frac{A^2}{2} = 8 V^2
+          \end{equation}
+
+\end{itemize}
+
+We can observe from \autoref{fig:UNIPOLAR_NRZ_AUTOCORRELATION},
+\autoref{fig:POLAR_NRZ_AUTOCORRELATION} and
+\autoref{fig:POLAR_RZ_AUTOCORRELATION} that the autocorrelation across time is
+not exactly the same but the reasoning of this is that MATLAB functions with
+discrete time samples so to integrate across all time for the signal we need to
+have infinite samples but we can say approximately that they are equal.
