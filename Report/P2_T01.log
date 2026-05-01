@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.3.7)  1 MAY 2026 12:49
+This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.3.7)  1 MAY 2026 15:45
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -2195,10 +2195,10 @@ Package hyperref Info: bookmark level for unknown listing defaults to 0 on input
 \pydata@fh@0=\write12
 \openout12 = `_5E7C8F4B5C50DC0799216130799B03E2.data.minted'.
 
-runsystem(latexminted config  --timestamp 20260501124904 5E7C8F4B5C50DC0799216130799B03E2)...executed safely (allowed).
+runsystem(latexminted config  --timestamp 20260501154544 5E7C8F4B5C50DC0799216130799B03E2)...executed safely (allowed).
 
 (./_5E7C8F4B5C50DC0799216130799B03E2.config.minted)
-runsystem(latexminted cleanconfig  --timestamp 20260501124904 5E7C8F4B5C50DC0799216130799B03E2)...executed safely (allowed).
+runsystem(latexminted cleanconfig  --timestamp 20260501154544 5E7C8F4B5C50DC0799216130799B03E2)...executed safely (allowed).
 
  (./_minted/default.style.minted) (./_minted/F5D828EA6FEBE2CE8F54A40D82DD8271.highlight.minted)) [4
 
@@ -2267,12 +2267,19 @@ Chapter 8.
 
 
 
-] (./_minted/F4E87BB4FD9B7B4EE6A39788CC8E2181.highlight.minted) (./_minted/2727C79919B7D37C1C1BEF2892367FF0.highlight.minted) (./_minted/71BD7BDFFFE275285D14AA252EB9BDC4.highlight.minted) (./_minted/680CFFBD9B5DA3E948E434DF32ED8EF1.highlight.minted)) [11]
+] (./_minted/F4E87BB4FD9B7B4EE6A39788CC8E2181.highlight.minted) (./_minted/2727C79919B7D37C1C1BEF2892367FF0.highlight.minted) (./_minted/71BD7BDFFFE275285D14AA252EB9BDC4.highlight.minted) (./_minted/680CFFBD9B5DA3E948E434DF32ED8EF1.highlight.minted) [11]
+File: Figures/Unipolar_NRZ_-_Time_Mean_X(t)_for_Each_Realization.png Graphic file (type bmp)
+<Figures/Unipolar_NRZ_-_Time_Mean_X(t)_for_Each_Realization.png>
+File: Figures/Polar_NRZ_-_Time_Mean_X(t)_for_Each_Realization.png Graphic file (type bmp)
+<Figures/Polar_NRZ_-_Time_Mean_X(t)_for_Each_Realization.png>
+File: Figures/Polar_RZ_-_Time_Mean_X(t)_for_Each_Realization.png Graphic file (type bmp)
+<Figures/Polar_RZ_-_Time_Mean_X(t)_for_Each_Realization.png>
+) [12]
 \openout2 = `Chapters/11-Q2-Is-the-Process-Stationary.aux'.
 
  (./Chapters/11-Q2-Is-the-Process-Stationary.tex
 Chapter 9.
-) [12
+) [13
 
 
 
@@ -2282,7 +2289,7 @@ Chapter 9.
 
  (./Chapters/12-Q3-Statistical-Autocorrelation.tex
 Chapter 10.
-) [13
+) [14
 
 
 
@@ -2292,7 +2299,7 @@ Chapter 10.
 
  (./Chapters/13-Q4-Time-Mean-&-Autocorrelation-of-One-Waveform.tex
 Chapter 11.
-) [14
+) [15
 
 
 
@@ -2302,7 +2309,7 @@ Chapter 11.
 
  (./Chapters/14-Q5-Is-the-Random-Process-Ergodic.tex
 Chapter 12.
-) [15
+) [16
 
 
 
@@ -2312,7 +2319,7 @@ Chapter 12.
 
  (./Chapters/15-Plotting-the-PSD-of-the-Ensemble.tex
 Chapter 13.
-) [16
+) [17
 
 
 
@@ -2322,7 +2329,7 @@ Chapter 13.
 
  (./Chapters/16-Q6-Signal Bandwidth.tex
 Chapter 14.
-) [17
+) [18
 
 
 
@@ -2358,14 +2365,14 @@ Package fontspec Info:
 (fontspec)             - 'bold italic small caps'  (b/scit) with NFSS spec.:
 (fontspec)             <->"[Configurations/Fonts/Minion-Pro-Bold-Italic.ttf]/OT:script=latn;language=dflt;+smcp;"
 
-) (./Chapters/Appendices/00-AppendixA.tex [18
+) (./Chapters/Appendices/00-AppendixA.tex [19
 \def\@LN@column{1}
 
 
 
 ]
 Appendix A.
-) [19
+) [20
 
 ]
 
@@ -2373,7 +2380,7 @@ Package glossaries Warning: No \printglossary or \printglossaries found.
 (Remove \makeglossaries if you don't want any glossaries.) 
 This document will not have a glossary.
 
-[20
+[21
 
 ] (./P2_T01.aux (./Matter/00-Cover.aux) (./Matter/01-Front-Page.aux) (./Chapters/00-Abstract.aux) (./Chapters/01-Problem-Description.aux) (./Chapters/02-Introduction.aux) (./Chapters/03-Control-Flags.aux) (./Chapters/04-Generation-of-Data.aux) (./Chapters/05-Creating-the-Unipolar-Ensemble.aux) (./Chapters/06-Creating-The-Polar-NRZ-Ensemble.aux) (./Chapters/07-Creating-The-Polar-RZ-Ensemble.aux) (./Chapters/10-Q1-Statistical-Mean-Calculation.aux) (./Chapters/11-Q2-Is-the-Process-Stationary.aux) (./Chapters/12-Q3-Statistical-Autocorrelation.aux) (./Chapters/13-Q4-Time-Mean-&-Autocorrelation-of-One-Waveform.aux) (./Chapters/14-Q5-Is-the-Random-Process-Ergodic.aux) (./Chapters/15-Plotting-the-PSD-of-the-Ensemble.aux) (./Chapters/16-Q6-Signal Bandwidth.aux))
  ***********
@@ -2385,18 +2392,18 @@ L3 programming layer <2026-01-19>
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `P2_T01.out' has not changed.
-(rerunfilecheck)             Checksum: C8C02D332929D81263A363C9562F444E;3241.
+(rerunfilecheck)             Checksum: 48386B1721CC6595925E2220EFF11360;3241.
 Package logreq Info: Writing requests to 'P2_T01.run.xml'.
 \openout1 = `P2_T01.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 66740 strings out of 468168
- 1463606 string characters out of 5436525
- 2724200 words of memory out of 5000000
- 94065 multiletter control sequences out of 15000+600000
- 720685 words of font info for 272 fonts, out of 8000000 for 9000
+ 66779 strings out of 468168
+ 1465738 string characters out of 5436525
+ 2724526 words of memory out of 5000000
+ 94099 multiletter control sequences out of 15000+600000
+ 720701 words of font info for 274 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 123i,12n,122p,2622b,4999s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 123i,13n,122p,2622b,4999s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on P2_T01.pdf (23 pages).
+Output written on P2_T01.pdf (24 pages).
