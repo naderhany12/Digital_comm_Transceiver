@@ -1,2 +1,75 @@
 \chapter[Q6 Signal Bandwidth]{Q6 Signal Bandwidth}
 \label{cp:q6-signal-bandwidth}
+
+To determine the bandwidth of the signal, we use the theoretical PSDs derived
+in \autoref{cp:plotting-the-psd-of-the-ensemble}. The bandwidth is defined as
+the frequency range up to the first spectral null, since all three PSDs take
+a $\text{sinc}^2$ shape whose first null marks the edge of the mainlobe.
+
+First null condition — sinc goes to zero when its argument is an integer:
+\[
+    \text{sinc}(x) = 0 \quad \text{when} \quad x = \pm 1, \pm 2, \ldots
+\]
+
+\textbf{Polar / Unipolar NRZ} — from \autoref{eq:PSD_polar_nrz} and
+\autoref{eq:PSD_unipolar_nrz}, both share the same sinc argument $\pi f T$:
+\[
+    \text{sinc}^2(\pi f T) = 0
+    \quad \Rightarrow \quad \pi f T = \pi
+    \quad \Rightarrow \quad f \cdot T_b = 1
+\]
+\[
+    \boxed{B_{\text{null}}^{\text{NRZ}} = \frac{1}{T_b}}
+\]
+
+\textbf{Polar RZ} — from \autoref{eq:PSD_polar_rz}, the sinc argument is
+$\pi f T / 2$:
+\[
+    \text{sinc}^2\!\left(\frac{\pi f T}{2}\right) = 0
+    \quad \Rightarrow \quad \frac{\pi f T}{2} = \pi
+    \quad \Rightarrow \quad f \cdot \frac{T_b}{2} = 1
+\]
+\[
+    \boxed{B_{\text{null}}^{\text{RZ}} = \frac{2}{T_b}}
+\]
+
+Substituting $T_b = L \times T_s = 8 \times 0.01 = 0.08\ \text{s}$:
+\[
+    B_{\text{null}}^{\text{NRZ}} = \frac{1}{0.08} = 12.5\ \text{Hz}, \qquad
+    B_{\text{null}}^{\text{RZ}}  = \frac{2}{0.08} = 25\ \text{Hz}
+\]
+
+Now we can make a function that calculates the bandwidth of the signal based on
+the first null of the sinc function and compare it with our results to see if
+they match.
+
+\begin{listing}[H]
+    \caption{Bandwidth Calculation Function}
+    \label{listing:BandwidthCalculationFunction}
+    \begin{minted}{matlab}
+function B_null = find_first_null(freq, PSD)
+pos       = freq >= 0; % Only consider non-negative frequencies for null detection.
+f_pos     = freq(pos); % Corresponding frequencies.
+PSD_pos   = PSD(pos);  % PSD values at non-negative frequencies.
+threshold = max(PSD_pos) * 0.01; % Threshold set to 1% of max PSD to find first null.
+idx       = find(PSD_pos < threshold & f_pos > 0, 1, 'first');
+if ~isempty(idx)
+    B_null = f_pos(idx);
+else
+    B_null = NaN;
+end
+end
+    \end{minted}
+\end{listing}
+
+The function \texttt{find\_first\_null} analyzes the PSD data to find the
+first frequency where the PSD drops below 1\% of its maximum value,
+identifying the first null point which corresponds to the signal bandwidth.
+
+As we can observe from the results in \autoref{fig:UNIPOLAR_NRZ_PSD},
+\autoref{fig:POLAR_NRZ_PSD}, and \autoref{fig:POLAR_RZ_PSD}, the first
+nulls of the PSDs for the Unipolar NRZ and Polar NRZ occur at approximately
+12.5 Hz, and for Polar RZ at 25 Hz, which matches our theoretical
+calculations. This confirms that our theoretical analysis of the signal
+bandwidth based on the first null of the sinc function is consistent with
+the simulated results.

@@ -1,0 +1,14 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k}{function}\PYG{+w}{ }B\PYGZus{}null\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nf}{find\PYGZus{}first\PYGZus{}null}\PYG{p}{(}freq, PSD\PYG{p}{)}
+\PYG{n}{pos}\PYG{+w}{       }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{freq}\PYG{+w}{ }\PYG{o}{\PYGZgt{}=}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{;}\PYG{+w}{ }\PYG{c}{\PYGZpc{} Only consider non\PYGZhy{}negative frequencies for null detection.}
+\PYG{n}{f\PYGZus{}pos}\PYG{+w}{     }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{freq}\PYG{p}{(}\PYG{n}{pos}\PYG{p}{);}\PYG{+w}{ }\PYG{c}{\PYGZpc{} Corresponding frequencies.}
+\PYG{n}{PSD\PYGZus{}pos}\PYG{+w}{   }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{PSD}\PYG{p}{(}\PYG{n}{pos}\PYG{p}{);}\PYG{+w}{  }\PYG{c}{\PYGZpc{} PSD values at non\PYGZhy{}negative frequencies.}
+\PYG{n}{threshold}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{max}\PYG{p}{(}\PYG{n}{PSD\PYGZus{}pos}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{l+m+mf}{0.01}\PYG{p}{;}\PYG{+w}{ }\PYG{c}{\PYGZpc{} Threshold set to 1\PYGZpc{} of max PSD to find first null.}
+\PYG{n}{idx}\PYG{+w}{       }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{find}\PYG{p}{(}\PYG{n}{PSD\PYGZus{}pos}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{threshold}\PYG{+w}{ }\PYG{o}{\PYGZam{}}\PYG{+w}{ }\PYG{n}{f\PYGZus{}pos}\PYG{+w}{ }\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{+w}{ }\PYG{l+s}{\PYGZsq{}first\PYGZsq{}}\PYG{p}{);}
+\PYG{k}{if}\PYG{+w}{ }\PYG{o}{\PYGZti{}}\PYG{n+nb}{isempty}\PYG{p}{(}\PYG{n}{idx}\PYG{p}{)}
+\PYG{+w}{    }\PYG{n}{B\PYGZus{}null}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{f\PYGZus{}pos}\PYG{p}{(}\PYG{n}{idx}\PYG{p}{);}
+\PYG{k}{else}
+\PYG{+w}{    }\PYG{n}{B\PYGZus{}null}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{NaN}\PYG{p}{;}
+\PYG{k}{end}
+\PYG{k}{end}
+\end{MintedVerbatim}

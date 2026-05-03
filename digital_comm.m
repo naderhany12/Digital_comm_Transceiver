@@ -96,7 +96,7 @@ Tb      = L * Ts;
 tau_sec = tau    * Ts;
 lag_sec = lags_t * Ts;
 
-% Define high-contrast theoretical color based on scheme
+
 switch type
     case 'polar_nrz', theo_color = [1 0 1]; % Magenta
     case 'unipolar',  theo_color = [0 1 1]; % Cyan
@@ -133,7 +133,7 @@ sgtitle([name, ': Ensemble vs Time Autocorrelation']);
 end
 
 function plot_means(Ex, Ux, name, ylim_range, theo_mean)
-% Using a universal bright contrast color for horizontal mean lines
+
 contrast_mean = [1 0.2 0.2]; % Bright Coral Red
 
 figure;
@@ -189,14 +189,14 @@ end
 end
 
 function plot_psd(freq, PSD_sim, PSD_theo, color, title_str, ylabel_str, Tb, type)
-% Theo color per signal type
+
 switch type
     case 'polar_nrz', theo_color = [1 0 1];
     case 'unipolar',  theo_color = [0 0.9 0.9];
     case 'polar_rz',  theo_color = [1 0.8 0];
 end
 
-% y-axis ceiling (exclude DC spike for unipolar)
+
 [~, dc_idx] = min(abs(freq));
 mask = true(size(PSD_sim));
 mask(max(1, dc_idx-1):min(length(freq), dc_idx+1)) = false;

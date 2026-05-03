@@ -1,0 +1,12 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k}{function}\PYG{+w}{ }\PYG{n+nf}{[PSD\PYGZus{}sim, PSD\PYGZus{}theo] = compute\PYGZus{}psd}\PYG{p}{(}Rx, N\PYGZus{}fft, center, half\PYGZus{}len, freq, Fs, A, Tb, type\PYG{p}{)}
+\PYG{n}{Ts}\PYG{+w}{  }\PYG{p}{=}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{o}{/}\PYG{n}{Fs}\PYG{p}{;}
+\PYG{n}{df}\PYG{+w}{  }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{Fs}\PYG{+w}{ }\PYG{o}{/}\PYG{+w}{ }\PYG{n}{N\PYGZus{}fft}\PYG{p}{;}
+\PYG{n}{f}\PYG{+w}{   }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{freq}\PYG{p}{;}
+
+\PYG{c}{\PYGZpc{} Simulated PSD via FFT of zero\PYGZhy{}padded Rx}
+\PYG{n}{Rx\PYGZus{}padded}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{zeros}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{N\PYGZus{}fft}\PYG{p}{);}
+\PYG{n}{Rx\PYGZus{}padded}\PYG{p}{(}\PYG{n}{center}\PYG{o}{\PYGZhy{}}\PYG{n}{half\PYGZus{}len}\PYG{+w}{ }\PYG{p}{:}\PYG{+w}{ }\PYG{n}{center}\PYG{o}{+}\PYG{n}{half\PYGZus{}len}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n}{Rx}\PYG{p}{;}
+\PYG{n}{PSD\PYGZus{}sim}\PYG{+w}{ }\PYG{p}{=}\PYG{+w}{ }\PYG{n+nb}{fftshift}\PYG{p}{(}\PYG{n+nb}{abs}\PYG{p}{(}\PYG{n+nb}{fft}\PYG{p}{(}\PYG{n+nb}{ifftshift}\PYG{p}{(}\PYG{n}{Rx\PYGZus{}padded}\PYG{p}{))))}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{Ts}\PYG{p}{;}
+\PYG{k}{end}
+\end{MintedVerbatim}

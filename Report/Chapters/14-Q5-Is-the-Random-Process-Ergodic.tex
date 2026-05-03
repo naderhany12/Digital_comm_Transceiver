@@ -2,16 +2,16 @@
 \label{cp:q5-is-the-random-process-ergodic}
 
 To determine if a random process is ergodic, we need to satisfy the following
-conditions as learned in \cite{Nafie2026b}, statistics across time are the same
+conditions as learned in \cite{DigitalCommunicationsLecture4}, statistics across time are the same
 as their statistics across the ensemble, which means:
 \begin{enumerate}
     \item \begin{equation}
-    \label{eq:moment1}
+              \label{eq:moment1}
               m(t) = E(X(t)) = \langle X(t) \rangle
           \end{equation}
 
     \item \begin{equation}
-    \label{eq:moment2}
+              \label{eq:moment2}
               R_x(\tau) = E[X(t) X(t + \tau)] = \langle X(t) X(t + \tau) \rangle
           \end{equation}
 \end{enumerate}
@@ -20,7 +20,7 @@ Where $E$ is the expectation across the ensemble and $\langle \cdot \rangle$ is
 the time average.
 
 We can use the following equations to get the time average of the mean and
-autocorrelation :
+autocorrelation
 \begin{equation}
     \langle x(t) \rangle = \lim_{T\to\infty} \frac{1}{2T} \int_{-T}^{T} x(t) \, dt
 \end{equation}
@@ -29,5 +29,14 @@ autocorrelation :
     \langle x(t) x(t + \tau) \rangle = \lim_{T\to\infty} \frac{1}{2T} \int_{-T}^{T} x(t)x(t + \tau) \, dt
 \end{equation}
 
-We have already calculated the mean and autocorrelation across the ensemble in the previous questions, we also graphed across time and acroess realizations,
-the two conditions in \autoref{eq:moment1} and \autoref{eq:moment2} are satisfied for all three formats, which means that the random process is ergodic.
+We have already calculated the mean and autocorrelation across the ensemble in
+the previous questions, we also graphed across time and acroess realizations,
+the two conditions in \autoref{eq:moment1} and \autoref{eq:moment2} are
+satisfied for all three formats as observed from Figures
+\autoref{fig:UNIPOLAR_NRZ_MEAN},
+\autoref{fig:POLAR_NRZ_MEAN}, 
+\autoref{fig:POLAR_RZ_MEAN}, 
+\autoref{fig:UNIPOLAR_NRZ_AUTOCORRELATION},
+\autoref{fig:POLAR_NRZ_AUTOCORRELATION}, and
+\autoref{fig:POLAR_RZ_AUTOCORRELATION}, which means that the
+random process is ergodic.

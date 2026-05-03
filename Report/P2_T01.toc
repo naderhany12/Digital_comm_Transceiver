@@ -11,7 +11,7 @@
 \contentsline {chapter}{\numberline {10}Q3 Statistical Autocorrelation + Q4 Time Mean \& Autocorrelation of One Waveform}{16}{chapter.10}%
 \contentsline {chapter}{\numberline {11}Q5 Is the Random Process Ergodic}{19}{chapter.11}%
 \contentsline {chapter}{\numberline {12}Plotting the PSD of the Ensemble}{20}{chapter.12}%
-\contentsline {chapter}{\numberline {13}Q6 Signal Bandwidth}{21}{chapter.13}%
+\contentsline {chapter}{\numberline {13}Q6 Signal Bandwidth}{22}{chapter.13}%
 \contentsline {chapter}{Appendices}{}{}
-\contentsline {chapter}{\numberline {A}Appendix}{23}{appendix.A}%
-\contentsline {backmatter}{References}{29}{appendix*.31}%
+\contentsline {chapter}{\numberline {A}Appendix}{25}{appendix.A}%
+\contentsline {backmatter}{References}{32}{appendix*.36}%
