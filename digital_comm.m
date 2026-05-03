@@ -1,3 +1,4 @@
+clc; clear; close all;
 %% Control Flags
 N_bits         = 100;           % Number of bits per realization.
 N_realizations = 500;           % Number of realizations.
@@ -32,8 +33,8 @@ plot_autocorr(tau_unipolar, Rx_unipolar, ...
     lags_time_unipolar, Rx_time_unipolar, 'Unipolar NRZ', Ts, A, L, 'unipolar');
 plot_means(Ex_unipolar, Ux_unipolar, 'Unipolar NRZ', ylim_unipolar, A/2);
 plot_stationarity(ensample_unipolar, Ts, 'Unipolar NRZ');
-compute_psd(Rx_unipolar, N_fft, center, half_len, freq, Fs, ...
-    A/2, color_unipolar, 'PSD - Unipolar NRZ', 'S_x(f) [V^2/Hz]', A, Pw, 'unipolar');
+[PSD_sim_unipolar, PSD_theo_unipolar] = compute_psd(Rx_unipolar, N_fft, center, half_len, freq, Fs, A, Pw, 'unipolar');
+plot_psd(freq, PSD_sim_unipolar, PSD_theo_unipolar, color_unipolar, 'PSD - Unipolar NRZ', 'S_x(f) [V^2/Hz]', Pw, 'unipolar');
 
 %% Polar NRZ
 fprintf('\nPolar NRZ\n');
@@ -53,8 +54,8 @@ plot_autocorr(tau_polar_NRZ, Rx_polar_NRZ, ...
     lags_time_polar_NRZ, Rx_time_polar_NRZ, 'Polar NRZ', Ts, A, L, 'polar_nrz');
 plot_means(Ex_polar_NRZ, Ux_polar_NRZ, 'Polar NRZ', ylim_polar_NRZ, 0);
 plot_stationarity(ensample_polar_NRZ, Ts, 'Polar NRZ');
-compute_psd(Rx_polar_NRZ, N_fft, center, half_len, freq, Fs, ...
-    0, color_polar_NRZ, 'PSD - Polar NRZ', 'Magnitude', A, Pw, 'polar_nrz');
+[PSD_sim_polar_NRZ, PSD_theo_polar_NRZ] = compute_psd(Rx_polar_NRZ, N_fft, center, half_len, freq, Fs, A, Pw, 'polar_nrz');
+plot_psd(freq, PSD_sim_polar_NRZ, PSD_theo_polar_NRZ, color_polar_NRZ, 'PSD - Polar NRZ', 'Magnitude', Pw, 'polar_nrz');
 
 %% Polar RZ
 fprintf('\nPolar RZ\n');
@@ -73,8 +74,8 @@ plot_realizations(ensample_RZ, 'Polar RZ', ylim_RZ);
 plot_autocorr(tau_RZ, Rx_RZ, lags_time_RZ, Rx_time_RZ, 'Polar RZ', Ts, A, L, 'polar_rz');
 plot_means(Ex_RZ, Ux_RZ, 'Polar RZ', [-1, 1], 0);
 plot_stationarity(ensample_RZ, Ts, 'Polar RZ');
-compute_psd(Rx_RZ, N_fft, center, half_len, freq, Fs, ...
-    0, color_RZ, 'PSD - Polar RZ', 'Magnitude', A, Pw, 'polar_rz');
+[PSD_sim_RZ, PSD_theo_RZ] = compute_psd(Rx_RZ, N_fft, center, half_len, freq, Fs, A, Pw, 'polar_rz');
+plot_psd(freq, PSD_sim_RZ, PSD_theo_RZ, color_RZ, 'PSD - Polar RZ', 'Magnitude', Pw, 'polar_rz');
 
 %% Functions
 
@@ -91,65 +92,65 @@ sgtitle([name, ' Realizations']);
 end
 
 function plot_autocorr(tau, Rx_ens, lags_t, Rx_t, name, Ts, A, L, type)
-    Tb      = L * Ts;
-    tau_sec = tau    * Ts;
-    lag_sec = lags_t * Ts;
-    
-    % Define high-contrast theoretical color based on scheme
-    switch type
-        case 'polar_nrz', theo_color = [1 0 1]; % Magenta
-        case 'unipolar',  theo_color = [0 1 1]; % Cyan
-        case 'polar_rz',  theo_color = [1 0.8 0]; % Gold/Yellow
-    end
+Tb      = L * Ts;
+tau_sec = tau    * Ts;
+lag_sec = lags_t * Ts;
 
-    switch type
-        case 'polar_nrz'
-            Rx_theo_ens  = A^2 * max(0, 1 - abs(tau_sec)/Tb);
-            Rx_theo_time = A^2 * max(0, 1 - abs(lag_sec)/Tb);
-        case 'unipolar'
-            Rx_theo_ens  = (A^2/4) * max(0, 1 - abs(tau_sec)/Tb) + (A/2)^2;
-            Rx_theo_time = (A^2/4) * max(0, 1 - abs(lag_sec)/Tb) + (A/2)^2;
-        case 'polar_rz'
-            Rx_theo_ens  = (A^2/2) * max(0, 1 - abs(tau_sec)/(Tb/2));
-            Rx_theo_time = (A^2/2) * max(0, 1 - abs(lag_sec)/(Tb/2));
-    end
+% Define high-contrast theoretical color based on scheme
+switch type
+    case 'polar_nrz', theo_color = [1 0 1]; % Magenta
+    case 'unipolar',  theo_color = [0 1 1]; % Cyan
+    case 'polar_rz',  theo_color = [1 0.8 0]; % Gold/Yellow
+end
 
-    figure;
-    subplot(2,1,1);
-    plot(tau*Ts, Rx_ens, 'LineWidth', 1.5); hold on;
-    plot(tau_sec, Rx_theo_ens, '--', 'Color', theo_color, 'LineWidth', 2);
-    title([name, ' - Ensemble R_x(\tau)']); grid on;
-    xlabel('\tau (s)'); ylabel('R_x(\tau)'); xlim([-0.75 0.75]);
-    legend('Simulated', 'Theoretical');
+switch type
+    case 'polar_nrz'
+        Rx_theo_ens  = A^2 * max(0, 1 - abs(tau_sec)/Tb);
+        Rx_theo_time = A^2 * max(0, 1 - abs(lag_sec)/Tb);
+    case 'unipolar'
+        Rx_theo_ens  = (A^2/4) * max(0, 1 - abs(tau_sec)/Tb) + (A/2)^2;
+        Rx_theo_time = (A^2/4) * max(0, 1 - abs(lag_sec)/Tb) + (A/2)^2;
+    case 'polar_rz'
+        Rx_theo_ens  = (A^2/2) * max(0, 1 - abs(tau_sec)/(Tb/2));
+        Rx_theo_time = (A^2/2) * max(0, 1 - abs(lag_sec)/(Tb/2));
+end
 
-    subplot(2,1,2);
-    plot(lags_t*Ts, Rx_t, 'g', 'LineWidth', 1.5); hold on;
-    plot(lag_sec, Rx_theo_time, '--', 'Color', theo_color, 'LineWidth', 2);
-    title([name, ' - Time R_x(\tau) for Realization #10']); grid on;
-    xlabel('\tau (s)'); ylabel('R_T(\tau)');
-    legend('Simulated', 'Theoretical');
-    sgtitle([name, ': Ensemble vs Time Autocorrelation']);
+figure;
+subplot(2,1,1);
+plot(tau*Ts, Rx_ens, 'LineWidth', 1.5); hold on;
+plot(tau_sec, Rx_theo_ens, '--', 'Color', theo_color, 'LineWidth', 2);
+title([name, ' - Ensemble R_x(\tau)']); grid on;
+xlabel('\tau (s)'); ylabel('R_x(\tau)'); xlim([-0.75 0.75]);
+legend('Simulated', 'Theoretical');
+
+subplot(2,1,2);
+plot(lags_t*Ts, Rx_t, 'g', 'LineWidth', 1.5); hold on;
+plot(lag_sec, Rx_theo_time, '--', 'Color', theo_color, 'LineWidth', 2);
+title([name, ' - Time R_x(\tau) for Realization #10']); grid on;
+xlabel('\tau (s)'); ylabel('R_T(\tau)');
+legend('Simulated', 'Theoretical');
+sgtitle([name, ': Ensemble vs Time Autocorrelation']);
 end
 
 function plot_means(Ex, Ux, name, ylim_range, theo_mean)
-    % Using a universal bright contrast color for horizontal mean lines
-    contrast_mean = [1 0.2 0.2]; % Bright Coral Red
-    
-    figure;
-    subplot(2,1,1);
-    plot(Ex); hold on;
-    yline(theo_mean, '--', 'Color', contrast_mean, 'LineWidth', 2);
-    ylim(ylim_range); grid on;
-    title([name, ' - E[X(t)]']); xlabel('Sample Index'); ylabel('Mean (V)');
-    legend('Simulated', 'Theoretical');
+% Using a universal bright contrast color for horizontal mean lines
+contrast_mean = [1 0.2 0.2]; % Bright Coral Red
 
-    subplot(2,1,2);
-    plot(Ux); hold on;
-    yline(theo_mean, '--', 'Color', contrast_mean, 'LineWidth', 2);
-    ylim(ylim_range); grid on;
-    title([name, ' - <X(t)> per Realization']); xlabel('Realization'); ylabel('Mean (V)');
-    legend('Simulated', 'Theoretical');
-    sgtitle([name, ': E[x(t)] vs <x(t)>']);
+figure;
+subplot(2,1,1);
+plot(Ex); hold on;
+yline(theo_mean, '--', 'Color', contrast_mean, 'LineWidth', 2);
+ylim(ylim_range); grid on;
+title([name, ' - E[X(t)]']); xlabel('Sample Index'); ylabel('Mean (V)');
+legend('Simulated', 'Theoretical');
+
+subplot(2,1,2);
+plot(Ux); hold on;
+yline(theo_mean, '--', 'Color', contrast_mean, 'LineWidth', 2);
+ylim(ylim_range); grid on;
+title([name, ' - <X(t)> per Realization']); xlabel('Realization'); ylabel('Mean (V)');
+legend('Simulated', 'Theoretical');
+sgtitle([name, ': E[x(t)] vs <x(t)>']);
 end
 
 function plot_stationarity(ensample, Ts, name)
@@ -163,62 +164,88 @@ grid on; legend('R_x at t_1', 'R_x at t_2');
 title([name, ' - Stationarity Check']); xlabel('\tau (s)'); ylabel('R_x(\tau)');
 end
 
-function compute_psd(Rx, N_fft, center, half_len, freq, Fs, dc_mean, color, title_str, ylabel_str, A, Tb, type)
-    Ts = 1/Fs;
-    df = Fs / N_fft;
-    
-    % 1. Compute Simulated PSD from Rx
-    Rx_padded = zeros(1, N_fft);
-    Rx_padded(center-half_len : center+half_len) = Rx; 
-    PSD_sim = fftshift(abs(fft(ifftshift(Rx_padded)))) * Ts;
+function [PSD_sim, PSD_theo] = compute_psd(Rx, N_fft, center, half_len, freq, Fs, A, Tb, type)
+Ts  = 1/Fs;
+df  = Fs / N_fft;
+f   = freq;
 
-    % 2. Theoretical PSD Calculation
-    f = freq;
-    f_eps = f + 1e-12; % Avoid division by zero
-    
-    switch type
-        case 'polar_nrz'
-            PSD_theo = (A^2 * Tb) * (sinc(f_eps * Tb)).^2;
-            theo_color = [1 0 1]; % Magenta
-            
-        case 'unipolar'
-            PSD_theo = (A^2 * Tb / 4) * (sinc(f_eps * Tb)).^2;
-            [~, dc_idx] = min(abs(f));
-            PSD_theo(dc_idx) = PSD_theo(dc_idx) + (A^2/4) / df;
-            theo_color = [0 0.9 0.9]; % Cyan
-            
-        case 'polar_rz'
-            PSD_theo = (A^2 * Tb / 4) * (sinc(f_eps * (Tb/2))).^2;
-            theo_color = [1 0.8 0]; % Gold
-    end
+% Simulated PSD via FFT of zero-padded Rx
+Rx_padded = zeros(1, N_fft);
+Rx_padded(center-half_len : center+half_len) = Rx;
+PSD_sim = fftshift(abs(fft(ifftshift(Rx_padded)))) * Ts;
 
-    % --- 3. Visualization (Original Background) ---
-    figure; % Default MATLAB gray background
-    
-    % Calculation of Shared Y-Axis Limits
-    [~, dc_idx] = min(abs(f));
-    mask = true(size(PSD_sim));
-    mask(max(1, dc_idx-1):min(length(f), dc_idx+1)) = false; 
-    
-    if strcmp(type, 'unipolar')
-        y_max = max(PSD_sim(mask)) * 1.5;
-    else
-        y_max = max(PSD_sim) * 1.1;
-    end
+% Theoretical PSD
+f_eps = f + 1e-12;
+switch type
+    case 'polar_nrz'
+        PSD_theo = (A^2 * Tb) * (sinc(f_eps * Tb)).^2;
+    case 'unipolar'
+        PSD_theo = (A^2 * Tb / 4) * (sinc(f_eps * Tb)).^2;
+        [~, dc_idx] = min(abs(f));
+        PSD_theo(dc_idx) = PSD_theo(dc_idx) + (A^2/4) / df;
+    case 'polar_rz'
+        PSD_theo = (A^2 * Tb / 4) * (sinc(f_eps * (Tb/2))).^2;
+end
+end
 
-    % Top Plot: Simulated
-    subplot(2,1,1);
-    plot(freq, PSD_sim, 'LineWidth', 2, 'Color', color);
-    grid on; title([title_str, ' - Simulated']); 
-    xlabel('Frequency (Hz)'); ylabel(ylabel_str);
-    xlim([-3/Tb, 3/Tb]); ylim([0, y_max]);
+function plot_psd(freq, PSD_sim, PSD_theo, color, title_str, ylabel_str, Tb, type)
+% Theo color per signal type
+switch type
+    case 'polar_nrz', theo_color = [1 0 1];
+    case 'unipolar',  theo_color = [0 0.9 0.9];
+    case 'polar_rz',  theo_color = [1 0.8 0];
+end
 
-    % Bottom Plot: Theoretical
-    subplot(2,1,2);
-    plot(freq, PSD_theo, 'LineWidth', 2, 'Color', theo_color);
-    grid on; title([title_str, ' - Theoretical']); 
-    xlabel('Frequency (Hz)'); ylabel(ylabel_str);
-    xlim([-3/Tb, 3/Tb]); ylim([0, y_max]);
+% y-axis ceiling (exclude DC spike for unipolar)
+[~, dc_idx] = min(abs(freq));
+mask = true(size(PSD_sim));
+mask(max(1, dc_idx-1):min(length(freq), dc_idx+1)) = false;
+if strcmp(type, 'unipolar')
+    y_max = max(PSD_sim(mask)) * 1.5;
+else
+    y_max = max(PSD_sim) * 1.1;
+end
+
+B_null = find_first_null(freq, PSD_sim);
+
+figure;
+
+subplot(2,1,1);
+plot(freq, PSD_sim, 'LineWidth', 2, 'Color', color); hold on;
+if ~isnan(B_null)
+    xline(B_null, '--', 'Color', [1 0.5 0], 'LineWidth', 1.5, ...
+        'Label', sprintf('B_{null} = %.2f Hz', B_null), ...
+        'LabelVerticalAlignment', 'bottom');
+end
+grid on; title([title_str, ' - Simulated']);
+xlabel('Frequency (Hz)'); ylabel(ylabel_str);
+xlim([-3/Tb, 3/Tb]); ylim([0, y_max]);
+
+subplot(2,1,2);
+plot(freq, PSD_theo, 'LineWidth', 2, 'Color', theo_color); hold on;
+if ~isnan(B_null)
+    xline(B_null, '--', 'Color', [1 0.5 0], 'LineWidth', 1.5, ...
+        'Label', sprintf('B_{null} = %.2f Hz', B_null), ...
+        'LabelVerticalAlignment', 'bottom');
+end
+grid on; title([title_str, ' - Theoretical']);
+xlabel('Frequency (Hz)'); ylabel(ylabel_str);
+xlim([-3/Tb, 3/Tb]); ylim([0, y_max]);
+
+sgtitle(title_str);
+end
+
+function B_null = find_first_null(freq, PSD)
+pos      = freq >= 0; % Only consider non-negative frequencies for null detection.
+f_pos    = freq(pos); % Corresponding frequencies.
+PSD_pos  = PSD(pos); % PSD values at non-negative frequencies.
+threshold = max(PSD_pos) * 0.01; % Threshold set to 1% of max PSD to find first null.
+idx      = find(PSD_pos < threshold & f_pos > 0, 1, 'first');
+if ~isempty(idx)
+    B_null = f_pos(idx);
+else
+    B_null = NaN;
+end
 end
 
 function [Ex, Ux] = compute_means(ensample, theoretical_mean)
@@ -272,5 +299,3 @@ elseif strcmp(type, 'time')
     end
 end
 end
-
-ExportFigures;
