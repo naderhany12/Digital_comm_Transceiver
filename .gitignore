@@ -1,0 +1,52 @@
+# --- MATLAB ---
+*.asv
+*.m~
+*.mat
+
+# --- LaTeX build artifacts ---
+*.aux
+*.bbl
+*.bbl-SAVE-ERROR
+*.blg
+*.bcf
+*.fdb_latexmk
+*.fls
+*.glo
+*.gls
+*.idx
+*.ilg
+*.ind
+*.ist
+*.lof
+*.log
+*.lot
+*.lol
+*.nav
+*.out
+*.run.xml
+*.slo
+*.snm
+*.sta
+*.synctex.gz
+*.toc
+*.vrb
+_minted*/
+
+# --- Archives ---
+*.rar
+*.zip
+*.tar.gz
+*.7z
+
+# --- Fonts (proprietary binaries) ---
+*.ttf
+*.otf
+*.woff
+*.woff2
+
+# --- OS metadata ---
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+
